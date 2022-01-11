@@ -1,0 +1,25 @@
+{
+  "name": "inContact",
+  "version": "1.0.0",
+  "description": "Application Determines Who Is In Contact",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node auth.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yzhbankov/inContact.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yzhbankov/inContact/issues"
+  },
+  "homepage": "https://github.com/yzhbankov/inContact#readme",
+  "dependencies": {
+    "input": "^1.0.1",
+    "telegram": "^2.3.0"
+  }
+}
