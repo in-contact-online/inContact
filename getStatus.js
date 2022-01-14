@@ -1,28 +1,26 @@
-const fs = require('fs');
+const fs = require("fs");
 const { Api, TelegramClient } = require("telegram");
 const { stringSession, Auth, apiHash, apiId } = require("./auth");
 const client = new TelegramClient(stringSession, apiId, apiHash, {});
-const CronJob = require('cron').CronJob;
-
+const CronJob = require("cron").CronJob;
 
 async function statuses() {
   const { users } = await client.invoke(new Api.contacts.GetContacts({}));
 
-  const result = users.map((user) => ({
-    phone: user.phone,
-    name: user.firstName + user.lastName,
-    username: user.username,
-    status: user.status
-  }))
-  const fileName = `statuses_${new Date().toISOString()}.json`;
+  for (let user of users) {
+    const name = `${user.firstName} ${
+      user.lastName ? user.lastName : ""
+    }`.trim();
+    const row = `${user.phone},${name},${user.username},${user.status.wasOnline}\r\n`;
 
-  fs.writeFile(fileName, JSON.stringify(result), (err) => {
-    if (err)
-      console.log(err);
-    else {
-      console.log("File written successfully");
-    }
-  }); // prints the result
+    fs.appendFile(`./users/${name}.csv`, row, (err) =>
+      console.log(
+        err
+          ? err
+          : `${new Date().toISOString()}: "${name}" written successfully`
+      )
+    );
+  }
 }
 
 (async function run() {
@@ -30,8 +28,14 @@ async function statuses() {
   await client.connect();
 })();
 
-const job = new CronJob('*/10 * * * *', async function() {
-  await statuses();
-}, null, true, null);
+const job = new CronJob(
+  "*/5 * * * *",
+  async function () {
+    await statuses();
+  },
+  null,
+  true,
+  null
+);
 
 job.start();
