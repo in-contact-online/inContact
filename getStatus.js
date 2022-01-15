@@ -21,7 +21,9 @@ async function statuses() {
     const name = `${user.firstName} ${
       user.lastName ? user.lastName : ""
     }`.trim();
-    const row = `${user.phone},${name},${user.username},${user.status.wasOnline}\r\n`;
+    const row = `${user.phone},${name},${user.username},${
+      user.status.wasOnline
+    },${new Date().toISOString()}\r\n`;
 
     fs.appendFile(`./users/${name}.csv`, row, (err) =>
       console.log(
