@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node getStatus.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,11 @@
   "homepage": "https://github.com/yzhbankov/inContact#readme",
   "dependencies": {
     "cron": "^1.8.2",
+    "express": "^4.17.2",
     "input": "^1.0.1",
     "telegram": "^2.3.0"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }

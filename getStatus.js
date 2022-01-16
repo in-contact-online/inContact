@@ -11,6 +11,10 @@ const stringSession = new StringSession(
 
 const client = new TelegramClient(stringSession, apiId, apiHash, {});
 
+function humanReadableDate(unixTs) {
+  return new Date(unixTs * 1000).toISOString();
+}
+
 async function statuses() {
   console.log("Connection...");
   await client.connect();
@@ -22,7 +26,7 @@ async function statuses() {
       user.lastName ? user.lastName : ""
     }`.trim();
     const row = `${user.phone},${name},${user.username},${
-      user.status.wasOnline
+      humanReadableDate(user.status.wasOnline)
     },${new Date().toISOString()}\r\n`;
 
     fs.appendFile(`./users/${name}.csv`, row, (err) =>
@@ -35,7 +39,7 @@ async function statuses() {
   }
 }
 
-const job = new CronJob(
+const scanStatuses = new CronJob(
   "*/5 * * * *",
   async function () {
     await statuses();
@@ -45,4 +49,6 @@ const job = new CronJob(
   null
 );
 
-job.start();
+module.exports = {
+  scanStatuses,
+}
