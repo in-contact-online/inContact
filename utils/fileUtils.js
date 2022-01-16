@@ -3,6 +3,7 @@ const fs = require("fs");
 async function createFile(filePath, status) {
      const header = 'phone,user,username,was_online,check_date\r\n';
      const content = header + status;
+     console.log(content);
      return fs.writeFile(filePath, content, (err) => {
           if (err)
                console.error('Create File Error:', err);
@@ -13,6 +14,7 @@ async function createFile(filePath, status) {
 }
 
 async function appendToFile(file, content) {
+     console.log(content);
      return fs.appendFile(file, content, (err) => {
           if (err) {
                console.error(err);
