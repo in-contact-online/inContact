@@ -16,7 +16,10 @@ function formatUserStatus(user) {
 }
 
 function humanReadableDate(unixTs) {
-     return new Date(unixTs * 1000).toISOString();
+     if (unixTs && typeof unixTs === 'number') {
+          return new Date(unixTs * 1000).toISOString();
+     } 
+     return unixTs
 }
 
 module.exports = {
