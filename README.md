@@ -34,3 +34,11 @@ Run services:
 
 1. ```yarn install``` - install node modules
 2. ```yarn ui:start``` - run server on port XXXX
+
+# 3. PostgreSQL configuration
+
+1. ```sudo -u postgres psql```
+2. ```create database in_contact;```
+3. ```create user in_contact;```
+4. ```ALTER USER in_contact with password 'in_contact';```
+5. ```grant all privileges on database in_contact to in_contact;```

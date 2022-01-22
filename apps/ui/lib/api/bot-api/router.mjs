@@ -1,4 +1,4 @@
-// import * as Controllers from './controllers';
+import * as Controllers from './controllers';
 // import { parseSafeNull } from '../../utils';
 // import logger from '../api'
 // import { WS_METHODS } from '../../system';
@@ -23,27 +23,32 @@ function Router(req, res) {
     }
 }
 
-export default async function (messageRaw, client) {
-    conrole.log('Receive message: ', messageRaw);
-    client.sendMessage('Receive your message');
+export default async function (message, client) {
+    console.log('Receive message: ', message);
+    const chatId = message.chat.id;
     // const message = parseSafeNull(messageRaw);
     // if (!message) return undefined;
 
-    // const router = Router(message, client);
+    const router = Router(message, client);
 
-    // switch (message.method) {
-    //     case(WS_METHODS.GET): {
-    //         await router(Controllers.main.get);
-    //         break;
-    //     }
-    //     case(WS_METHODS.ADD): {
-    //         await router(Controllers.session.check, Controllers.main.add);
-    //         break;
-    //     }
-    //     case(WS_METHODS.DELETE): {
-    //         await router(Controllers.session.check, Controllers.main.del);
-    //         break;
-    //     }
-    // }
+    switch (message.text) {
+        case('GET'): {
+            await router(Controllers.main.get);
+            client.sendMessage(chatId, 'Receive your message');
+            break;
+        }
+        default: {
+            client.sendMessage(chatId, 'Invalid message');
+        }
+        // case(WS_METHODS.ADD): {
+        //     await router(Controllers.session.check, Controllers.main.add);
+        //     break;
+        // }
+        // case(WS_METHODS.DELETE): {
+        //     await router(Controllers.session.check, Controllers.main.del);
+        //     break;
+        // }
+    }
+    
     return undefined;
 }

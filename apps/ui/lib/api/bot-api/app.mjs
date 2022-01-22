@@ -6,8 +6,8 @@ let service = null;
 const CONNECT_ATTEMPTS = 10;
 let connectionAttempt = 0;
 
-export function startServer({ botToken }) {
-    service = startService({ botToken });
+export function startServer({ auth }) {
+    service = startService({ auth });
 }
 
 export async function stopServer() {
@@ -17,17 +17,15 @@ export async function stopServer() {
     logger.info('WS Service stopped');
 }
 
-function startService({ botToken }) {
+function startService({ auth }) {
     try {
-        const bot = new TelegramBot(botToken, {polling: true});
+        const bot = new TelegramBot(auth.botToken, { polling: true });
         logger.info('Telegra Bot started');
 
         bot.on('message', (msg) => {
-            const chatId = msg.chat.id;
-          
             // send a message to the chat acknowledging receipt of their message
-            bot.sendMessage(chatId, 'Received your message');
-            Router(msg.toString(), bot);
+            // bot.sendMessage(chatId, 'Received your message');
+            Router(msg, bot);
           });
 
         return bot;
@@ -37,7 +35,7 @@ function startService({ botToken }) {
         if (connectionAttempt <= CONNECT_ATTEMPTS) {
             connectionAttempt += 1;
             setTimeout(function () {
-                startService({ botToken });
+                startService({ auth });
             }, 5000 * connectionAttempt);
         } else {
             logger.info(`Stop trying connect to Bot Service after ${connectionAttempt} attempts`);

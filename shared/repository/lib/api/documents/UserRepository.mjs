@@ -22,7 +22,7 @@ export class UserRepository extends RepoBase {
      * @return {Promise<Object>} returns data saved in DB
      */
     async read({ phone }) {
-        const result = await this.db.queryAsync('SELECT * FROM users WHERE phone = ?', [phone]).catch((err) => {
+        const result = await this.db.queryAsync('SELECT NOW();', [phone]).catch((err) => {
             throw new RepoError(err);
         });
         return result[0];
