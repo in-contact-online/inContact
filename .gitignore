@@ -1,3 +1,13 @@
+.idea/
 node_modules/
-users/*
-!users/.gitkeep
+.env
+/temp
+/coverage/*
+build/
+.nyc_output
+coverage
+lerna-debug.log
+**/build
+/apps/build/*
+/shared/build/*
+

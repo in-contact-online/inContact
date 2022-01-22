@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "email": "test@redpointpositioning.com",
+      "uid": "8s7drh2VR3ibOGURdxV24A"
+    },
+    {
+      "email": "test2@redpointpositioning.com",
+      "uid": "dsgdrh2VR3ibOGURdxV48l"
+    }
+  ],
+  "nodes": [
+    {
+      "mac": "00000000001a",
+      "projectUid": "wABnaPYiSLyHncJVmTWHE2",
+      "companyUid": "2FGzD2v1SuKkueYdta2ppm"
+    },
+    {
+      "mac": "00000000001b",
+      "projectUid": "wABnaPYiSLyHncJVmTWHE2",
+      "companyUid": "2FGzD2v1SuKkueYdta2ppm"
+    },
+    {
+      "mac": "00000000001c",
+      "projectUid": "bq9DRjmJT0e7gEY8IeQ9uQ",
+      "companyUid": "2FGzD2v1SuKkueYdta2ppm"
+    }
+  ],
+  "migrations": [
+    "CREATE TABLE IF NOT EXISTS `users` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `encrypted_password` varchar(255) NOT NULL DEFAULT '',\n  `reset_password_token` varchar(255) DEFAULT NULL,\n  `reset_password_sent_at` datetime DEFAULT NULL,\n  `remember_created_at` datetime DEFAULT NULL,\n  `sign_in_count` int(11) DEFAULT 0,\n  `current_sign_in_at` datetime DEFAULT NULL,\n  `last_sign_in_at` datetime DEFAULT NULL,\n  `current_sign_in_ip` varchar(255) DEFAULT NULL,\n  `last_sign_in_ip` varchar(255) DEFAULT NULL,\n  `created_at` datetime DEFAULT NULL,\n  `updated_at` datetime DEFAULT NULL,\n  `authentication_token` varchar(255) DEFAULT NULL,\n  `uid` char(22) DEFAULT NULL,\n  `first_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `last_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `admin` int(11) DEFAULT NULL,\n  `authentication_token_issued_at` datetime DEFAULT NULL,\n  `failed_attempt_count` int(11) DEFAULT 0,\n  `last_passwords` text DEFAULT NULL,\n  `status` tinytext DEFAULT 'ACTIVE',\n  `password_updated_at` datetime DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `index_users_on_email` (`email`),\n  UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`),\n  UNIQUE KEY `index_users_on_authentication_token` (`authentication_token`),\n  UNIQUE KEY `uid` (`uid`)\n) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8"
+  ]
+}

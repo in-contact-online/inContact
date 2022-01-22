@@ -1,0 +1,50 @@
+{
+  "name": "incontact-data-scanner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "apps/data-scanner/app.mjs",
+  "engines": {
+    "node": ">=14.15.4",
+    "npm": ">=6.14.10"
+  },
+  "type": "module",
+  "scripts": {
+    "test:unit": "mocha --es-module-specifier-resolution=node lib/**/*.test.mjs",
+    "test:unit:coverage": "cross-env NODE_ENV=test c8 yarn test:unit",
+    "test:integration": "cross-env NODE_ENV=test mocha --exit --es-module-specifier-resolution=node e2e/integration/*.test.mjs",
+    "test:integration:ci": "cross-env NODE_ENV=gitlab mocha --exit --es-module-specifier-resolution=node --timeout 10000 e2e/integration/*.test.mjs",
+    "test:integration:coverage": "cross-env NODE_ENV=test c8 yarn test:integration",
+    "test:coverage": "cross-env NODE_ENV=test c8 mocha --exit --es-module-specifier-resolution=node --timeout 10000 e2e/integration/*.test.mjs lib/**/*.test.mjs",
+    "test:ci": "yarn test:unit && yarn test:integration:ci",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix --ext .mjs .",
+    "reset": "yarn clean && yarn",
+    "clean": "rimraf node_modules",
+    "prep-build": "",
+    "preversion": "",
+    "start": "cross-env NODE_ENV=production node --experimental-modules --es-module-specifier-resolution=node app",
+    "start:test": "cross-env NODE_ENV=test node --experimental-modules --es-module-specifier-resolution=node app.mjs"
+  },
+  "dependencies": {
+    "@rtls-platform/logger": "1.0.0",
+    "@rtls-platform/repository": "1.0.0",
+    "cross-env": "^7.0.3",
+    "dotenv-defaults": "^2.0.1"
+  },
+  "devDependencies": {
+    "c8": "^7.9.0",
+    "mocha": "^8.4.0",
+    "supertest": "^6.1.3"
+  },
+  "c8": {
+    "exclude": [
+      "e2e/**",
+      "app.mjs",
+      "**/*.test.mjs"
+    ],
+    "check-coverage": true,
+    "skip-full": false,
+    "all": true
+  },
+  "license": "UNLICENSED"
+}

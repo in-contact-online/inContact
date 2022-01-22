@@ -1,0 +1,11 @@
+{
+  "npmClient": "yarn",
+  "packages": [
+    "shared/logger",
+    "shared/repository",
+    "apps/data-analyzer",
+    "apps/notificator",
+    "apps/data-scanner"
+  ],
+  "version": "1.0.0-alpha.0"
+}
