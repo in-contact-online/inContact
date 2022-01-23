@@ -6,8 +6,7 @@ export class GetSubscriptions extends UseCaseBase {
     };
 
     async execute() {
-        const user = await (new User()).read();
-
+        const user = await (new User()).read(123456);
         return JSON.stringify(user);
     }
 }

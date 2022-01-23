@@ -1,7 +1,5 @@
 import * as Controllers from './controllers';
-// import { parseSafeNull } from '../../utils';
-// import logger from '../api'
-// import { WS_METHODS } from '../../system';
+import { BOT_ACTION } from '../../system';
 
 // Chain of responsibilities pattern. If error occurs in one of the handlers then all chain breaking
 function Router(req, res) {
@@ -24,17 +22,18 @@ function Router(req, res) {
 }
 
 export default async function (message, client) {
-    console.log('Receive message: ', message);
     const chatId = message.chat.id;
-    // const message = parseSafeNull(messageRaw);
-    // if (!message) return undefined;
+
+    if (!message) {
+        client.sendMessage(chatId, 'Invalid message');
+        return undefined;
+     }
 
     const router = Router(message, client);
 
     switch (message.text) {
-        case('GET'): {
+        case(BOT_ACTION.GET_STATUS): {
             await router(Controllers.main.get);
-            client.sendMessage(chatId, 'Receive your message');
             break;
         }
         default: {

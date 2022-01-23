@@ -1,5 +1,4 @@
 import pkg from 'pg';
-// import { DbError } from '../models';
 
 const { Pool } = pkg;
 
@@ -15,8 +14,11 @@ function QueryAsync(pool) {
             } else {
                 promise = conn.query(sqlStatement);
             }
-            return promise;
-        } finally {
+            const result = await promise;
+            conn.release();
+
+            return result;
+        } catch(err) {
             if (conn) conn.release(); //release to pool
         }
     }

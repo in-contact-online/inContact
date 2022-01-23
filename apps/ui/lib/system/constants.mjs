@@ -3,5 +3,5 @@ export const BOT_ACTION = {
     DELETE: 'delete',
     START: 'start',
     STOP: 'stop',
-    GET_STATUS: 'read'
+    GET_STATUS: 'get'
 }

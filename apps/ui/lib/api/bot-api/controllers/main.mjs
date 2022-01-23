@@ -6,42 +6,31 @@ export const main = {
         GetSubscriptions,
         (req) => ({
             jsonrpc: req.jsonrpc,
-            id: req.id,
-            entity: req.params.entity,
         }),
-        (result, res) => {
-            res.send(result);
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, JSON.stringify(result));
         }
     ),
     add: makeRequestHandler(
         AddSubscriptions,
-        (req, res) => ({
-            jsonrpc: req.jsonrpc,
+        (req) => ({
             id: req.id,
-            clientUid: res.uid,
-            email: req.params.userEmail,
-            project: req.params.project_uid,
-            channels: req.params.data,
-            entity: req.params.entity,
-            client: res,
         }),
-        (result, res) => {
-            res.send(result);
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, JSON.stringify(result));
         }
     ),
     del: makeRequestHandler(
         DeleteSubscriptions,
-        (req, res) => ({
+        (req) => ({
             jsonrpc: req.jsonrpc,
             id: req.id,
-            clientUid: res.uid,
-            email: req.params.userEmail,
-            project: req.params.project_uid,
-            channels: req.params.data,
-            entity: req.params.entity,
         }),
-        (result, res) => {
-            res.send(result);
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, JSON.stringify(result));
         }
     ),
 }
