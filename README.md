@@ -26,19 +26,13 @@
 ## Pre-requirements
 
 1. Node - 14.x.x or later
-1. yarn - 1.22.4 or later
-1. redis - 3.2.x or later
+2. yarn - 1.22.4 or later
+3. PostgreSQL - 14 or later
 
+## Configure Database
+1. Follow instructions in ```./apps/ui/README.md```
 ## Run in console
-Run services:
-
+Run commands:
 1. ```yarn install``` - install node modules
-2. ```yarn ui:start``` - run server on port XXXX
-
-# 3. PostgreSQL configuration
-
-1. ```sudo -u postgres psql```
-2. ```create database in_contact;```
-3. ```create user in_contact;```
-4. ```ALTER USER in_contact with password 'in_contact';```
-5. ```grant all privileges on database in_contact to in_contact;```
+2. ```cd ./apps/ui & npm run migration:run``` - run database migrations to add tables
+3. ```yarn start``` - run server on port XXXX
