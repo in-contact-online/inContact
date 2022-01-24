@@ -12,7 +12,8 @@
     "lint:fix": "lerna run lint:fix",
     "clean": "lerna run clean && yarn run clean:node_modules",
     "clean:node_modules": "rimraf node_modules",
-    "reset": "yarn run clean && yarn install"
+    "reset": "yarn run clean && yarn install",
+    "ui:start": "cd apps/ui && yarn start"
   },
   "repository": {
     "type": "git",
