@@ -32,12 +32,12 @@ export default async function (message, client) {
 
     const welcomeMessage = `Привет. Это бот трекинга статусов телеграм аккаунтов.
 
-Доступные комманды:
-/start - Запустить бота / Помощь и команды
-/edit_numbers - Список отслеживаемых номеров / Удалить номер
-/get_status - Статус отслеживания
+Доступные команды:
+<b>/start</b> - Запустить бота / Помощь и команды
+<b>/edit_numbers</b> - Список отслеживаемых номеров / Удалить номер
+<b>/get_status</b> - Статус отслеживания
     
-Для начала добавьте номера для отслеживания в формате +380992102030 для Украины, или +79024670149 для России:`;
+Для начала добавьте номера для отслеживания в формате <i>+380992102030</i> для Украины, или <i>+79024670149</i> для России:`;
 
     //TODO: replace mock data with phone numbers from database
     function keyboardPayload() {
@@ -57,9 +57,13 @@ export default async function (message, client) {
         // TODO: add number to database
         client.sendMessage(chatId, `Номер ${message.text} добавлен`);
     } else if (message.text === '/start') {
-        client.sendMessage(chatId, welcomeMessage);
+        client.sendMessage(chatId, welcomeMessage, { parse_mode: 'HTML' });
     } else if (message.text === '/edit_numbers') {
-        client.sendMessage(chatId, 'Выберите номер который хотите прекратить отслеживать:', keyboardPayload());
+        client.sendMessage(
+            chatId,
+            'Ваш список номеров. Выберите номер, если хотите удалить номер из базы и прекратить отслеживание:',
+            keyboardPayload()
+        );
     } else client.sendMessage(chatId, 'Invalid command!');
 
     /* 

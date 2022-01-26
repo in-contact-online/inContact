@@ -38,8 +38,17 @@ function startService({ auth }) {
 
         bot.on('callback_query', (msg) => {
             const chatId = msg.message.chat.id;
-            //TODO: remove number from database
-            bot.sendMessage(chatId, `Номер ${msg.data} удален`);
+            //TODO: remove number from database, get updated list of numbers and load new markup
+            bot.editMessageReplyMarkup(
+                {
+                    inline_keyboard: [[{ text: 'updated_number1', callback_data: 'data1' }]],
+                },
+                {
+                    chat_id: chatId,
+                    message_id: msg.message.message_id,
+                }
+            );
+            bot.answerCallbackQuery(msg.id, { text: `Номер ${msg.data} больше не отслеживается`, show_alert: true });
         });
 
         return bot;
