@@ -10,4 +10,5 @@ lerna-debug.log
 **/build
 /apps/build/*
 /shared/build/*
+.DS_Store
 
