@@ -22,11 +22,25 @@ function startService({ auth }) {
         const bot = new TelegramBot(auth.botToken, { polling: true });
         logger.info('Telegra Bot started');
 
+        bot.setMyCommands([
+            {
+                command: '/edit_numbers',
+                description: 'Список отслеживаемых номеров / Удалить номер',
+            },
+            { command: '/get_status', description: 'Статус отслеживания' },
+        ]);
+
         bot.on('message', (msg) => {
             // send a message to the chat acknowledging receipt of their message
             // bot.sendMessage(chatId, 'Received your message');
             Router(msg, bot);
-          });
+        });
+
+        bot.on('callback_query', (msg) => {
+            const chatId = msg.message.chat.id;
+            //TODO: remove number from database
+            bot.sendMessage(chatId, `Номер ${msg.data} удален`);
+        });
 
         return bot;
     } catch (err) {

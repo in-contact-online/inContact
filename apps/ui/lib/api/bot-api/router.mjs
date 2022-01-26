@@ -18,36 +18,68 @@ function Router(req, res) {
                 break;
             }
         }
-    }
+    };
 }
 
 export default async function (message, client) {
-    const chatId = message.chat.id;
-
     if (!message) {
         client.sendMessage(chatId, 'Invalid message');
         return undefined;
-     }
+    }
+    const chatId = message.chat.id;
 
     const router = Router(message, client);
 
+    const welcomeMessage = `Привет. Это бот трекинга статусов телеграм аккаунтов.
+
+Доступные комманды:
+/start - Запустить бота / Помощь и команды
+/edit_numbers - Список отслеживаемых номеров / Удалить номер
+/get_status - Статус отслеживания
+    
+Для начала добавьте номера для отслеживания в формате +380992102030 для Украины, или +79024670149 для России:`;
+
+    //TODO: replace mock data with phone numbers from database
+    function keyboardPayload() {
+        const data = ['+380991291415', '+380673546786'];
+        const keyboard_payload = data.map((number) => [{ text: number, callback_data: number }]);
+
+        return {
+            reply_markup: JSON.stringify({
+                inline_keyboard: keyboard_payload,
+            }),
+        };
+    }
+
+    const isPhoneNumber = (number) => /^\+(380[0-9]{9}|7[0-9]{10})$/.test(number);
+
+    if (/^\+(380[0-9]{9}|7[0-9]{10})$/.test(message.text)) {
+        // TODO: add number to database
+        client.sendMessage(chatId, `Номер ${message.text} добавлен`);
+    } else if (message.text === '/start') {
+        client.sendMessage(chatId, welcomeMessage);
+    } else if (message.text === '/edit_numbers') {
+        client.sendMessage(chatId, 'Выберите номер который хотите прекратить отслеживать:', keyboardPayload());
+    } else client.sendMessage(chatId, 'Invalid command!');
+
+    /* 
     switch (message.text) {
-        case(BOT_ACTION.GET_STATUS): {
+        case '/start': {
             await router(Controllers.main.get);
             break;
         }
         default: {
             client.sendMessage(chatId, 'Invalid message');
-        }
-        // case(WS_METHODS.ADD): {
-        //     await router(Controllers.session.check, Controllers.main.add);
-        //     break;
-        // }
-        // case(WS_METHODS.DELETE): {
-        //     await router(Controllers.session.check, Controllers.main.del);
-        //     break;
-        // }
-    }
-    
+        } 
+         case(WS_METHODS.ADD): {
+             await router(Controllers.session.check, Controllers.main.add);
+             break;
+         }
+         case(WS_METHODS.DELETE): {
+             await router(Controllers.session.check, Controllers.main.del);
+             break;
+         }
+    }*/
+
     return undefined;
 }
