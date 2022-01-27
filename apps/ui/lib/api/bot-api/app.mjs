@@ -1,6 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
 import Router from './router';
 import logger from '../logger';
+import { getKeyboardPayload } from '../utils';
 
 let service = null;
 const CONNECT_ATTEMPTS = 10;
@@ -23,6 +24,7 @@ function startService({ auth }) {
         logger.info('Telegra Bot started');
 
         bot.setMyCommands([
+            { command: '/add_number', description: 'Добавить номер и начать отслеживание' },
             {
                 command: '/edit_numbers',
                 description: 'Список отслеживаемых номеров / Удалить номер',
@@ -37,17 +39,13 @@ function startService({ auth }) {
         });
 
         bot.on('callback_query', (msg) => {
-            const chatId = msg.message.chat.id;
             //TODO: remove number from database, get updated list of numbers and load new markup
-            bot.editMessageReplyMarkup(
-                {
-                    inline_keyboard: [[{ text: 'updated_number1', callback_data: 'data1' }]],
-                },
-                {
-                    chat_id: chatId,
-                    message_id: msg.message.message_id,
-                }
-            );
+            const mockData = ['updated...', 'updated...'];
+            const keyboardPayload = getKeyboardPayload(mockData);
+            bot.editMessageReplyMarkup(keyboardPayload, {
+                chat_id: msg.message.chat.id,
+                message_id: msg.message.message_id,
+            });
             bot.answerCallbackQuery(msg.id, { text: `Номер ${msg.data} больше не отслеживается`, show_alert: true });
         });
 

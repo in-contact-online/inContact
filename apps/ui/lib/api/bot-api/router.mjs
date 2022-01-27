@@ -1,5 +1,6 @@
 import * as Controllers from './controllers';
 import { BOT_ACTION } from '../../system';
+import { getKeyboardPayload } from '../utils';
 
 // Chain of responsibilities pattern. If error occurs in one of the handlers then all chain breaking
 function Router(req, res) {
@@ -34,35 +35,31 @@ export default async function (message, client) {
 
 Доступные команды:
 <b>/start</b> - Запустить бота / Помощь и команды
+<b>/add_number</b> - Добавить номер и начать отслеживание
 <b>/edit_numbers</b> - Список отслеживаемых номеров / Удалить номер
-<b>/get_status</b> - Статус отслеживания
-    
-Для начала добавьте номера для отслеживания в формате <i>+380992102030</i> для Украины, или <i>+79024670149</i> для России:`;
-
-    //TODO: replace mock data with phone numbers from database
-    function keyboardPayload() {
-        const data = ['+380991291415', '+380673546786'];
-        const keyboard_payload = data.map((number) => [{ text: number, callback_data: number }]);
-
-        return {
-            reply_markup: JSON.stringify({
-                inline_keyboard: keyboard_payload,
-            }),
-        };
-    }
+<b>/get_status</b> - Статус отслеживания`;
 
     const isPhoneNumber = (number) => /^\+(380[0-9]{9}|7[0-9]{10})$/.test(number);
 
-    if (/^\+(380[0-9]{9}|7[0-9]{10})$/.test(message.text)) {
-        // TODO: add number to database
-        client.sendMessage(chatId, `Номер ${message.text} добавлен`);
-    } else if (message.text === '/start') {
+    if (message.text === '/start') {
         client.sendMessage(chatId, welcomeMessage, { parse_mode: 'HTML' });
-    } else if (message.text === '/edit_numbers') {
+    } else if (message.text === '/add_number') {
         client.sendMessage(
             chatId,
-            'Ваш список номеров. Выберите номер, если хотите удалить номер из базы и прекратить отслеживание:',
-            keyboardPayload()
+            'Добавьте номера для отслеживания в формате <i>+380992102030</i> для Украины, или <i>+79024670149</i> для России:',
+            { parse_mode: 'HTML' }
+        );
+    } else if (isPhoneNumber(message.text)) {
+        // TODO: add number to database
+        client.sendMessage(chatId, `Номер ${message.text} добавлен`);
+    } else if (message.text === '/edit_numbers') {
+        //TODO: replace mock data with phone numbers from database
+        const mockData = ['+380992101314', '+380677738465', '+380504358474', '+380773748398'];
+        const keyboardPayload = getKeyboardPayload(mockData);
+        client.sendMessage(
+            chatId,
+            '<b>Ваш список номеров.</b> <i>Выберите номер, если хотите удалить его из базы и прекратить отслеживание:</i>',
+            { reply_markup: keyboardPayload, parse_mode: 'HTML' }
         );
     } else client.sendMessage(chatId, 'Invalid command!');
 
