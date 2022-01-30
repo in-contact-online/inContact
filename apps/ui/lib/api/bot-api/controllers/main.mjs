@@ -1,36 +1,79 @@
-import { makeRequestHandler } from '../../utils';
-import { AddSubscriptions, GetSubscriptions, DeleteSubscriptions } from '../../../usecases'
+import { makeRequestHandler } from '../../utils/index.mjs';
+import { RegisterAndStart, EditUsersTrackingMenu, UserStopTrackingPhone } from '../../../usecases/index.mjs'
 
 export const main = {
-    get: makeRequestHandler(
-        GetSubscriptions,
+    start: makeRequestHandler(
+        RegisterAndStart,
         (req) => ({
-            jsonrpc: req.jsonrpc,
+            firstName: req.from.first_name,
+            lastName: req.from.last_name,
+            userId: req.from.id,
+            idBot: req.from.is_bot,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;
-            res.sendMessage(chatId, JSON.stringify(result));
+            res.sendMessage(chatId, JSON.stringify(result), { parse_mode: 'HTML' });
         }
     ),
-    add: makeRequestHandler(
-        AddSubscriptions,
+    editTrackingMenu: makeRequestHandler(
+        EditUsersTrackingMenu,
         (req) => ({
-            id: req.id,
+            firstName: req.from.first_name,
+            lastName: req.from.last_name,
+            userId: req.from.id,
+            idBot: req.from.is_bot,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;
-            res.sendMessage(chatId, JSON.stringify(result));
+            if (result.payload.length) {
+                res.sendMessage(chatId, result.text, { reply_markup: result.payload, parse_mode: 'HTML' });
+            } else {
+                res.sendMessage(chatId, result.text, { parse_mode: 'HTML' });
+            }
         }
     ),
-    del: makeRequestHandler(
-        DeleteSubscriptions,
+    stopTracking: makeRequestHandler(
+        UserStopTrackingPhone,
         (req) => ({
-            jsonrpc: req.jsonrpc,
-            id: req.id,
+            userId: req.from.id,
+            data: req.data,
         }),
         (result, res, req) => {
-            const chatId = req.chat.id;
-            res.sendMessage(chatId, JSON.stringify(result));
+            res.editMessageReplyMarkup(
+                result.payload,
+                { chat_id: req.message.chat.id, message_id: req.message.message_id }
+            );
+            res.answerCallbackQuery(req.id, { text: result.text, show_alert: true });
         }
     ),
+    // quit: makeRequestHandler(
+    //     GetSubscriptions,
+    //     (req) => ({
+    //         jsonrpc: req.jsonrpc,
+    //     }),
+    //     (result, res, req) => {
+    //         const chatId = req.chat.id;
+    //         res.sendMessage(chatId, JSON.stringify(result));
+    //     }
+    // ),
+    // getStatus: makeRequestHandler(
+    //     GetSubscriptions,
+    //     (req) => ({
+    //         jsonrpc: req.jsonrpc,
+    //     }),
+    //     (result, res, req) => {
+    //         const chatId = req.chat.id;
+    //         res.sendMessage(chatId, JSON.stringify(result));
+    //     }
+    // ),
+    // trackPhone: makeRequestHandler(
+    //     AddSubscriptions,
+    //     (req) => ({
+    //         id: req.id,
+    //     }),
+    //     (result, res, req) => {
+    //         const chatId = req.chat.id;
+    //         res.sendMessage(chatId, JSON.stringify(result));
+    //     }
+    // ),
 }

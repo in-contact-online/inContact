@@ -10,10 +10,6 @@
   },
   "plugins": ["prettier"],
   "rules": {
-    "array-element-newline": ["error", {
-      "ArrayExpression": "never",
-      "ArrayPattern": { "minItems": 5 }
-    }],
     "no-multiple-empty-lines": ["error", { "max": 2 }],
     "import/no-extraneous-dependencies": [
       "off",

@@ -19,7 +19,7 @@ export function makeRequestHandler(UseCase, mapToParams, mapToResponse) {
         try {
             const startTime = Date.now();
             const params = mapToParams(req, res);
-            const chatId = req.chat.id;
+            const chatId = req.chat ? req.chat.id : req.message.chat.id;
 
             const result = await runUseCase(UseCase, { params });
 

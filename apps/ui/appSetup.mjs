@@ -1,10 +1,10 @@
-import { createRepository } from '@rtls-platform/repository';
-import { createLogger, LoggerTypes } from '@rtls-platform/logger';
-import * as App from './lib/api';
-import * as BotApi from './lib/api/bot-api/app';
+import { createRepository } from '@rtls-platform/repository/index.mjs';
+import { createLogger, LoggerTypes } from '@rtls-platform/logger/index.mjs';
+import * as App from './lib/api/index.mjs';
+import * as BotApi from './lib/api/bot-api/app.mjs';
 import * as ConfigContainer from './lib/config.cjs';
-import { createMariaDbConnection } from './lib/db';
-import ModelBase from './lib/models/ModelBase';
+import { createMariaDbConnection } from './lib/db/index.mjs';
+import ModelBase from './lib/models/ModelBase.mjs';
 
 
 export async function main() {

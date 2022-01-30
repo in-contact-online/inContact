@@ -1,5 +1,5 @@
-import RepoBase from '../RepoBase';
-import { RepoError } from '../models';
+import RepoBase from '../RepoBase.mjs';
+import { RepoError } from '../models/index.mjs';
 
 export class UserRepository extends RepoBase {
     /**
@@ -15,16 +15,49 @@ export class UserRepository extends RepoBase {
 
         super(db);
     }
+    
+    /**
+     * @method
+     * @param {string} userId - user identifier
+     * @return {Promise<Object>} returns data saved in DB
+     */
+    async read({ userId }) {
+        const result = await this.db.queryAsync('SELECT * FROM users WHERE user_id = $1', [userId]).catch((err) => {
+            throw new RepoError(err);
+        });
+        return result && result.rows[0];
+    }
 
     /**
      * @method
-     * @param {string} phone - users phone
-     * @return {Promise<Object>} returns data saved in DB
+     * @param {Number} userId - user identifier
+     * @param {String} firstName - user first name
+     * @param {String} lastName - user last name
+     * @returns {Promise<Object>}
      */
-    async read({ phone }) {
-        const result = await this.db.queryAsync('SELECT * FROM users WHERE phone = $1', [phone]).catch((err) => {
+     async save({ userId, firstName, lastName }) {
+        const result = await this.db.queryAsync(
+            'INSERT INTO users (user_id, first_name, second_name, active) VALUES ($1, $2, $3, $4)',
+            [userId, firstName, lastName, true]).catch((err) => {
             throw new RepoError(err);
         });
-        return result && result.rows;
+        return result;
+    }
+
+    /**
+     * @method
+     * @param {Number} userId - user identifier
+     * @param {String} firstName - user first name
+     * @param {String} lastName - user last name
+     * @param {Boolean} active - user active status
+     * @returns {Promise<Object>}
+     */
+     async update({ userId, firstName, lastName, active }) {
+        const result = await this.db.queryAsync(
+            'UPDATE users SET first_name = $1, second_name = $2, active = $3, updated_at = NOW() WHERE user_id = $4',
+            [firstName, lastName, active, userId]).catch((err) => {
+            throw new RepoError(err);
+        });
+        return result;
     }
 }

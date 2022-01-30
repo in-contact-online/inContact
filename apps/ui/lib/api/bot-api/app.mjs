@@ -1,7 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
-import Router from './router';
-import logger from '../logger';
-import { getKeyboardPayload } from '../utils';
+import Controller from './controller.mjs';
+import logger from '../logger.mjs';
+import { BOT_COMMANDS } from '../../system/constants.mjs'
 
 let service = null;
 const CONNECT_ATTEMPTS = 10;
@@ -21,32 +21,16 @@ export async function stopServer() {
 function startService({ auth }) {
     try {
         const bot = new TelegramBot(auth.botToken, { polling: true });
-        logger.info('Telegra Bot started');
+        logger.info('Telegram Bot started');
 
-        bot.setMyCommands([
-            { command: '/add_number', description: 'Добавить номер и начать отслеживание' },
-            {
-                command: '/edit_numbers',
-                description: 'Список отслеживаемых номеров / Удалить номер',
-            },
-            { command: '/get_status', description: 'Статус отслеживания' },
-        ]);
+        bot.setMyCommands(BOT_COMMANDS);
 
         bot.on('message', (msg) => {
-            // send a message to the chat acknowledging receipt of their message
-            // bot.sendMessage(chatId, 'Received your message');
-            Router(msg, bot);
+            Controller(msg, bot);
         });
 
         bot.on('callback_query', (msg) => {
-            //TODO: remove number from database, get updated list of numbers and load new markup
-            const mockData = ['updated...', 'updated...'];
-            const keyboardPayload = getKeyboardPayload(mockData);
-            bot.editMessageReplyMarkup(keyboardPayload, {
-                chat_id: msg.message.chat.id,
-                message_id: msg.message.message_id,
-            });
-            bot.answerCallbackQuery(msg.id, { text: `Номер ${msg.data} больше не отслеживается`, show_alert: true });
+            Controller(msg, bot);
         });
 
         return bot;
