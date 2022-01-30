@@ -1,5 +1,10 @@
 import { makeRequestHandler } from '../../utils/index.mjs';
-import { RegisterAndStart, EditUsersTrackingMenu, UserStopTrackingPhone } from '../../../usecases/index.mjs'
+import {
+    RegisterAndStart,
+    EditUsersTrackingMenu,
+    UserStopTrackingPhone,
+    AddTrackingPhone,
+} from '../../../usecases/index.mjs';
 
 export const main = {
     start: makeRequestHandler(
@@ -12,7 +17,7 @@ export const main = {
         }),
         (result, res, req) => {
             const chatId = req.chat.id;
-            res.sendMessage(chatId, JSON.stringify(result), { parse_mode: 'HTML' });
+            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
         }
     ),
     editTrackingMenu: makeRequestHandler(
@@ -39,11 +44,23 @@ export const main = {
             data: req.data,
         }),
         (result, res, req) => {
-            res.editMessageReplyMarkup(
-                result.payload,
-                { chat_id: req.message.chat.id, message_id: req.message.message_id }
-            );
+            res.editMessageReplyMarkup(result.payload, {
+                chat_id: req.message.chat.id,
+                message_id: req.message.message_id,
+            });
             res.answerCallbackQuery(req.id, { text: result.text, show_alert: true });
+        }
+    ),
+
+    trackPhone: makeRequestHandler(
+        AddTrackingPhone,
+        (req) => ({
+            userId: req.from.id,
+            phone: req.text,
+        }),
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
         }
     ),
     // quit: makeRequestHandler(
@@ -66,14 +83,5 @@ export const main = {
     //         res.sendMessage(chatId, JSON.stringify(result));
     //     }
     // ),
-    // trackPhone: makeRequestHandler(
-    //     AddSubscriptions,
-    //     (req) => ({
-    //         id: req.id,
-    //     }),
-    //     (result, res, req) => {
-    //         const chatId = req.chat.id;
-    //         res.sendMessage(chatId, JSON.stringify(result));
-    //     }
-    // ),
-}
+    //
+};
