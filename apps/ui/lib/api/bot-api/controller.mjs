@@ -53,18 +53,7 @@ export default async function (request, client) {
              break;
         }
         case BOT_COMMAND.STOP_TRACK_PHONE: {
-            //  await router(Controllers.session.check, Controllers.main.add
-            // console.log(message);
-            // const index = message.data.indexOf(':');
-            // const phone = message.data.substring(index)
-            // const mockData = ['updated...', 'updated...'];
-            // const keyboardPayload = getKeyboardPayload(mockData);
-            // client.editMessageReplyMarkup(keyboardPayload, {
-            //     chat_id: message.message.chat.id,
-            //     message_id: message.message.message_id,
-            // });
-            // client.answerCallbackQuery(message.id, { text: `Номер ${phone} больше не отслеживается`, show_alert: true });
-            // client.sendMessage(chatId, 'Stop track phone!');
+             await router(Controllers.main.stopTracking);
              break;
         }
         default: {

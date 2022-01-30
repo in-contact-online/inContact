@@ -1,5 +1,5 @@
 import { makeRequestHandler } from '../../utils/index.mjs';
-import { RegisterAndStart, EditUsersTrackingMenu } from '../../../usecases/index.mjs'
+import { RegisterAndStart, EditUsersTrackingMenu, UserStopTrackingPhone } from '../../../usecases/index.mjs'
 
 export const main = {
     start: makeRequestHandler(
@@ -32,6 +32,20 @@ export const main = {
             }
         }
     ),
+    stopTracking: makeRequestHandler(
+        UserStopTrackingPhone,
+        (req) => ({
+            userId: req.from.id,
+            data: req.data,
+        }),
+        (result, res, req) => {
+            res.editMessageReplyMarkup(
+                result.payload,
+                { chat_id: req.message.chat.id, message_id: req.message.message_id }
+            );
+            res.answerCallbackQuery(req.id, { text: result.text, show_alert: true });
+        }
+    ),
     // quit: makeRequestHandler(
     //     GetSubscriptions,
     //     (req) => ({
@@ -55,17 +69,6 @@ export const main = {
     // trackPhone: makeRequestHandler(
     //     AddSubscriptions,
     //     (req) => ({
-    //         id: req.id,
-    //     }),
-    //     (result, res, req) => {
-    //         const chatId = req.chat.id;
-    //         res.sendMessage(chatId, JSON.stringify(result));
-    //     }
-    // ),
-    // stopTracking: makeRequestHandler(
-    //     DeleteSubscriptions,
-    //     (req) => ({
-    //         jsonrpc: req.jsonrpc,
     //         id: req.id,
     //     }),
     //     (result, res, req) => {

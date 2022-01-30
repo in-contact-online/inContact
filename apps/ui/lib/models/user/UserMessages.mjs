@@ -15,4 +15,8 @@ export class UserMessages {
      static noTrackingMessage() {
           return '<b>У вас нет отслеживаемых номеров.</b>';
      }
+
+     static phoneStopTracking(phone) {
+          return `Номер ${phone} больше не отслеживается`;
+     }
 }
