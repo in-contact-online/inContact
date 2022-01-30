@@ -43,20 +43,8 @@ export default async function (request, client) {
             // client.sendMessage(chatId, `Номер ${message.text} добавлен`);
             break;
         }
-        case BOT_COMMAND.EDIT_TRACK_PHONES: {
-            //  await router(Controllers.session.check, Controllers.main.add);
-            // function getKeyboardPayload(data) {
-            //     const keyboard_payload = data.map((number) => [{ text: number, callback_data: `${BOT_COMMAND_UI.STOP_TRACK_PHONE}:${number}` }]);
-            //     return { inline_keyboard: keyboard_payload };
-            // }
-            // const mockData = ['+380992101314', '+380677738465', '+380504358474', '+380773748398'];
-            // const keyboardPayload = getKeyboardPayload(mockData);
-            // console.log('keyboardPayload ', JSON.stringify(keyboardPayload));
-            // client.sendMessage(
-            //     chatId,
-            //     '<b>Ваш список номеров.</b> <i>Выберите номер, если хотите удалить его из базы и прекратить отслеживание:</i>',
-            //     { reply_markup: keyboardPayload, parse_mode: 'HTML' }
-            // );
+        case BOT_COMMAND.EDIT_TRACK_PHONES_MENU: {
+             await router(Controllers.main.editTrackingMenu);
              break;
         }
         case BOT_COMMAND.GET_TRACK_STATUS: {

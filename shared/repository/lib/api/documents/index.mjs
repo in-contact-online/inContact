@@ -1,1 +1,2 @@
-export * from './UserRepository';
+export * from './UserRepository.mjs';
+export * from './UserPhonesRepository.mjs';

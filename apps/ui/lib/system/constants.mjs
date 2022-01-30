@@ -1,7 +1,7 @@
 export const BOT_COMMAND = {
     START: 'start',
     ADD_TRACK_PHONE: 'add_track_phone',
-    EDIT_TRACK_PHONES: 'edit_track_phones',
+    EDIT_TRACK_PHONES_MENU: 'edit_track_phones_menu',
     STOP_TRACK_PHONE: 'stop_track_phone',
     GET_TRACK_STATUS: 'get_track_status'
 };
