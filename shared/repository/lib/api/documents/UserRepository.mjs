@@ -25,7 +25,7 @@ export class UserRepository extends RepoBase {
         const result = await this.db.queryAsync('SELECT * FROM users WHERE user_id = $1', [userId]).catch((err) => {
             throw new RepoError(err);
         });
-        return result && result.rows;
+        return result && result.rows[0];
     }
 
     /**
