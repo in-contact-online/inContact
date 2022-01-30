@@ -1,2 +1,2 @@
-export * from './user';
-export * from './errors';
+export * from './user/index.mjs';
+export * from './errors/index.mjs';

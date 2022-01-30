@@ -5,7 +5,7 @@ function isPhoneNumber(text) {
      return /^\+(380[0-9]{9}|7[0-9]{10})$/.test(text);
 }
 
-export function decodeSystemMessage(message) {
+export function getCommand(message) {
      const { text, data } = message;
      if (isPhoneNumber(text) || text === BOT_COMMAND_UI.ADD_TRACK_PHONE) return BOT_COMMAND.ADD_TRACK_PHONE;
      if (text === BOT_COMMAND_UI.START) return BOT_COMMAND.START;

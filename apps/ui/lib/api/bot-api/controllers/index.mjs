@@ -1,2 +1,1 @@
-export * from './session';
-export * from './main';
+export * from './main.mjs';

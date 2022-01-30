@@ -1,6 +1,6 @@
 import * as Controllers from './controllers/index.mjs';
 import { BOT_COMMAND } from '../../system/index.mjs';
-import { decodeSystemMessage } from '../utils/index.mjs';
+import { getCommand } from '../utils/index.mjs';
 
 // Chain of responsibilities pattern. If error occurs in one of the handlers then all chain breaking
 function Router(req, res) {
@@ -23,27 +23,19 @@ function Router(req, res) {
 }
 
 
-export default async function (message, client) {
+export default async function (request, client) {
     // if (!message || !message.chat || !message.chat.id) {
     //     client.sendMessage(chatId, 'Invalid message');
     //     return undefined;
     // }
     // const chatId = message.chat ? message.chat.id : message.message.chat.id;
 
-    // const router = Router(message, client);
-    const command = decodeSystemMessage(message);
+    const router = Router(request, client);
+    const command = getCommand(request);
 
     switch (command) {
         case BOT_COMMAND.START: {
-            // await router(Controllers.main.get);
-            // const welcomeMessage = `Привет. Это бот трекинга статусов телеграм аккаунтов.
-
-            //     Доступные команды:
-            //     <b>/start</b> - Запустить бота / Помощь и команды
-            //     <b>/add_number</b> - Добавить номер и начать отслеживание
-            //     <b>/edit_numbers</b> - Список отслеживаемых номеров / Удалить номер
-            //     <b>/get_status</b> - Статус отслеживания`;
-            // client.sendMessage(chatId, welcomeMessage, { parse_mode: 'HTML' });
+            await router(Controllers.main.start);
             break;
         }
         case BOT_COMMAND.ADD_TRACK_PHONE: {
