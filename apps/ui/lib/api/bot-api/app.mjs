@@ -1,7 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
 import Controller from './controller.mjs';
 import logger from '../logger.mjs';
-import { BOT_COMMANDS } from '../../system/constants.mjs'
+import { BOT_COMMANDS } from '../../system/constants.mjs';
 
 let service = null;
 const CONNECT_ATTEMPTS = 10;

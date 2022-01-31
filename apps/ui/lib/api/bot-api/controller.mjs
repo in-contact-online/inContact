@@ -1,6 +1,7 @@
 import * as Controllers from './controllers/index.mjs';
 import { BOT_COMMAND } from '../../system/index.mjs';
 import { getCommand } from '../utils/index.mjs';
+import { UserMessages } from '../../models/user/index.mjs';
 
 // Chain of responsibilities pattern. If error occurs in one of the handlers then all chain breaking
 function Router(req, res) {
@@ -22,13 +23,13 @@ function Router(req, res) {
     };
 }
 
-
 export default async function (request, client) {
     // if (!message || !message.chat || !message.chat.id) {
     //     client.sendMessage(chatId, 'Invalid message');
     //     return undefined;
     // }
-    // const chatId = message.chat ? message.chat.id : message.message.chat.id;
+
+    const chatId = request.chat ? request.chat.id : request.message.chat.id;
 
     const router = Router(request, client);
     const command = getCommand(request);
@@ -39,26 +40,24 @@ export default async function (request, client) {
             break;
         }
         case BOT_COMMAND.ADD_TRACK_PHONE: {
-            //  await router(Controllers.session.check, Controllers.main.add);
-            // client.sendMessage(chatId, `Номер ${message.text} добавлен`);
+            await router(Controllers.main.trackPhone);
             break;
         }
         case BOT_COMMAND.EDIT_TRACK_PHONES_MENU: {
-             await router(Controllers.main.editTrackingMenu);
-             break;
+            await router(Controllers.main.editTrackingMenu);
+            break;
         }
         case BOT_COMMAND.GET_TRACK_STATUS: {
             //  await router(Controllers.session.check, Controllers.main.add);
             // client.sendMessage(chatId, 'Not implemented yet!');
-             break;
+            break;
         }
         case BOT_COMMAND.STOP_TRACK_PHONE: {
-             await router(Controllers.main.stopTracking);
-             break;
+            await router(Controllers.main.stopTracking);
+            break;
         }
         default: {
-            //  await router(Controllers.session.check, Controllers.main.add);
-            // client.sendMessage(chatId, 'Invalid command!');
+            client.sendMessage(chatId, UserMessages.unknownCommand());
             break;
         }
     }

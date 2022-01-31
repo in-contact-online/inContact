@@ -3,7 +3,7 @@ export const BOT_COMMAND = {
     ADD_TRACK_PHONE: 'add_track_phone',
     EDIT_TRACK_PHONES_MENU: 'edit_track_phones_menu',
     STOP_TRACK_PHONE: 'stop_track_phone',
-    GET_TRACK_STATUS: 'get_track_status'
+    GET_TRACK_STATUS: 'get_track_status',
 };
 
 export const BOT_COMMAND_UI = {
@@ -11,7 +11,7 @@ export const BOT_COMMAND_UI = {
     ADD_TRACK_PHONE: '/add_number',
     EDIT_TRACK_PHONES: '/edit_numbers',
     STOP_TRACK_PHONE: '/stop_track',
-    GET_TRACK_STATUS: '/get_status'
+    GET_TRACK_STATUS: '/get_status',
 };
 
 export const BOT_COMMANDS = [
