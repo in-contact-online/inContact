@@ -18,7 +18,7 @@ export class UserStopTrackingPhone extends UseCaseBase {
         
 
         return { 
-            text: UserMessages.phoneStopTracking(phone),
+            text: UserMessages.phoneStopTrackingMessage(phone),
             payload: { inline_keyboard: paylaodKeyboard }
         };
     }

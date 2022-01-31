@@ -24,11 +24,6 @@ function Router(req, res) {
 }
 
 export default async function (request, client) {
-    // if (!message || !message.chat || !message.chat.id) {
-    //     client.sendMessage(chatId, 'Invalid message');
-    //     return undefined;
-    // }
-
     const chatId = request.chat ? request.chat.id : request.message.chat.id;
 
     const router = Router(request, client);
@@ -48,8 +43,7 @@ export default async function (request, client) {
             break;
         }
         case BOT_COMMAND.GET_TRACK_STATUS: {
-            //  await router(Controllers.session.check, Controllers.main.add);
-            // client.sendMessage(chatId, 'Not implemented yet!');
+            await router(Controllers.main.getStatus);
             break;
         }
         case BOT_COMMAND.STOP_TRACK_PHONE: {
@@ -57,7 +51,7 @@ export default async function (request, client) {
             break;
         }
         default: {
-            client.sendMessage(chatId, UserMessages.unknownCommand());
+            client.sendMessage(chatId, UserMessages.unknownCommandMessage());
             break;
         }
     }

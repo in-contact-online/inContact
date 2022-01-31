@@ -20,13 +20,13 @@ export class AddTrackingPhone extends UseCaseBase {
 
         switch (isTracked) {
             case 'TRACKED':
-                return UserMessages.dublicatePhone(params.phone);
+                return UserMessages.dublicatePhoneMessage(params.phone);
             case 'NOT_TRACKED':
                 await userTrackPhones.activate(params);
-                return UserMessages.phoneActivateTracking(params.phone);
+                return UserMessages.phoneActivateTrackingMessage(params.phone);
             case 'NOT_IN_DB':
                 await userTrackPhones.save(params);
-                return UserMessages.phoneStartTracking(params.phone);
+                return UserMessages.phoneStartTrackingMessage(params.phone);
         }
     }
 }
