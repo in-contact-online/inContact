@@ -15,7 +15,7 @@ export class UserPhonesRepository extends RepoBase {
 
         super(db);
     }
-    
+
     /**
      * @method
      * @param {string} userId - user identifier
@@ -41,12 +41,12 @@ export class UserPhonesRepository extends RepoBase {
      * @param {String} phone - tracked phone
      * @returns {Promise<Object>}
      */
-     async save({ userId, phone }) {
-        const result = await this.db.queryAsync(
-            'INSERT INTO tracked_phones (user_id, tracked_phone) VALUES ($1, $2)',
-            [userId, phone]).catch((err) => {
-            throw new RepoError(err);
-        });
+    async save({ userId, phone }) {
+        const result = await this.db
+            .queryAsync('INSERT INTO tracked_phones (user_id, tracked_phone) VALUES ($1, $2)', [userId, phone])
+            .catch((err) => {
+                throw new RepoError(err);
+            });
         return result;
     }
 
@@ -57,13 +57,34 @@ export class UserPhonesRepository extends RepoBase {
      * @param {Boolean} tracked - tracked status
      * @returns {Promise<Object>}
      */
-     async update({ userId, phone, tracked }) {
-         //todo: find out why no error on bad requests
-        const result = await this.db.queryAsync(
-            'UPDATE tracked_phones SET tracked = $1, updated_at = NOW() WHERE user_id = $2 AND tracked_phone = $3',
-            [tracked, userId, phone]).catch((err) => {
-            throw new RepoError(err);
-        });
+    async update({ userId, phone, tracked }) {
+        //todo: find out why no error on bad requests
+        const result = await this.db
+            .queryAsync(
+                'UPDATE tracked_phones SET tracked = $1, updated_at = NOW() WHERE user_id = $2 AND tracked_phone = $3',
+                [tracked, userId, phone]
+            )
+            .catch((err) => {
+                throw new RepoError(err);
+            });
+        return result;
+    }
+
+    /**
+     * @method
+     * @param {Number} userId - user identifier
+     * @param {Boolean} tracked - tracked status
+     * @returns {Promise<Object>}
+     */
+    async updateAll({ userId, tracked }) {
+        const result = await this.db
+            .queryAsync('UPDATE tracked_phones SET tracked = $1, updated_at = NOW() WHERE user_id = $2', [
+                tracked,
+                userId,
+            ])
+            .catch((err) => {
+                throw new RepoError(err);
+            });
         return result;
     }
 }

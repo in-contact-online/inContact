@@ -4,6 +4,7 @@ import {
     EditUsersTrackingMenu,
     UserStopTrackingPhone,
     AddTrackingPhone,
+    StopBotByUser,
 } from '../../../usecases/index.mjs';
 
 export const main = {
@@ -50,6 +51,14 @@ export const main = {
             });
             res.answerCallbackQuery(req.id, { text: result.text, show_alert: true });
         }
+    ),
+
+    deleteUserTasks: makeRequestHandler(
+        StopBotByUser,
+        (req) => ({
+            userId: req.from.id,
+        }),
+        (result, res, req) => {}
     ),
 
     trackPhone: makeRequestHandler(

@@ -56,6 +56,10 @@ export default async function (request, client) {
             await router(Controllers.main.stopTracking);
             break;
         }
+        case BOT_COMMAND.DELETE_USER_TASKS: {
+            await router(Controllers.main.deleteUserTasks);
+            break;
+        }
         default: {
             client.sendMessage(chatId, UserMessages.unknownCommand());
             break;

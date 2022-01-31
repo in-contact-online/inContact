@@ -4,6 +4,7 @@ export const BOT_COMMAND = {
     EDIT_TRACK_PHONES_MENU: 'edit_track_phones_menu',
     STOP_TRACK_PHONE: 'stop_track_phone',
     GET_TRACK_STATUS: 'get_track_status',
+    DELETE_USER_TASKS: 'delete_user_tasks',
 };
 
 export const BOT_COMMAND_UI = {
