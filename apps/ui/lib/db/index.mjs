@@ -1,1 +1,1 @@
-export * from './createrMariaDbConnection';
+export * from './createPgDbConnection.mjs';

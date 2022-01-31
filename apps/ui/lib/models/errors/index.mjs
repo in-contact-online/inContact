@@ -1,4 +1,3 @@
-export * from './ErrorHandler.mjs';
 export * from './NotImplemented.mjs';
 export * from './ValidationError.mjs';
 export * from './AuthenticationError.mjs';

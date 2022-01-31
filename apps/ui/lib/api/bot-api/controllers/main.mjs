@@ -4,6 +4,8 @@ import {
     EditUsersTrackingMenu,
     UserStopTrackingPhone,
     AddTrackingPhone,
+    AddTrackingMenu,
+    GetUserStatus,
 } from '../../../usecases/index.mjs';
 
 export const main = {
@@ -63,6 +65,14 @@ export const main = {
             res.sendMessage(chatId, result, { parse_mode: 'HTML' });
         }
     ),
+    trackPhoneMenu: makeRequestHandler(
+        AddTrackingMenu,
+        () => ({}),
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
+        }
+    ),
     // quit: makeRequestHandler(
     //     GetSubscriptions,
     //     (req) => ({
@@ -73,15 +83,18 @@ export const main = {
     //         res.sendMessage(chatId, JSON.stringify(result));
     //     }
     // ),
-    // getStatus: makeRequestHandler(
-    //     GetSubscriptions,
-    //     (req) => ({
-    //         jsonrpc: req.jsonrpc,
-    //     }),
-    //     (result, res, req) => {
-    //         const chatId = req.chat.id;
-    //         res.sendMessage(chatId, JSON.stringify(result));
-    //     }
-    // ),
-    //
+    getStatus: makeRequestHandler(
+        GetUserStatus,
+        (req) => ({
+            firstName: req.from.first_name,
+            lastName: req.from.last_name,
+            userId: req.from.id,
+            idBot: req.from.is_bot,
+        }),
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
+        }
+    ),
+    
 };

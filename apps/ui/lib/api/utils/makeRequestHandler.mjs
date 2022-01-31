@@ -1,4 +1,3 @@
-import { ErrorHandler } from '../../models';
 import logger from '../logger';
 
 export async function runUseCase(UseCase, { params }) {
@@ -16,10 +15,10 @@ export function makeRequestHandler(UseCase, mapToParams, mapToResponse) {
     }
 
     return async function routerHandler(req, res, next = () => {}) {
+        const chatId = req.chat ? req.chat.id : req.message.chat.id;
         try {
             const startTime = Date.now();
             const params = mapToParams(req, res);
-            const chatId = req.chat ? req.chat.id : req.message.chat.id;
 
             const result = await runUseCase(UseCase, { params });
 
@@ -33,7 +32,8 @@ export function makeRequestHandler(UseCase, mapToParams, mapToResponse) {
             }
             next();
         } catch (err) {
-            ErrorHandler.handleRequestError(res, err, next);
+            logger.error(`[ErrorHandler] ${err}`);
+            res.sendMessage(chatId, 'Internal Error');
         }
     };
 }
