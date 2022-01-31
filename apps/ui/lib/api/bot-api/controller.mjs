@@ -1,6 +1,7 @@
 import * as Controllers from './controllers/index.mjs';
 import { BOT_COMMAND } from '../../system/index.mjs';
 import { getCommand } from '../utils/index.mjs';
+import { UserMessages } from '../../models/user/index.mjs';
 
 // Chain of responsibilities pattern. If error occurs in one of the handlers then all chain breaking
 function Router(req, res) {
@@ -27,7 +28,8 @@ export default async function (request, client) {
     //     client.sendMessage(chatId, 'Invalid message');
     //     return undefined;
     // }
-    // const chatId = message.chat ? message.chat.id : message.message.chat.id;
+
+    const chatId = request.chat ? request.chat.id : request.message.chat.id;
 
     const router = Router(request, client);
     const command = getCommand(request);
@@ -55,8 +57,7 @@ export default async function (request, client) {
             break;
         }
         default: {
-            //  await router(Controllers.session.check, Controllers.main.add);
-            // client.sendMessage(chatId, 'Invalid command!');
+            client.sendMessage(chatId, UserMessages.unknownCommand());
             break;
         }
     }

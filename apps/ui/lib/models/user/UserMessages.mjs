@@ -34,4 +34,8 @@ export class UserMessages {
     static dublicatePhone(phone) {
         return `Номер ${phone} уже отслеживается`;
     }
+
+    static unknownCommand() {
+        return `Неправильная команда. Повторите пожалуйста!`;
+    }
 }
