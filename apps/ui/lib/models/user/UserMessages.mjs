@@ -20,11 +20,18 @@ export class UserMessages {
         return `Номер ${phone} больше не отслеживается`;
     }
 
-    static addTrackingPhone(phone) {
+    static phoneStartTracking(phone) {
         return `Номер ${phone} добавлен и начал отслеживаться`;
     }
 
-    static welcomeAddingPhone() {
+    static phoneActivateTracking(phone) {
+        return `По номеру ${phone} возобновлено отслеживание`;
+    }
+    static welcomeAddingMessage() {
         return `Добавьте номер на отслеживание в формате <b>+380992112233</b> или <b>+71234567890</b>`;
+    }
+
+    static dublicatePhone(phone) {
+        return `Номер ${phone} уже отслеживается`;
     }
 }
