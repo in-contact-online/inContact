@@ -73,7 +73,6 @@ export class UserPhonesRepository extends RepoBase {
      * @returns {Promise<Object>}
      */
      async update({ userId, phone, tracked }) {
-         //todo: find out why no error on bad requests
         const result = await this.db.queryAsync(
             'UPDATE tracked_phones SET tracked = $1, updated_at = NOW() WHERE user_id = $2 AND tracked_phone = $3',
             [tracked, userId, phone]).catch((err) => {

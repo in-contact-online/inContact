@@ -1,4 +1,4 @@
-import { createMariaDbConnection, createRedisConnection } from '../../lib/db';
+import { createPgDbConnection, createRedisConnection } from '../../lib/db/index.mjs';
 import * as ConfigContainer from '../../lib/config.cjs';
 
 export class Repository {
@@ -11,7 +11,7 @@ export class Repository {
     #redis = null;
 
     constructor() {
-        this.#mariadb = createMariaDbConnection({
+        this.#mariadb = createPgDbConnection({
             port: ConfigContainer.config.mariadb.port,
             host: ConfigContainer.config.mariadb.host,
             user: ConfigContainer.config.mariadb.user,
