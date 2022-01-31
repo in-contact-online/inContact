@@ -18,7 +18,7 @@ export class UserPhonesRepository extends RepoBase {
     
     /**
      * @method
-     * @param {string} userId - user identifier
+     * @param {number} userId - user identifier
      * @param {boolean} tracked - the flag that indicates do the phone is tracking
      * @return {Promise<Object>} returns data saved in DB
      */
@@ -34,6 +34,21 @@ export class UserPhonesRepository extends RepoBase {
         });
         return result && result.rows;
     }
+
+        /**
+     * @method
+     * @param {number} userId - user identifier
+     * @param {string} phone - users phone is tracking
+     * @return {Promise<Object>} returns data saved in DB
+     */
+         async readOne({ userId, phone }) {
+            const sql = 'SELECT * FROM tracked_phones WHERE user_id = $1 AND tracked_phone = $2';
+            const params = [userId, phone];
+            const result = await this.db.queryAsync(sql, params).catch((err) => {
+                throw new RepoError(err);
+            });
+            return result && result.rows[0];
+        }
 
     /**
      * @method
