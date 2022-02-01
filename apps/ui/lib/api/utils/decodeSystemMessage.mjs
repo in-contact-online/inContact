@@ -5,7 +5,8 @@ function isPhoneNumber(text) {
 }
 
 export function getCommand(message) {
-    const { text, data } = message;
+    const { text, data, new_chat_member } = message;
+    if (new_chat_member && new_chat_member.status === 'kicked') return BOT_COMMAND.DELETE_USER_TASKS;
     if (isPhoneNumber(text)) return BOT_COMMAND.ADD_TRACK_PHONE;
     if (text === BOT_COMMAND_UI.ADD_TRACK_PHONE) return BOT_COMMAND.ADD_TRACK_PHONE_MENU;
     if (text === BOT_COMMAND_UI.START) return BOT_COMMAND.START;

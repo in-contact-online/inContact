@@ -24,7 +24,7 @@ export class UserTrackPhones extends ModelBase {
      * @param {Number} userId - user identifier
      * @returns {Promise<Object>}
      */
-     async listTracked({ userId }) {
+    async listTracked({ userId }) {
         return this.repository.userPhones.read({ userId, tracked: true });
     }
 
@@ -44,7 +44,7 @@ export class UserTrackPhones extends ModelBase {
      * @param {String} phone - user tracked phone
      * @returns {Promise<Object>}
      */
-     async save(params) {
+    async save(params) {
         return this.repository.userPhones.save(params);
     }
 
@@ -54,8 +54,8 @@ export class UserTrackPhones extends ModelBase {
      * @param {String} phone - user tracked phone
      * @returns {Promise<Object>}
      */
-     async activate(params) {
-        return this.repository.userPhones.update({...params, tracked: true});
+    async activate(params) {
+        return this.repository.userPhones.update({ ...params, tracked: true });
     }
 
     /**
@@ -64,7 +64,16 @@ export class UserTrackPhones extends ModelBase {
      * @param {String} phone - user tracked phone
      * @returns {Promise<Object>}
      */
-     async deactivate(params) {
-        return this.repository.userPhones.update({...params, tracked: false});
+    async deactivate(params) {
+        return this.repository.userPhones.update({ ...params, tracked: false });
+    }
+
+    /**
+     * @method
+     * @param {Number} userId - user identifier
+     * @returns {Promise<Object>}
+     */
+    async deactivateAll(params) {
+        return this.repository.userPhones.updateAll({ ...params, tracked: false });
     }
 }

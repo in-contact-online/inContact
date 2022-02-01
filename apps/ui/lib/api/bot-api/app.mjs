@@ -33,6 +33,10 @@ function startService({ auth }) {
             Controller(msg, bot);
         });
 
+        bot.on('my_chat_member', (msg) => {
+            Controller(msg, bot);
+        });
+
         return bot;
     } catch (err) {
         logger.error('Bot Service try init');
