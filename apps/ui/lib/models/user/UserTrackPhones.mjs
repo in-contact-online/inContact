@@ -28,6 +28,16 @@ export class UserTrackPhones extends ModelBase {
         return this.repository.userPhones.read({ userId, tracked: true });
     }
 
+        /**
+     * @method
+     * @param {Number} userId - user identifier
+     * @param {String} phone - tracked phone
+     * @returns {Promise<Object>}
+     */
+    async readByPhone({ userId, phone }) {
+            return this.repository.userPhones.readOne({ userId, phone });
+    }
+
     /**
      * @method
      * @param {Number} userId - user identifier
