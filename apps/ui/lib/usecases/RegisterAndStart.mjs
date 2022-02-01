@@ -13,10 +13,7 @@ export class RegisterAndStart extends UseCaseBase {
         const user = await (new User()).read(params);
         if (!user) {
             await (new User()).save(params);
-        } else if (!user.active) {
-            await (new User()).update({...params, active: true});
         }
-
         return UserMessages.welcomeMessage();
     }
 }

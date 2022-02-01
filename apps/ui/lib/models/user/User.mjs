@@ -31,8 +31,6 @@ export class User extends ModelBase {
     /**
      * @method
      * @param {Number} userId - user identifier
-     * @param {String} firstName - user first name
-     * @param {String} lastName - user last name
      * @param {String} active - user active status
      * @returns {Promise<Object>}
      */
