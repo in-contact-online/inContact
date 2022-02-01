@@ -54,8 +54,12 @@ export default async function (request, client) {
             await router(Controllers.main.stopTracking);
             break;
         }
-        case BOT_COMMAND.DELETE_USER_TASKS: {
-            await router(Controllers.main.deleteUserTasks);
+        case BOT_COMMAND.LEAVE_CHAT: {
+            await router(Controllers.main.leaveChat);
+            break;
+        }
+        case BOT_COMMAND.RESTART_CHAT: {
+            await router(Controllers.main.restartChat);
             break;
         }
         default: {

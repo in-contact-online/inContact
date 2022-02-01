@@ -4,7 +4,8 @@ import {
     EditUsersTrackingMenu,
     UserStopTrackingPhone,
     AddTrackingPhone,
-    StopBotByUser,
+    UserLeaveChat,
+    UserRestartChat,
     AddTrackingMenu,
     GetUserStatus,
 } from '../../../usecases/index.mjs';
@@ -54,15 +55,20 @@ export const main = {
             res.answerCallbackQuery(req.id, { text: result.text, show_alert: true });
         }
     ),
-
-    deleteUserTasks: makeRequestHandler(
-        StopBotByUser,
+    leaveChat: makeRequestHandler(
+        UserLeaveChat,
         (req) => ({
             userId: req.from.id,
         }),
-        (result, res, req) => {}
+        () => {}
     ),
-
+    restartChat: makeRequestHandler(
+        UserRestartChat,
+        (req) => ({
+            userId: req.from.id,
+        }),
+        () => {}
+    ),
     trackPhone: makeRequestHandler(
         AddTrackingPhone,
         (req) => ({
@@ -82,16 +88,6 @@ export const main = {
             res.sendMessage(chatId, result, { parse_mode: 'HTML' });
         }
     ),
-    // quit: makeRequestHandler(
-    //     GetSubscriptions,
-    //     (req) => ({
-    //         jsonrpc: req.jsonrpc,
-    //     }),
-    //     (result, res, req) => {
-    //         const chatId = req.chat.id;
-    //         res.sendMessage(chatId, JSON.stringify(result));
-    //     }
-    // ),
     getStatus: makeRequestHandler(
         GetUserStatus,
         (req) => ({
@@ -105,5 +101,4 @@ export const main = {
             res.sendMessage(chatId, result, { parse_mode: 'HTML' });
         }
     ),
-    
 };

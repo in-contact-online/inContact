@@ -47,15 +47,13 @@ export class UserRepository extends RepoBase {
     /**
      * @method
      * @param {Number} userId - user identifier
-     * @param {String} firstName - user first name
-     * @param {String} lastName - user last name
      * @param {Boolean} active - user active status
      * @returns {Promise<Object>}
      */
-     async update({ userId, firstName, lastName, active }) {
+     async update({ userId, active }) {
         const result = await this.db.queryAsync(
-            'UPDATE users SET first_name = $1, second_name = $2, active = $3, updated_at = NOW() WHERE user_id = $4',
-            [firstName, lastName, active, userId]).catch((err) => {
+            'UPDATE users SET active = $1, updated_at = NOW() WHERE user_id = $2',
+            [active, userId]).catch((err) => {
             throw new RepoError(err);
         });
         return result;
