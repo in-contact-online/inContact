@@ -23,3 +23,5 @@ export const BOT_COMMANDS = [
     { command: BOT_COMMAND_UI.EDIT_TRACK_PHONES, description: 'Список отслеживаемых номеров / Удалить номер' },
     { command: BOT_COMMAND_UI.GET_TRACK_STATUS, description: 'Статус отслеживания' },
 ];
+
+export const COUNTRIES = ['RU', 'UA', 'KZ', 'BY'];

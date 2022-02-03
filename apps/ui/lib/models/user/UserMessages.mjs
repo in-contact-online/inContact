@@ -32,7 +32,7 @@ export class UserMessages {
         return `Номер ${phone} уже отслеживается`;
     }
     static unknownCommandMessage() {
-        return `Неправильная команда. Повторите пожалуйста!`;
+        return `Неправильная команда или неверный номер телефона. Повторите пожалуйста!`;
     }
     static notImplementYetMessage() {
         return `В разработке...`;
