@@ -29,10 +29,13 @@
 2. yarn - 1.22.4 or later
 3. PostgreSQL - 14 or later
 
-## Configure Database
+## Configure Modules
 1. Follow instructions in ```./apps/ui/README.md```
+2. Follow instructions in ```./apps/data-scanner/README.md```
 ## Run in console
 Run commands:
 1. ```yarn install``` - install node modules
 2. ```cd ./apps/ui & npm run migration:run``` - run database migrations to add tables
-3. ```yarn start``` - run server on port XXXX
+3. ```yarn start``` - run ui
+4. ```cd ./apps/data-scanner & npm run migration:run``` - run database migrations to add tables
+5. ```yarn start``` - run scanner module on port XXXX

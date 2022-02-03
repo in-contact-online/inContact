@@ -1,0 +1,23 @@
+{
+  "logLevel": ["required",  "string"],
+  "serviceName": ["required",  "string"],
+  "db": ["required", {
+    "nested_object": {
+      "host" : ["required", "string"],
+      "port" : ["required", "positive_integer"],
+      "database":  ["required", "string"],
+      "user": ["required", "string"],
+      "password": ["required", "string"],
+      "connectionsLimit": ["required", "positive_integer"]
+    }
+  }],
+  "service": ["required", {
+    "nested_object": {
+      "port": ["required", "positive_integer"],
+      "cron": ["required", "string"],
+      "apiId": ["required", "positive_integer"],
+      "apiHash": ["required", "string"],
+      "sessionId": ["required", "string"]
+    }
+  }]
+}
