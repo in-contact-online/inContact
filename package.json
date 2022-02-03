@@ -13,7 +13,8 @@
     "clean": "lerna run clean && yarn run clean:node_modules",
     "clean:node_modules": "rimraf node_modules",
     "reset": "yarn run clean && yarn install",
-    "start:ui": "cd apps/ui && yarn start"
+    "start:ui": "cd apps/ui && yarn start",
+    "start:scanner": "cd apps/data-scanner && yarn start"
   },
   "repository": {
     "type": "git",
@@ -22,9 +23,9 @@
   "workspaces": [
     "shared/logger",
     "shared/repository",
-    "shared/data-analyzer",
-    "shared/data-scanner",
-    "shared/notificator",
+    "apps/data-analyzer",
+    "apps/data-scanner",
+    "apps/notificator",
     "apps/ui"
   ],
   "private": true,
