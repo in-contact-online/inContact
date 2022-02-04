@@ -37,4 +37,7 @@ export class UserMessages {
     static notImplementYetMessage() {
         return `В разработке...`;
     }
+    static exceedLimitMessage() {
+        return `Превышен лимит на количество отслеживаемых номеров`;
+    }
 }

@@ -1,5 +1,6 @@
 import UseCaseBase from './UseCaseBase.mjs';
 import { UserMessages, UserTrackPhones } from '../models/index.mjs';
+import * as ConfigContainer from '../config.cjs';
 
 export class AddTrackingPhone extends UseCaseBase {
     static validationRules = {
@@ -9,7 +10,14 @@ export class AddTrackingPhone extends UseCaseBase {
 
     async execute(params) {
         const userTrackPhones = new UserTrackPhones();
+
+        const limit = ConfigContainer.config.trackedPhonesLimit;
+
         const trackedPhone = await userTrackPhones.readByPhone(params);
+        const allTrackedPhones = (await userTrackPhones.listTracked(params)).map((item) => item.tracked_phone);
+
+        if (allTrackedPhones.length >= limit) return UserMessages.exceedLimitMessage();
+
         let result;
 
         if (!trackedPhone) {
@@ -21,7 +29,7 @@ export class AddTrackingPhone extends UseCaseBase {
             await userTrackPhones.activate(params);
             result = UserMessages.phoneActivateTrackingMessage(params.phone);
         }
-        
+
         return result;
     }
 }
