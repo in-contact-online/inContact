@@ -1,7 +1,5 @@
 import UseCaseBase from './UseCaseBase.mjs';
 import { UserMessages, UserTrackPhones } from '../models/index.mjs';
-import { Phone } from '../models/index.mjs';
-import { COUNTRIES } from '../system/constants.mjs';
 
 export class AddTrackingPhone extends UseCaseBase {
     static validationRules = {
@@ -10,8 +8,6 @@ export class AddTrackingPhone extends UseCaseBase {
     };
 
     async execute(params) {
-        params.phone = new Phone(params.phone, COUNTRIES).validated.phoneNumber;
-
         const userTrackPhones = new UserTrackPhones();
         const trackedPhone = await userTrackPhones.readByPhone(params);
         let result;

@@ -35,7 +35,7 @@ export default async function (request, client) {
             break;
         }
         case BOT_COMMAND.ADD_TRACK_PHONE: {
-            await router(Controllers.main.trackPhone);
+            await router(Controllers.prepare.phoneNumberValidation, Controllers.main.trackPhone);
             break;
         }
         case BOT_COMMAND.ADD_TRACK_PHONE_MENU: {
