@@ -14,7 +14,7 @@ export class AddTrackingPhone extends UseCaseBase {
         const limit = ConfigContainer.config.trackedPhonesLimit;
 
         const trackedPhone = await userTrackPhones.readByPhone(params);
-        const allTrackedPhones = (await userTrackPhones.listTracked(params)).map((item) => item.tracked_phone);
+        const allTrackedPhones = await userTrackPhones.listTracked(params);
 
         if (allTrackedPhones.length >= limit) return UserMessages.exceedLimitMessage();
 
