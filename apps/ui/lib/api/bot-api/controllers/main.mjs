@@ -18,6 +18,7 @@ export const main = {
             lastName: req.from.last_name,
             userId: req.from.id,
             idBot: req.from.is_bot,
+            chatId: req.chat.id,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;
