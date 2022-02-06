@@ -1,15 +1,16 @@
 {
-  "logLevel": "{{IN_CONTACT_UI_LOG_LEVEL}}",
-  "serviceName": "{{IN_CONTACT_UI_SERVICE_NAME}}",
-  "db": {
-    "host": "{{IN_CONTACT_DB_HOST}}",
-    "port": "{{IN_CONTACT_DB_PORT}}",
-    "user": "{{IN_CONTACT_DB_USER}}",
-    "database": "{{IN_CONTACT_DB_SCHEMA}}",
-    "password": "{{IN_CONTACT_DB_PASSWORD}}",
-    "connectionsLimit": "{{IN_CONTACT_DB_CONNECTIONS_LIMIT}}"
-  },
-  "auth": {
-    "botToken": "{{IN_CONTACT_BOT_TOKEN}}"
-  }
+    "logLevel": "{{IN_CONTACT_UI_LOG_LEVEL}}",
+    "serviceName": "{{IN_CONTACT_UI_SERVICE_NAME}}",
+    "db": {
+        "host": "{{IN_CONTACT_DB_HOST}}",
+        "port": "{{IN_CONTACT_DB_PORT}}",
+        "user": "{{IN_CONTACT_DB_USER}}",
+        "database": "{{IN_CONTACT_DB_SCHEMA}}",
+        "password": "{{IN_CONTACT_DB_PASSWORD}}",
+        "connectionsLimit": "{{IN_CONTACT_DB_CONNECTIONS_LIMIT}}"
+    },
+    "auth": {
+        "botToken": "{{IN_CONTACT_BOT_TOKEN}}"
+    },
+    "trackedPhonesLimit": "{{IN_CONTACT_LIMIT_TRACKED_PHONE}}"
 }
