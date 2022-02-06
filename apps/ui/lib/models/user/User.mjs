@@ -20,6 +20,7 @@ export class User extends ModelBase {
     /**
      * @method
      * @param {Number} userId - user identifier
+     * @param {Number} chatId - chat identifier
      * @param {String} firstName - user first name
      * @param {String} lastName - user last name
      * @returns {Promise<Object>}
@@ -34,7 +35,7 @@ export class User extends ModelBase {
      * @param {String} active - user active status
      * @returns {Promise<Object>}
      */
-     async update(params) {
+    async update(params) {
         return this.repository.user.update(params);
     }
 }

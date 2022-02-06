@@ -7,12 +7,13 @@ export class RegisterAndStart extends UseCaseBase {
         lastName: ['string'],
         userId: ['required', 'positive_integer'],
         idBot: ['boolean'],
+        chatId: ['positive_integer'],
     };
 
     async execute(params) {
-        const user = await (new User()).read(params);
+        const user = await new User().read(params);
         if (!user) {
-            await (new User()).save(params);
+            await new User().save(params);
         }
         return UserMessages.welcomeMessage();
     }
