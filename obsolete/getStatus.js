@@ -6,7 +6,6 @@ const { getFileName, getFilePath, getUserName, formatUserStatus } = require('./u
 const { createFile, appendToFile, fileExist } = require('./utils/fileUtils');
 const fs = require('fs');
 
-const arrayOfNumbers = fs.readFileSync('./userList.txt').toString().split('\n');
 const client = new TelegramClient(new StringSession(config.sessionId), config.apiId, config.apiHash, {});
 
 async function statuses() {
@@ -15,8 +14,9 @@ async function statuses() {
     await client.connect();
 
     //add contacts
+    const arrayOfNumbers = fs.readFileSync('./userList.txt').toString().split('\n');
 
-    /*     const mappedArrayOfNumbers = arrayOfNumbers.map((number) => {
+    const mappedArrayOfNumbers = arrayOfNumbers.map((number) => {
         const generatedId = Math.trunc(Math.random() * 10000000);
         return new Api.InputPhoneContact({
             clientId: generatedId,
@@ -39,7 +39,7 @@ async function statuses() {
         await new Promise((resolve) => {
             setTimeout(() => resolve(), 20000);
         });
-    } */
+    }
 
     const { users } = await client.invoke(new Api.contacts.GetContacts({}));
 
