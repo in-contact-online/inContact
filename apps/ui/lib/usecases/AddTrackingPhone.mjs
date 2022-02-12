@@ -4,7 +4,7 @@ import * as ConfigContainer from '../config.cjs';
 
 export class AddTrackingPhone extends UseCaseBase {
     static validationRules = {
-        phone: ['string'],
+        phone: ['phone_number'],
         userId: ['required', 'positive_integer'],
     };
 
