@@ -1,5 +1,5 @@
 import { BOT_COMMAND, BOT_COMMAND_UI } from '../../system/index.mjs';
-import { isValidPhone } from '../../utils/isValidPhone.mjs';
+import { isValidPhone } from './isValidPhone.mjs';
 
 export function getCommand(message) {
     const { text, data = '', new_chat_member = {} } = message;

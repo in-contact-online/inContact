@@ -1,6 +1,6 @@
 import LIVR from 'livr';
 import extraRules from 'livr-extra-rules';
-import customRules from '../utils/customValidationRules.mjs';
+import { customRules } from '../system/livr-custom-rules/index.mjs';
 import { ValidationError } from '../models';
 
 export default class UseCaseBase {
