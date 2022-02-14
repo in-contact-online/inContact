@@ -1,4 +1,5 @@
 import logger from '../logger';
+import { errorToMessage } from './errorToMessage.mjs';
 
 export async function runUseCase(UseCase, { params }) {
     return new UseCase().run(params);
@@ -33,7 +34,7 @@ export function makeRequestHandler(UseCase, mapToParams, mapToResponse) {
             next();
         } catch (err) {
             logger.error(`[ErrorHandler] ${err}`);
-            res.sendMessage(chatId, 'Internal Error');
+            res.sendMessage(chatId, errorToMessage(err));
         }
     };
 }

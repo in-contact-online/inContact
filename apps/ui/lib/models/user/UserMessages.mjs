@@ -40,4 +40,7 @@ export class UserMessages {
     static exceedLimitMessage() {
         return `Превышен лимит на количество отслеживаемых номеров`;
     }
+    static invalidPhoneNumber() {
+        return `Неправильный номер телефона`;
+    }
 }
