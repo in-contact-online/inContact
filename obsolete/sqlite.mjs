@@ -1,12 +1,10 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
-
 import { StringSession } from 'telegram/sessions/index.js';
 import { Api, TelegramClient } from 'telegram/index.js';
 import { AuthKey } from 'telegram/crypto/AuthKey.js';
+import { config } from './config';
 
-const apiId = 2040;
-const apiHash = 'b18441a1ff607e10a989891a5462e627';
 
 open({
     filename: './accs/+79858679537.session',
@@ -21,7 +19,7 @@ open({
     authKey.setKey(auth_key);
     session.setAuthKey(authKey);
 
-    const client = new TelegramClient(session, apiId, apiHash, {});
+    const client = new TelegramClient(session, config.apiId, config.apiHash, {});
     await client.connect();
 
     console.log('connected...');

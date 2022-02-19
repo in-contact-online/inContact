@@ -24,7 +24,8 @@
     "input": "^1.0.1",
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2",
-    "telegram": "^2.3.0"
+    "telegram": "^2.3.0",
+    "uuid": "^8.3.2"
   },
   "engines": {
     "node": "14.x"
