@@ -14,11 +14,13 @@ export async function addContacts(client, contacts_path, delay) {
         });
     });
 
+    let countErrors = 0;
+
     await client.connect(client);
     console.log('connected...');
 
     for (let contact of contacts) {
-        console.log(`Adding contact with number ${contact.phone}...`);
+        console.log(`Client ${client.data.phone}: Adding contact with number ${contact.phone}...`);
         await client
             .invoke(
                 new Api.contacts.ImportContacts({
@@ -30,10 +32,13 @@ export async function addContacts(client, contacts_path, delay) {
                     let addedPhone = data.users[0].phone;
                     console.log(`Contact with phone number ${addedPhone} has beed added!`);
                 } catch (error) {
-                    console.log(error);
+                    countErrors++;
+                    console.log(`Not added. Error count: ${countErrors}`);
                 }
             })
             .catch((e) => console.log(e));
+
+        if (countErrors > 2) break;
 
         await new Promise((resolve) => {
             console.log(`Waiting for ${delay} seconds...`);

@@ -9,6 +9,18 @@ import { AuthKey } from 'telegram/crypto/AuthKey.js';
 import { config } from './config.js';
 import { CronJob } from 'cron';
 
+export class TelegramClientAdapter extends TelegramClient {
+    constructor({ dc_id, server_address, port, auth_key }, apiConfig) {
+        const session = new StringSession();
+        const authKey = new AuthKey();
+
+        authKey.setKey(auth_key);
+        session.setDC(dc_id, server_address, port);
+        session.setAuthKey(authKey);
+
+        super(session, apiConfig.apiId, apiConfig.apiHash, {});
+    }
+}
 
 export class ClientSession {
     #session = null;
@@ -70,18 +82,18 @@ class SessionsPool {
     async readDir(dirname) {
         return new Promise((resolve, reject) => {
             readdir(dirname, (err, files) => {
-                 if (err) reject(err);
-   
-                 const result = files.reduce((memo, fileName) => {
-                     if (fileName.includes('.session')) {
-                         memo.push(path.join(dirname, fileName))
-                     }
-                     return memo;
-                 }, [])
-                 
-                 resolve(result);
-            })
-       })
+                if (err) reject(err);
+
+                const result = files.reduce((memo, fileName) => {
+                    if (fileName.includes('.session')) {
+                        memo.push(path.join(dirname, fileName));
+                    }
+                    return memo;
+                }, []);
+
+                resolve(result);
+            });
+        });
     }
 
     async readSessionFile(filename) {
@@ -94,7 +106,7 @@ class SessionsPool {
 
     async invokeEach(command) {
         console.log('invokeEach');
-        for(const client of this.#pool) {
+        for (const client of this.#pool) {
             const result = await client.session.invoke(command);
             console.log('result: ', result);
         }
@@ -105,9 +117,16 @@ async function start() {
     const sessionsPoll = new SessionsPool(config);
     await sessionsPoll.init();
 
-    const job = new CronJob(config.cronString, async function () { await sessionsPoll.invokeEach(new Api.contacts.GetContacts({})); }, null, true, null);
+    const job = new CronJob(
+        config.cronString,
+        async function () {
+            await sessionsPoll.invokeEach(new Api.contacts.GetContacts({}));
+        },
+        null,
+        true,
+        null
+    );
     job.start();
 }
 
 start();
-
