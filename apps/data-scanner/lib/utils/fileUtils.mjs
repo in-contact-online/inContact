@@ -5,9 +5,15 @@ import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import { getFileName, getFilePath, getUserName, formatUserStatus } from './formatUtils.mjs';
 
-export async function createFile(filePath, status) {
+/**
+ * @function
+ * @param {String} filePath - file path
+ * @param {String} data - data to write in filw
+ * @return {Promise<void>}
+ */
+export async function createFile(filePath, data) {
     const header = 'phone,user,username,was_online,check_date\r\n';
-    const content = header + status;
+    const content = header + data;
     return fs.writeFile(filePath, content, (err) => {
         if (err) console.error('Create File Error:', err);
         else {
@@ -16,34 +22,56 @@ export async function createFile(filePath, status) {
     });
 }
 
-export async function appendToFile(file, content) {
-    return fs.appendFile(file, content, (err) => {
+/**
+ * @function
+ * @param {String} filePath - file path
+ * @param {String} data - data to write in filw
+ * @return {Promise<void>}
+ */
+export async function appendToFile(filePath, data) {
+    return fs.appendFile(filePath, data, (err) => {
         if (err) {
             console.error(err);
         } else {
-            console.log(`${new Date().toISOString()}: "${file}" append successfully.`);
+            console.log(`${new Date().toISOString()}: "${filePath}" append successfully.`);
         }
     });
 }
 
-export function fileExist(path) {
-    return fs.existsSync(path);
+/**
+ * @function
+ * @param {String} filePath - file path
+ * @return {Boolean}
+ */
+export function fileExist(filePath) {
+    return fs.existsSync(filePath);
 }
 
+/**
+ * @function
+ * @param {Object[]} users - list of users data
+ * @return {Promise<void>}
+ */
 export async function writeToFile(users = []) {
     for (let user of users) {
-        const name = getUserName(user);
-        const filePath = getFilePath(getFileName(name));
-        const status = formatUserStatus(user);
+        const username = getUserName(user);
+        const filePath = getFilePath(getFileName(username));
+        const data = formatUserStatus(user);
 
         if (!fileExist(filePath)) {
-            await createFile(filePath, status);
+            await createFile(filePath, data);
         } else {
-            await appendToFile(filePath, status);
+            await appendToFile(filePath, data);
         }
     }
 }
 
+/**
+ * @function
+ * @param {String} dirname - dirname
+ * @param {String} fileExtension - file extensions to find
+ * @return {Promise<String[]>}
+ */
 export async function readDir(dirname, fileExtension) {
     return new Promise((resolve, reject) => {
         readdir(dirname, (err, files) => {
@@ -61,6 +89,12 @@ export async function readDir(dirname, fileExtension) {
     });
 }
 
+/**
+ * @function
+ * @param {String} filePath - path to sqlite file
+ * @param {String} tableName - table name
+ * @return {Promise<Object[]>}
+ */
 export async function readSqlite(filePath, tableName) {
     return open({ filename: filePath, driver: sqlite3.Database }).then(async (db) => db.get(`SELECT * FROM ${tableName}`));
 }
