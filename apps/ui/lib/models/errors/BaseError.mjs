@@ -1,4 +1,4 @@
-export default class RepoError extends Error {
+export default class BaseError extends Error {
     /**
      * @typedef {Class} BaseError
      */

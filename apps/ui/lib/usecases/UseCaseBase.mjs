@@ -1,5 +1,6 @@
 import LIVR from 'livr';
 import extraRules from 'livr-extra-rules';
+import { customRules } from '../system/livr-custom-rules/index.mjs';
 import { ValidationError } from '../models';
 
 export default class UseCaseBase {
@@ -20,7 +21,7 @@ export default class UseCaseBase {
     async validate(params) {
         if (this.constructor.validationRules) {
             this.validator = new LIVR.Validator(this.constructor.validationRules);
-            this.validator.registerRules({ ...extraRules });
+            this.validator.registerRules({ ...extraRules, ...customRules });
             return this.validator.validate(params);
         }
         return params;

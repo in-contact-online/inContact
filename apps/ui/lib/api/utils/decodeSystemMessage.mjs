@@ -1,14 +1,11 @@
 import { BOT_COMMAND, BOT_COMMAND_UI } from '../../system/index.mjs';
-
-function isPhoneNumber(text) {
-    return /^\+(380[0-9]{9}|7[0-9]{10})$/.test(text);
-}
+import { isValidPhone } from './isValidPhone.mjs';
 
 export function getCommand(message) {
     const { text, data = '', new_chat_member = {} } = message;
     if (new_chat_member.status === 'kicked') return BOT_COMMAND.LEAVE_CHAT;
     if (new_chat_member.status === 'member') return BOT_COMMAND.RESTART_CHAT;
-    if (isPhoneNumber(text)) return BOT_COMMAND.ADD_TRACK_PHONE;
+    if (isValidPhone(text)) return BOT_COMMAND.ADD_TRACK_PHONE;
     if (text === BOT_COMMAND_UI.ADD_TRACK_PHONE) return BOT_COMMAND.ADD_TRACK_PHONE_MENU;
     if (text === BOT_COMMAND_UI.START) return BOT_COMMAND.START;
     if (text === BOT_COMMAND_UI.EDIT_TRACK_PHONES) return BOT_COMMAND.EDIT_TRACK_PHONES_MENU;
