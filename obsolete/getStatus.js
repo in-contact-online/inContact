@@ -1,4 +1,4 @@
-const { Api, TelegramClient } = require('telegram');
+const { Api, TelegramClient, Connection } = require('telegram');
 const { StringSession } = require('telegram/sessions');
 const CronJob = require('cron').CronJob;
 const { config } = require('./config');
@@ -6,17 +6,11 @@ const { getFileName, getFilePath, getUserName, formatUserStatus } = require('./u
 const { createFile, appendToFile, fileExist } = require('./utils/fileUtils');
 const fs = require('fs');
 
-const client = new TelegramClient(new StringSession(config.sessionId), config.apiId, config.apiHash, {});
-
 async function statuses() {
-    console.log('statuses...');
+    //Prepare contacts for import
+    const phones = fs.readFileSync('./userList.txt').toString().split('\n');
 
-    await client.connect();
-
-    //add contacts
-    const arrayOfNumbers = fs.readFileSync('./userList.txt').toString().split('\n');
-
-    const mappedArrayOfNumbers = arrayOfNumbers.map((number) => {
+    const contacts = phones.map((number) => {
         const generatedId = Math.trunc(Math.random() * 10000000);
         return new Api.InputPhoneContact({
             clientId: generatedId,
@@ -26,22 +20,33 @@ async function statuses() {
         });
     });
 
-    for (let item of mappedArrayOfNumbers) {
+    const client = new TelegramClient(config.sessionId, config.apiId, config.apiHash, {});
+    await client.connect();
+
+    for (let contact of contacts) {
         await client
             .invoke(
                 new Api.contacts.ImportContacts({
-                    contacts: [item],
+                    contacts: [contact],
                 })
             )
-            .then((data) => console.log(JSON.stringify(data) + ' added!'))
+            .then((data) => {
+                let addedPhone = data.users[0].phone;
+                if (addedPhone) {
+                    console.log(`Contact with phone number ${addedPhone} has beed added!`);
+                    fs.appendFileSync('contacts.txt', addedPhone + '\n');
+                }
+            })
             .catch((e) => console.log(e));
 
         await new Promise((resolve) => {
-            setTimeout(() => resolve(), 20000);
+            let sec = 40;
+            console.log(`Waiting for ${sec} seconds...`);
+            setTimeout(() => resolve(), sec * 1000);
         });
     }
 
-    const { users } = await client.invoke(new Api.contacts.GetContacts({}));
+    let { users } = await client.invoke(new Api.contacts.GetContacts({}));
 
     for (let user of users) {
         const name = getUserName(user);
