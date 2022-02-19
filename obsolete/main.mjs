@@ -8,6 +8,8 @@ import { Api, TelegramClient } from 'telegram/index.js';
 import { AuthKey } from 'telegram/crypto/AuthKey.js';
 import { config } from './config.js';
 import { CronJob } from 'cron';
+import { getFileName, getFilePath, getUserName, formatUserStatus } from './utils/formatUtils.mjs';
+import { createFile, appendToFile, fileExist } from './utils/fileUtils.mjs';
 
 export class TelegramClientAdapter extends TelegramClient {
     constructor({ dc_id, server_address, port, auth_key }, apiConfig) {
@@ -105,22 +107,35 @@ class SessionsPool {
     }
 
     async invokeEach(command) {
-        console.log('invokeEach');
         for (const client of this.#pool) {
             const result = await client.session.invoke(command);
-            console.log('result: ', result);
+            await writeToFile(result.users);
+        }
+    }
+}
+
+async function writeToFile(users = []) {
+    for (let user of users) {
+        const name = getUserName(user);
+        const filePath = getFilePath(getFileName(name));
+        const status = formatUserStatus(user);
+
+        if (!fileExist(filePath)) {
+            await createFile(filePath, status);
+        } else {
+            await appendToFile(filePath, status);
         }
     }
 }
 
 async function start() {
-    const sessionsPoll = new SessionsPool(config);
-    await sessionsPoll.init();
+    const sessionsPool = new SessionsPool(config);
+    await sessionsPool.init();
 
     const job = new CronJob(
         config.cronString,
         async function () {
-            await sessionsPoll.invokeEach(new Api.contacts.GetContacts({}));
+            await sessionsPool.invokeEach(new Api.contacts.GetContacts({}));
         },
         null,
         true,
