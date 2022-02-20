@@ -1,0 +1,15 @@
+[Unit]
+Description="In Contact Data Scanner"
+
+[Service]
+ExecStart=/usr/bin/node app.mjs
+WorkingDirectory=/home/ubuntu/inContact/apps/data-scanner
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=in-contact-data-scanner
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
