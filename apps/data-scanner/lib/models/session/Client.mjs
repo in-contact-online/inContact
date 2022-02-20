@@ -47,7 +47,7 @@ export class Client {
      * @returns {Promise<Object>}
      */
     async invoke(command) {
-        return this.#api.session.invoke(command);
+        return this.#api.invoke(command);
 
     }
 
