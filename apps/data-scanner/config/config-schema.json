@@ -14,10 +14,10 @@
   "service": ["required", {
     "nested_object": {
       "port": ["required", "positive_integer"],
+      "sessionsFolder": ["required", "string"],
       "cron": ["required", "string"],
       "apiId": ["required", "positive_integer"],
-      "apiHash": ["required", "string"],
-      "sessionId": ["required", "string"]
+      "apiHash": ["required", "string"]
     }
   }]
 }

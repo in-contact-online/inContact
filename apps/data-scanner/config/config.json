@@ -11,9 +11,9 @@
   },
   "service": {
     "port": "{{IN_CONTACT_SCANNER_PORT}}",
+    "sessionsFolder": "{{IN_CONTACT_SESSIONS_FOLDER}}",
     "cron": "{{IN_CONTACT_SCANNER_CRON}}",
     "apiId": "{{IN_CONTACT_SCANNER_API_ID}}",
-    "apiHash": "{{IN_CONTACT_SCANNER_API_HASH}}",
-    "sessionId": "{{IN_CONTACT_SCANNER_SESSION_ID}}"
+    "apiHash": "{{IN_CONTACT_SCANNER_API_HASH}}"
   }
 }

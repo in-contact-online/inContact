@@ -1,29 +1,19 @@
 import express from 'express';
-import { Api, TelegramClient } from "telegram";
-import { StringSession } from "telegram/sessions";
+import { Api } from 'telegram';
 import { CronJob } from "cron";
+import { Sessions } from '../../models/index.mjs';
 import logger from '../logger.mjs';
 
 
 let service = null;
 
-async function statuses(config) {
-    logger.info('statuses');
-    const client = new TelegramClient(new StringSession(config.sessionId), config.apiId, config.apiHash, {});
-    await client.connect();
-
-    const { users } = await client.invoke(new Api.contacts.GetContacts({}));
-    logger.info('Scanned data');
-    logger.info(users);
-}
-
 export function start(config) {
     service = express()
-    .get('/', (req, res) => res.send('Hello'))
-    .listen(config.port, () => {
-       logger.info(`Listening on ${ config.port }`);
-       new CronJob(config.cron, async function () { await statuses(config); }, null, true, null);
-    });
+        .get('/', (req, res) => res.send('Hello'))
+        .listen(config.port, () => {
+            logger.info(`Listening on ${config.port}`);
+            scanStatuses(config);
+        });
 }
 
 export async function stop() {
@@ -31,4 +21,18 @@ export async function stop() {
 
     service.close();
     logger.info('Data Scanner Service stopped');
+}
+
+async function scanStatuses(config) {
+    const sessions = new Sessions(config);
+    await sessions.init();
+    const job = new CronJob(config.cron,
+        async function () {
+            await sessions.invokeEach(new Api.contacts.GetContacts({}));
+        },
+        null,
+        true,
+        null
+    );
+    job.start();
 }
