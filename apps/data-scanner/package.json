@@ -37,7 +37,10 @@
     "livr": "^2.3.3",
     "livr-extra-rules": "^1.2.1",
     "pg": "^8.7.1",
-    "telegram": "^2.4.6"
+    "sqlite": "^4.0.23",
+    "sqlite3": "^5.0.2",
+    "telegram": "^2.4.6",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "c8": "^7.9.0",

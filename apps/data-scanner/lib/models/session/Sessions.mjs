@@ -3,7 +3,7 @@ import { writeToFile, readDir, readSqlite } from '../../utils/index.mjs';
 
 export class Sessions {
     /**
-     * @typedef {Class} Session
+     * @typedef {Class} Sessions
      * @method init
      * @method invokeEach
     */
