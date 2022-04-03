@@ -1,4 +1,4 @@
-import { UserRepository, UserPhonesRepository } from './documents/index.mjs';
+import { UserRepository, UserPhonesRepository, StatusesRepository } from './documents/index.mjs';
 
 export class Repository {
     /**
@@ -23,5 +23,6 @@ export class Repository {
     constructor(options) {
         this.user = new UserRepository(options);
         this.userPhones = new UserPhonesRepository(options);
+        this.statuses = new StatusesRepository(options);
     }
 }
