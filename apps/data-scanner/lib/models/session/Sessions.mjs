@@ -54,11 +54,17 @@ export class Sessions {
             // await writeToFile(result.users);
 
             for (let user of result.users) {
+                const currentDate = new Date().toISOString();
+                const wasOnline =
+                    user.status.className === 'UserStatusOnline'
+                        ? currentDate
+                        : humanReadableDate(user.status.wasOnline);
+
                 const params = {
-                    fullName: user.firstName + user.lastName,
+                    phoneNumber: user.phone,
                     username: user.username,
-                    wasOnline: humanReadableDate(user.status.wasOnline),
-                    checkDate: new Date().toISOString(),
+                    wasOnline,
+                    checkDate: currentDate,
                 };
 
                 await new Statuses().save(params);

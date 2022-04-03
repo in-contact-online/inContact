@@ -32,20 +32,18 @@ export class StatusesRepository extends RepoBase {
 
     /**
      * @method
-     * @param {String} fullName - contact's full name
+     * @param {String} phoneNumber - contact's phone number
      * @param {String} username - contact's username
      * @param {String} wasOnline - time which contact was online
      * @param {String} checkDate - time in moment of getting statuses
      * @returns {Promise<Object>}
      */
-    async save({ fullName, username, wasOnline, checkDate }) {
+    async save({ phoneNumber, username, wasOnline, checkDate }) {
         const result = await this.db
-            .queryAsync('INSERT INTO statuses (full_name, username, was_online, check_date) VALUES ($1, $2, $3, $4)', [
-                fullName,
-                username,
-                wasOnline,
-                checkDate,
-            ])
+            .queryAsync(
+                'INSERT INTO statuses (phone_number, username, was_online, check_date) VALUES ($1, $2, $3, $4)',
+                [phoneNumber, username, wasOnline, checkDate]
+            )
             .catch((err) => {
                 throw new RepoError(err);
             });

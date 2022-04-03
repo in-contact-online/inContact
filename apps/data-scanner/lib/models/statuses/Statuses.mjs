@@ -19,7 +19,7 @@ export class Statuses extends ModelBase {
 
     /**
      * @method
-     * @param {String} fullName - contact's full name
+     * @param {String} phoneNumber - contact's phone number
      * @param {String} username - contact's username
      * @param {String} wasOnline - time which contact was online
      * @param {String} checkDate - time in moment of getting statuses
