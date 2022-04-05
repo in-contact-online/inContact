@@ -1,12 +1,13 @@
 import { Client } from './Client.mjs';
-import { writeToFile, readDir, readSqlite } from '../../utils/index.mjs';
+import { writeToFile, readDir, readSqlite, humanReadableDate } from '../../utils/index.mjs';
+import { Statuses } from '../statuses/Statuses.mjs';
 
 export class Sessions {
     /**
      * @typedef {Class} Sessions
      * @method init
      * @method invokeEach
-    */
+     */
 
     /**
      * @property {Object|null}
@@ -50,7 +51,24 @@ export class Sessions {
     async invokeEach(command) {
         for (const client of this.#pool) {
             const result = await client.invoke(command);
-            await writeToFile(result.users);
+
+            for (let user of result.users) {
+                if (user.status) {
+                    const wasOnline =
+                        user.status.className === 'UserStatusOnline' ? null : humanReadableDate(user.status.wasOnline);
+
+                    if (wasOnline !== undefined) {
+                        const params = {
+                            phoneNumber: user.phone,
+                            username: user.username,
+                            wasOnline,
+                            checkDate: new Date().toISOString(),
+                        };
+
+                        await new Statuses().save(params);
+                    }
+                }
+            }
         }
     }
 }

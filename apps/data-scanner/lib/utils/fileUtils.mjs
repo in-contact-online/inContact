@@ -96,5 +96,7 @@ export async function readDir(dirname, fileExtension) {
  * @return {Promise<Object[]>}
  */
 export async function readSqlite(filePath, tableName) {
-    return open({ filename: filePath, driver: sqlite3.Database }).then(async (db) => db.get(`SELECT * FROM ${tableName}`));
+    return open({ filename: filePath, driver: sqlite3.Database }).then(async (db) =>
+        db.get(`SELECT * FROM ${tableName}`)
+    );
 }

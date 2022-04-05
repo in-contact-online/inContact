@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS statuses;
+CREATE TABLE statuses(
+	id SERIAL PRIMARY KEY,
+	phone_number VARCHAR(20) NOT NULL,
+	username TEXT DEFAULT NULL,
+	was_online TIMESTAMP DEFAULT NULL,
+	check_date TIMESTAMP NOT NULL
+);
