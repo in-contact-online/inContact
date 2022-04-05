@@ -18,12 +18,12 @@ export class StatusesRepository extends RepoBase {
 
     /**
      * @method
-     * @param {number} statusId - status identifier
+     * @param {String} phoneNumber - contact's phone number
      * @return {Promise<Object>} returns data saved in DB
      */
-    async read({ statusId }) {
-        let sql = 'SELECT * FROM statuses WHERE status_id = $1';
-        const params = [statusId];
+    async readByPhone({ phoneNumber }) {
+        let sql = 'SELECT * FROM statuses WHERE phone_number = $1';
+        const params = [phoneNumber];
         const result = await this.db.queryAsync(sql, params).catch((err) => {
             throw new RepoError(err);
         });

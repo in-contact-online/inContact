@@ -51,23 +51,23 @@ export class Sessions {
     async invokeEach(command) {
         for (const client of this.#pool) {
             const result = await client.invoke(command);
-            // await writeToFile(result.users);
 
             for (let user of result.users) {
-                const currentDate = new Date().toISOString();
-                const wasOnline =
-                    user.status.className === 'UserStatusOnline'
-                        ? currentDate
-                        : humanReadableDate(user.status.wasOnline);
+                if (user.status) {
+                    const wasOnline =
+                        user.status.className === 'UserStatusOnline' ? null : humanReadableDate(user.status.wasOnline);
 
-                const params = {
-                    phoneNumber: user.phone,
-                    username: user.username,
-                    wasOnline,
-                    checkDate: currentDate,
-                };
+                    if (wasOnline !== undefined) {
+                        const params = {
+                            phoneNumber: user.phone,
+                            username: user.username,
+                            wasOnline,
+                            checkDate: new Date().toISOString(),
+                        };
 
-                await new Statuses().save(params);
+                        await new Statuses().save(params);
+                    }
+                }
             }
         }
     }

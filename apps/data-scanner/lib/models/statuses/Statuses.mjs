@@ -10,11 +10,11 @@ export class Statuses extends ModelBase {
 
     /**
      * @method
-     * @param {Number} statusId - status identifier
+     * @param {String} phoneNumber - contact's phone number
      * @returns {Promise<Object>}
      */
-    async read({ statusId }) {
-        return this.repository.statuses.read({ statusId });
+    async readByPhone({ phoneNumber }) {
+        return this.repository.statuses.readByPhone({ phoneNumber });
     }
 
     /**
