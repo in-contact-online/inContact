@@ -2,7 +2,7 @@
 Description="In Contact UI"
 
 [Service]
-ExecStart=/usr/bin/node app.mjs
+ExecStart=/usr/bin/node --experimental-modules --es-module-specifier-resolution=node app
 WorkingDirectory=/home/ubuntu/inContact/apps/ui
 Restart=always
 RestartSec=10
