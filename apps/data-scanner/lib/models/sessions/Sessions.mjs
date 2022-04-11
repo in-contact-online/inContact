@@ -1,6 +1,6 @@
 import { Client } from './Client.mjs';
 import { writeToFile, readDir, readSqlite, humanReadableDate } from '../../utils/index.mjs';
-import { Statuses } from '../statuses/Statuses.mjs';
+import { Status } from '../status/Status.mjs';
 
 export class Sessions {
     /**
@@ -65,7 +65,7 @@ export class Sessions {
                             checkDate: new Date().toISOString(),
                         };
 
-                        await new Statuses().save(params);
+                        await new Status().save(params);
                     }
                 }
             }

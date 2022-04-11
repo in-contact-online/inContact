@@ -1,4 +1,5 @@
-import { Repository } from './api';
+//import { Repository } from './api';
+import { Repository } from './api/Repository.mjs';
 
 /*
     In case of couple DB connections extend `cache`

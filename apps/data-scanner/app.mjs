@@ -6,7 +6,6 @@ import * as ConfigContainer from './lib/config.cjs';
 import { createPgDbConnection } from './lib/db/index.mjs';
 import ModelBase from './lib/models/ModelBase.mjs';
 
-
 // Init Logger
 const logger = createLogger({
     type: LoggerTypes.Winston,
@@ -25,8 +24,8 @@ const repository = createRepository({
         user: ConfigContainer.config.db.user,
         database: ConfigContainer.config.db.database,
         password: ConfigContainer.config.db.password,
-        connectionsLimit: ConfigContainer.config.db.connectionsLimit
-    })
+        connectionsLimit: ConfigContainer.config.db.connectionsLimit,
+    }),
 });
 
 // Init Domain Model Layer

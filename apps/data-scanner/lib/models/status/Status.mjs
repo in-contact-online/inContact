@@ -1,8 +1,8 @@
 import ModelBase from '../ModelBase.mjs';
 
-export class Statuses extends ModelBase {
+export class Status extends ModelBase {
     /**
-     * @typedef {Class} Statuses
+     * @typedef {Class} Status
      * @property read
      * @property save
      * @property update
@@ -14,7 +14,7 @@ export class Statuses extends ModelBase {
      * @returns {Promise<Object>}
      */
     async readByPhone({ phoneNumber }) {
-        return this.repository.statuses.readByPhone({ phoneNumber });
+        return this.repository.status.readByPhone({ phoneNumber });
     }
 
     /**
@@ -22,10 +22,10 @@ export class Statuses extends ModelBase {
      * @param {String} phoneNumber - contact's phone number
      * @param {String} username - contact's username
      * @param {String} wasOnline - time which contact was online
-     * @param {String} checkDate - time in moment of getting statuses
+     * @param {String} checkDate - time in moment of getting status
      * @returns {Promise<Object>}
      */
     async save(params) {
-        return this.repository.statuses.save(params);
+        return this.repository.status.save(params);
     }
 }

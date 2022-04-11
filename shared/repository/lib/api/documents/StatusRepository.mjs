@@ -1,9 +1,9 @@
 import RepoBase from '../RepoBase.mjs';
 import { RepoError } from '../models/index.mjs';
 
-export class StatusesRepository extends RepoBase {
+export class StatusRepository extends RepoBase {
     /**
-     * @typedef {Class} StatusesRepository
+     * @typedef {Class} StatusRepository
      */
 
     /**
