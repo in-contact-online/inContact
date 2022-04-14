@@ -36,15 +36,12 @@ export class Sessions {
      */
     async init() {
         const sessions = await new Session().readAll();
-        console.log(sessions);
 
-        /*         const sessionFiles = await readDir(this.#config.sessionsFolder, '.session');
-        for (const sessionFile of sessionFiles) {
-            const session = await readSqlite(sessionFile, 'sessions');
+        for (const session of sessions) {
             const client = new Client(session, this.#config);
             await client.init();
             this.#pool.push(client);
-        } */
+        }
     }
 
     /**
