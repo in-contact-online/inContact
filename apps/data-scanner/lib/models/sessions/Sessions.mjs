@@ -1,6 +1,7 @@
 import { Client } from './Client.mjs';
 import { writeToFile, readDir, readSqlite, humanReadableDate } from '../../utils/index.mjs';
 import { Status } from '../status/Status.mjs';
+import { Session } from './Session.mjs';
 
 export class Sessions {
     /**
@@ -34,13 +35,16 @@ export class Sessions {
      * @returns {Promise<void>}
      */
     async init() {
-        const sessionFiles = await readDir(this.#config.sessionsFolder, '.session');
+        const sessions = await new Session().readAll();
+        console.log(sessions);
+
+        /*         const sessionFiles = await readDir(this.#config.sessionsFolder, '.session');
         for (const sessionFile of sessionFiles) {
             const session = await readSqlite(sessionFile, 'sessions');
             const client = new Client(session, this.#config);
             await client.init();
             this.#pool.push(client);
-        }
+        } */
     }
 
     /**

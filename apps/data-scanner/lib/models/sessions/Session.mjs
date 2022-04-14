@@ -4,6 +4,7 @@ export class Session extends ModelBase {
     /**
      * @typedef {Class} Session
      * @property readByPhone
+     * @property readAll
      * @property save
      * @property update
      */
@@ -15,6 +16,14 @@ export class Session extends ModelBase {
      */
     async readByPhone({ phone }) {
         return this.repository.session.readByPhone({ phone });
+    }
+
+    /**
+     * @method
+     * @returns {Promise<Object>}
+     */
+    async readAll() {
+        return this.repository.session.readAll();
     }
 
     /**

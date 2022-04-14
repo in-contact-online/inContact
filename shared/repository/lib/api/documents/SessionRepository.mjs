@@ -30,6 +30,17 @@ export class SessionRepository extends RepoBase {
 
     /**
      * @method
+     * @return {Promise<Object>} returns data saved in DB
+     */
+    async readAll() {
+        const result = await this.db.queryAsync('SELECT * FROM sessions').catch((err) => {
+            throw new RepoError(err);
+        });
+        return result && result.rows[0];
+    }
+
+    /**
+     * @method
      * @param {String} phone - Phone nubmer that activates the session
      * @param {String} authKey - Telegram session authentication key
      * @param {String} dcId - Telegram DC ID

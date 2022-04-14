@@ -12,7 +12,9 @@ export function start(config) {
         .get('/', (req, res) => res.send('Hello'))
         .get('/sessions_update', async (req, res) => {
             const newSessions = await updateSessions();
-            res.send(`New sessions:\n ${newSessions.map((session) => session.phone).join('\n')}`);
+            let sessionMessage = 'No message to ADD!';
+            if (newSessions.length !== 0) sessionMessage = newSessions.map((session) => session.phone).join(', ');
+            res.send('New sessions: ' + sessionMessage);
         })
         .listen(config.port, () => {
             logger.info(`Listening on ${config.port}`);

@@ -23,8 +23,11 @@ export async function updateSessions() {
 
         const session = new Session();
 
-        await session.save({ phone, dcId, serverAddress, port, authKey });
-        newSessions.push(await session.readByPhone({ phone }));
+        const sessionByPhone = await session.readByPhone({ phone });
+        if (!sessionByPhone) {
+            await session.save({ phone, dcId, serverAddress, port, authKey });
+            newSessions.push(await session.readByPhone({ phone }));
+        }
     }
     return newSessions;
 }
