@@ -1,6 +1,6 @@
 import { Client } from './Client.mjs';
-import { writeToFile, readDir, readSqlite, humanReadableDate } from '../../utils/index.mjs';
-import { Status } from '../status/Status.mjs';
+import { humanReadableDate } from '../../utils/index.mjs';
+import { Status } from '../status/index.mjs';
 import { Session } from './Session.mjs';
 
 export class Sessions {

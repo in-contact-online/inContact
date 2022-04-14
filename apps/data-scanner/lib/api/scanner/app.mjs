@@ -1,5 +1,5 @@
 import express from 'express';
-import { updateSessions } from '../../utils/updateSessions.mjs';
+import { updateSessions } from '../../scripts/index.mjs';
 import { Api } from 'telegram';
 import { CronJob } from 'cron';
 import { Sessions } from '../../models/index.mjs';
