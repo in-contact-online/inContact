@@ -1,5 +1,7 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
+import { readdir } from 'fs';
+import path from 'path';
 import { Session } from '../models/index.mjs';
 import * as ConfigContainer from '../config.cjs';
 

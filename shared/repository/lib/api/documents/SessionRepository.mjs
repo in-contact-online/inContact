@@ -51,8 +51,8 @@ export class SessionRepository extends RepoBase {
     async save({ phone, authKey, dcId, serverAddress, port }) {
         const result = await this.db
             .queryAsync(
-                'INSERT INTO sessions (phone, auth_key, dc_id, server_address, port, active) VALUES ($1, $2, $3, $4, $5, $6)',
-                [phone, authKey, dcId, serverAddress, port, true]
+                'INSERT INTO sessions (phone, auth_key, dc_id, server_address, port) VALUES ($1, $2, $3, $4, $5)',
+                [phone, authKey, dcId, serverAddress, port]
             )
             .catch((err) => {
                 throw new RepoError(err);
