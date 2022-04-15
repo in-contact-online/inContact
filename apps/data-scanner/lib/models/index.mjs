@@ -1,3 +1,3 @@
-export * from './statuses/index.mjs';
+export * from './status/index.mjs';
 export * from './errors/index.mjs';
-export * from './session/index.mjs';
+export * from './sessions/index.mjs';

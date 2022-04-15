@@ -22,7 +22,7 @@ export class UserRepository extends RepoBase {
      * @return {Promise<Object>} returns data saved in DB
      */
     async read({ userId }) {
-        const result = await this.db.queryAsync('SELECT * FROM users WHERE user_id = $1', [userId]).catch((err) => {
+        const result = await this.db.queryAsync('SELECT * FROM users WHERE id = $1', [userId]).catch((err) => {
             throw new RepoError(err);
         });
         return result && result.rows[0];
@@ -39,7 +39,7 @@ export class UserRepository extends RepoBase {
     async save({ userId, firstName, lastName, chatId }) {
         const result = await this.db
             .queryAsync(
-                'INSERT INTO users (user_id, first_name, second_name, active, chat_id) VALUES ($1, $2, $3, $4, $5)',
+                'INSERT INTO users (id, first_name, second_name, active, chat_id) VALUES ($1, $2, $3, $4, $5)',
                 [userId, firstName, lastName, true, chatId]
             )
             .catch((err) => {
@@ -56,7 +56,7 @@ export class UserRepository extends RepoBase {
      */
     async update({ userId, active }) {
         const result = await this.db
-            .queryAsync('UPDATE users SET active = $1, updated_at = NOW() WHERE user_id = $2', [active, userId])
+            .queryAsync('UPDATE users SET active = $1, updated_at = NOW() WHERE id = $2', [active, userId])
             .catch((err) => {
                 throw new RepoError(err);
             });
