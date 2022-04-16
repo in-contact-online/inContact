@@ -22,7 +22,7 @@ export class SessionRepository extends RepoBase {
      * @return {Promise<Object>} returns data saved in DB
      */
     async readByPhone({ phone }) {
-        const result = await this.db.queryAsync('SELECT * FROM sessions WHERE phone = $1', [phone]).catch((err) => {
+        const result = await this.db.queryAsync('SELECT * FROM sessions WHERE id = $1', [phone]).catch((err) => {
             throw new RepoError(err);
         });
         return result && result.rows[0];
@@ -51,7 +51,7 @@ export class SessionRepository extends RepoBase {
     async save({ phone, authKey, dcId, serverAddress, port }) {
         const result = await this.db
             .queryAsync(
-                'INSERT INTO sessions (phone, auth_key, dc_id, server_address, port) VALUES ($1, $2, $3, $4, $5)',
+                'INSERT INTO sessions (id, auth_key, dc_id, server_address, port) VALUES ($1, $2, $3, $4, $5)',
                 [phone, authKey, dcId, serverAddress, port]
             )
             .catch((err) => {
