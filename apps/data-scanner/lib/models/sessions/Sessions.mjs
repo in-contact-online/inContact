@@ -38,11 +38,34 @@ export class Sessions {
         const sessions = await new Session().readAll();
 
         for (const session of sessions) {
-            const client = new Client(session, this.#config);
+            const client = new Client(session, this.#config); //todo: extend Client class with the sessionId prop
             await client.init();
-            this.#pool.push(client);
+            this.#pool.push(client); // todo: replace array with object { sessionId: client }
+            // [{sessionId, api }, {sessionId, api }, {sessionId, api }]
+            // { 
+            //     1234: {sessionId:1234, api },
+            //     3456: {sessionId:3456, api },
+            // }
         }
     }
+
+    // async add(session) {
+        // todo: implement logic to add session to the pool
+    // }
+
+    // async del() {
+        // todo: implement logic to remove session to the pool
+        // todo: mark in DB as expired
+    // }
+
+    // #findSessionById(sessionId) {}
+
+    // todo: addPones method. find session with the flag full eqaul to false and add phone to this session
+    // todo: add session full flag in case session could not add more phones
+
+    // todo: deletePones method. find session and remove phone contact
+    // client = this.#pool.find(_clit => client.sessionId=== sessionsId)
+    // await client.invoke(remove phone command)
 
     /**
      * @method
@@ -51,6 +74,9 @@ export class Sessions {
      */
     async invokeEach(command) {
         for (const client of this.#pool) {
+            // todo: implement mechanism/functionality that define session expiration/invalid state
+            // if session was expired or become invalid than clear this session id in tracked_phoned table
+            // remove session from pool invoke this.del(sessionId)
             const result = await client.invoke(command);
 
             for (let user of result.users) {

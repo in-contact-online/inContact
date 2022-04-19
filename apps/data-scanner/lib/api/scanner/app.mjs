@@ -30,6 +30,12 @@ async function scanStatuses(config) {
         config.cron,
         async function () {
             await sessions.invokeEach(new Api.contacts.GetContacts({}));
+            // todo: check for new sessions addSessionsList
+            // todo: sessions.add(addSessionsList)
+            // todo: add functionality that is checking phone numbers that should be added or removed
+            // todo: read DB and return two lists (addList, removeList)
+            // sessions.addPhones(addList); [{trackedPhone: 1231313}, ...]
+            // sessions.deletePhones(removeList); [{trackedPhone: 1231313, sessionId: 1231313}, ...]
         },
         null,
         true,

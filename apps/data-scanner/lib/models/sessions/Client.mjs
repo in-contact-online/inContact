@@ -29,7 +29,7 @@ export class Client {
      * @param {String} apiConfig.apiHash - Telegram Api hash
      */
     constructor(sessionConfig, apiConfig) {
-        this.#uid = uuidv4();
+        this.#uid = uuidv4();// todo: replce uid with sessionId
         this.#api = new TelegramClientAdapter(sessionConfig, apiConfig);
     }
 
