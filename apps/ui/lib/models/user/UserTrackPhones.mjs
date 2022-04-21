@@ -2,7 +2,7 @@ import ModelBase from '../ModelBase.mjs';
 
 export class UserTrackPhones extends ModelBase {
     /**
-     * @typedef {Class} User
+     * @typedef {Class} UserTrackPhones
      * @property listAll
      * @property listTracked
      * @property save
@@ -28,14 +28,14 @@ export class UserTrackPhones extends ModelBase {
         return this.repository.userPhones.read({ userId, tracked: true });
     }
 
-        /**
+    /**
      * @method
      * @param {Number} userId - user identifier
      * @param {String} phone - tracked phone
      * @returns {Promise<Object>}
      */
     async readByPhone({ userId, phone }) {
-            return this.repository.userPhones.readOne({ userId, phone });
+        return this.repository.userPhones.readOne({ userId, phone });
     }
 
     /**

@@ -33,7 +33,7 @@ export class Sessions {
             await client.init();
             Sessions.pool.push(client); // todo: replace array with object { sessionId: client }
             // [{sessionId, api }, {sessionId, api }, {sessionId, api }]
-            // { 
+            // {
             //     1234: {sessionId:1234, api },
             //     3456: {sessionId:3456, api },
             // }
@@ -41,12 +41,12 @@ export class Sessions {
     }
 
     // async add(session) {
-        // todo: implement logic to add session to the pool
+    // todo: implement logic to add session to the pool
     // }
 
     // async del() {
-        // todo: implement logic to remove session to the pool
-        // todo: mark in DB as expired
+    // todo: implement logic to remove session to the pool
+    // todo: mark in DB as expired
     // }
 
     // #findSessionById(sessionId) {}

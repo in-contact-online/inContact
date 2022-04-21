@@ -1,4 +1,10 @@
-import { UserRepository, UserPhonesRepository, StatusRepository, SessionRepository } from './documents/index.mjs';
+import {
+    UserRepository,
+    UserPhonesRepository,
+    StatusRepository,
+    SessionRepository,
+    PhonesRepository,
+} from './documents/index.mjs';
 
 export class Repository {
     /**
@@ -38,5 +44,6 @@ export class Repository {
         this.userPhones = new UserPhonesRepository(options);
         this.status = new StatusRepository(options);
         this.session = new SessionRepository(options);
+        this.phones = new PhonesRepository(options);
     }
 }
