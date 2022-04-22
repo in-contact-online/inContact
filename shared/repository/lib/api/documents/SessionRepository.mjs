@@ -16,35 +16,47 @@ export class SessionRepository extends RepoBase {
         super(db);
     }
 
-    /**
-     * @method
-     * @param {String} phone - Phone nubmer that activates the session
-     * @return {Promise<Object>} returns data saved in DB
-     */
-    async readByPhone({ phone }) {
-        const result = await this.db.queryAsync('SELECT * FROM sessions WHERE id = $1', [phone]).catch((err) => {
+    async readBySessionId({ sessionId }) {
+        const result = await this.db.queryAsync('SELECT * FROM sessions WHERE id = $1', [sessionId]).catch((err) => {
             throw new RepoError(err);
         });
         return result && result.rows[0];
     }
 
-    /**
-     * @method
-     * @return {Promise<Object>} returns data saved in DB
-     */
-    async readAll() {
-        const result = await this.db.queryAsync('SELECT * FROM sessions').catch((err) => {
+    async update({ sessionId, full, valid }) {
+        const result = await this.db
+            .queryAsync('UPDATE sessions SET is_full = $1, valid = $2 WHERE id = $3', [full, valid, sessionId])
+            .catch((err) => {
+                throw new RepoError(err);
+            });
+        return result;
+    }
+
+    async readAll({ valid, full }) {
+        let sql = 'SELECT * FROM sessions';
+        const params = [];
+        if (typeof valid === 'boolean') {
+            sql += ' WHERE valid = $1';
+            params.push(valid);
+        }
+
+        if (typeof full === 'boolean') {
+            sql += ' AND is_full = $2';
+            params.push(full);
+        }
+
+        const result = await this.db.queryAsync(sql, params).catch((err) => {
             throw new RepoError(err);
         });
         return result && result.rows;
     }
 
     /**
- * @method
- * @param {Number} page - page number
- * @param {Number} size - page size
- * @return {Promise<Object>} returns data saved in DB
- */
+     * @method
+     * @param {Number} page - page number
+     * @param {Number} size - page size
+     * @return {Promise<Object>} returns data saved in DB
+     */
     async readList({ page, size }) {
         const sql = `SELECT * FROM sessions LIMIT ${size} OFFSET ${page * size}`;
         const result = await this.db.queryAsync(sql).catch((err) => {
@@ -73,11 +85,12 @@ export class SessionRepository extends RepoBase {
      * @param {String} port - Telegram session port
      * @returns {Promise<Object>}
      */
-    async save({ phone, authKey, dcId, serverAddress, port }) {
+
+    async save({ sessionId, authKey, dcId, serverAddress, port, valid, full }) {
         const result = await this.db
             .queryAsync(
-                'INSERT INTO sessions (id, auth_key, dc_id, server_address, port) VALUES ($1, $2, $3, $4, $5)',
-                [phone, authKey, dcId, serverAddress, port]
+                'INSERT INTO sessions (id, auth_key, dc_id, server_address, port, valid, full) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+                [sessionId, authKey, dcId, serverAddress, port, valid, full]
             )
             .catch((err) => {
                 throw new RepoError(err);

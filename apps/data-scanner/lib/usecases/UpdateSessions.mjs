@@ -17,11 +17,11 @@ export class UpdateSessions {
 
             const session = new Session();
 
-            const sessionByPhone = await session.readByPhone({ phone });
+            const sessionByPhone = await session.readBySessionId({ sessionId: phone });
 
             if (!sessionByPhone) {
-                await session.save({ phone, dcId, serverAddress, port, authKey });
-                newSessions.push(await session.readByPhone({ phone }));
+                await session.save({ sessionId: phone, dcId, serverAddress, port, authKey });
+                newSessions.push(await session.readBySessionId({ sessionId: phone }));
             }
         }
 

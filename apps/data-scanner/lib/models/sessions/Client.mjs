@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from 'uuid'
-import { TelegramClientAdapter } from './TelegramClientAdapter.mjs'
+import { v4 as uuidv4 } from 'uuid';
+import { TelegramClientAdapter } from './TelegramClientAdapter.mjs';
 
 export class Client {
     /**
@@ -7,7 +7,7 @@ export class Client {
      * @method init
      * @method invoke
      * @property uid
-    */
+     */
 
     /**
      * @property {Object|null}
@@ -29,7 +29,7 @@ export class Client {
      * @param {String} apiConfig.apiHash - Telegram Api hash
      */
     constructor(sessionConfig, apiConfig) {
-        this.#uid = uuidv4();// todo: replce uid with sessionId
+        this.#uid = uuidv4(); // todo: replce uid with sessionId
         this.#api = new TelegramClientAdapter(sessionConfig, apiConfig);
     }
 
@@ -48,7 +48,6 @@ export class Client {
      */
     async invoke(command) {
         return this.#api.invoke(command);
-
     }
 
     /**

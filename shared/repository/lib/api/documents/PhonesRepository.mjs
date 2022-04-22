@@ -18,17 +18,15 @@ export class PhonesRepository extends RepoBase {
 
     /**
      * @method
-     * @param {boolean} tracked - the flag that indicates do the phone is tracking
+     * @param {String} tracked - flag for phone numbers which should be added to traking
+     * @param {String} withSession - flag for phone numbers which have session field filled
      * @return {Promise<Object>} returns data saved in DB
      */
-    async read({ tracked }) {
-        let sql = 'SELECT * FROM tracked_phones';
-        const params = [];
-        if (typeof tracked === 'boolean') {
-            sql += ' WHERE tracked = $1';
-            params.push(tracked);
-        }
-        const result = await this.db.queryAsync(sql, params).catch((err) => {
+    async read({ tracked, withSession }) {
+        let sql = 'SELECT * FROM tracked_phones WHERE tracked = $1 AND session_id';
+        withSession ? (sql += ' IS NOT NULL') : (sql += ' IS NULL');
+
+        const result = await this.db.queryAsync(sql, [tracked]).catch((err) => {
             throw new RepoError(err);
         });
         return result && result.rows;
@@ -36,13 +34,13 @@ export class PhonesRepository extends RepoBase {
 
     /**
      * @method
-     * @param {String} trackedPhoneId - tracked phone identifier
+     * @param {String} trackedPhone - tracked phonenumber which session we should update
      * @param {String} sessionId - session identifier
      * @returns {Promise<Object>}
      */
-    async update({ trackedPhoneId, sessionId }) {
+    async update({ trackedPhone, sessionId }) {
         const result = await this.db
-            .queryAsync('UPDATE tracked_phones SET session_id = $1 WHERE id = $2', [sessionId, trackedPhoneId])
+            .queryAsync('UPDATE tracked_phones SET session_id = $1 WHERE tracked_phone = $2', [sessionId, trackedPhone])
             .catch((err) => {
                 throw new RepoError(err);
             });

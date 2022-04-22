@@ -1,7 +1,10 @@
 import { Client } from './Client.mjs';
+import { Session } from './Session.mjs';
 import { humanReadableDate } from '../../utils/index.mjs';
 import { Status } from '../status/index.mjs';
-import { Session } from './Session.mjs';
+import { Api } from 'telegram';
+import { generateRandomBigInt } from 'telegram/Helpers';
+import { Phones } from '../index.mjs';
 
 export class Sessions {
     /**
@@ -50,6 +53,62 @@ export class Sessions {
     // }
 
     // #findSessionById(sessionId) {}
+
+    async addOnePhone(phoneNumber) {
+        const avaliablePool = this.#pool['avaliable'];
+        let result = null;
+
+        if (avaliablePool.length === 0) {
+            console.log('There are no avaliable sessions!');
+            return false;
+        }
+
+        await avaliablePool[0].client
+            .invoke(
+                new Api.contacts.ImportContacts({
+                    contacts: [
+                        new Api.InputPhoneContact({
+                            clientId: generateRandomBigInt(),
+                            phone: phoneNumber,
+                            firstName: 'name',
+                            lastName: 'lastName',
+                        }),
+                    ],
+                })
+            )
+            .then(async (data) => {
+                if (data.users[0].phone) {
+                    result = '+' + data.users[0].phone;
+                    await new Phones().updateSession({
+                        trackedPhone: result,
+                        sessionId: avaliablePool[0].sessionId,
+                    });
+                }
+            });
+
+        return { addedPhone: result, sessionId: avaliablePool[0].sessionId };
+    }
+
+    /**
+     * @method
+     * @returns {Promise<Object>}
+     */
+    async addPhones(phones, attempts = 2) {
+        const addedPhones = [];
+        let result = null;
+        let errors = 0;
+
+        for (let phone of phones) {
+            do {
+                result = await addOnePhone(phone);
+                errors++;
+            } while (!result.addedPhone || errors < attempts);
+
+            if (result.addedPhone) addedPhones.push(result);
+            else await new Session().update({ sessionId: result.sessionId, full: false, valid: true });
+        }
+        return addedPhones;
+    }
 
     // todo: addPones method. find session with the flag full eqaul to false and add phone to this session
     // todo: add session full flag in case session could not add more phones
