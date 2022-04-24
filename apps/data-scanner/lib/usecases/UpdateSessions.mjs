@@ -1,9 +1,9 @@
-import { Session } from '../../../models/index.mjs';
-import { readDir, readSqlite } from '../../../utils/index.mjs';
-import * as ConfigContainer from '../../../config.cjs';
+import { Session } from '../models/index.mjs';
+import { readDir, readSqlite } from '../utils/index.mjs';
+import * as ConfigContainer from '../config.cjs';
 
 export class UpdateSessions {
-    async execute(params) {
+    async execute() {
         const sessionFiles = await readDir(ConfigContainer.config.service.sessionsFolder, '.session');
         const newSessions = [];
 

@@ -1,7 +1,9 @@
 import { Router } from 'express';
-import { sessions } from './routs/index.mjs';
+import { sessions } from './routes/index.mjs';
 
-export let router = Router();
+const router = Router();
 
 router.get('/', (req, res) => res.send('Hello'));
 router.get('/sessions_update', sessions.update);
+
+export default router;

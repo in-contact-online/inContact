@@ -11,36 +11,27 @@ export class Sessions {
      */
 
     /**
-     * @property {Object|null}
-     */
-    #config = null;
-
-    /**
      * @property {Client[]}
      */
-    #pool = [];
+    static pool = null;
 
     /**
      * @param {Object} config - service configuration
      * @param {String} config.sessionsFolder - folder path with telegram sessions
      * @param {String} config.apiId - Telegram Api id
      * @param {String} config.apiHash - Telegram Api hash
-     */
-    constructor(config) {
-        this.#config = config;
-    }
-
-    /**
-     * @method
      * @returns {Promise<void>}
      */
-    async init() {
+    static async init(config) {
+        if (Sessions.pool) return;
+        Sessions.pool = [];
+
         const sessions = await new Session().readAll();
 
         for (const session of sessions) {
-            const client = new Client(session, this.#config); //todo: extend Client class with the sessionId prop
+            const client = new Client(session, config); //todo: extend Client class with the sessionId prop
             await client.init();
-            this.#pool.push(client); // todo: replace array with object { sessionId: client }
+            Sessions.pool.push(client); // todo: replace array with object { sessionId: client }
             // [{sessionId, api }, {sessionId, api }, {sessionId, api }]
             // { 
             //     1234: {sessionId:1234, api },
@@ -72,8 +63,8 @@ export class Sessions {
      * @param {Object} command - Telegram command to be invoked
      * @returns {Promise<void>}
      */
-    async invokeEach(command) {
-        for (const client of this.#pool) {
+    static async invokeEach(command) {
+        for (const client of Sessions.pool) {
             // todo: implement mechanism/functionality that define session expiration/invalid state
             // if session was expired or become invalid than clear this session id in tracked_phoned table
             // remove session from pool invoke this.del(sessionId)
