@@ -46,6 +46,6 @@ export default class Scanner {
      * @return {undefined}
      */
      stop() {
-          this.#cronJob.stop()
+          this.#cronJob.stop();
      }
 }
