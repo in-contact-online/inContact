@@ -8,20 +8,18 @@ export class UpdateSessions {
         const newSessions = [];
 
         for (const sessionFile of sessionFiles) {
-            const phone = sessionFile.match(/([^/]*)\.session/)[1];
+            const sessionId = sessionFile.match(/([^/]*)\.session/)[1];
 
             const { dc_id: dcId, server_address: serverAddress, port, auth_key: authKey } = await readSqlite(
                 sessionFile,
                 'sessions'
             );
 
-            const session = new Session();
+            const session = new Session().readBySessionId({ sessionId });
 
-            const sessionByPhone = await session.readBySessionId({ sessionId: phone });
-
-            if (!sessionByPhone) {
-                await session.save({ sessionId: phone, dcId, serverAddress, port, authKey });
-                newSessions.push(await session.readBySessionId({ sessionId: phone }));
+            if (!session) {
+                await session.save({ sessionId, dcId, serverAddress, port, authKey });
+                newSessions.push(await session.readBySessionId({ sessionId }));
             }
         }
 

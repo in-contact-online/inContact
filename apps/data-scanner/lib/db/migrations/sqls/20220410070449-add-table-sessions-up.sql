@@ -14,4 +14,5 @@ CREATE TABLE sessions(
     dc_id TEXT NOT NULL,
     server_address INET NOT NULL,
     port INT NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE
 );
