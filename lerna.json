@@ -6,6 +6,7 @@
     "apps/data-analyzer",
     "apps/notificator",
     "apps/data-scanner",
+    "apps/monitor-server",
     "apps/ui"
   ],
   "version": "1.0.0-alpha.0"

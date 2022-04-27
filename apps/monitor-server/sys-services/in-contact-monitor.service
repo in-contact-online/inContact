@@ -1,0 +1,15 @@
+[Unit]
+Description="In Contact Monitor Service"
+
+[Service]
+ExecStart=/usr/bin/node --experimental-modules --es-module-specifier-resolution=node app
+WorkingDirectory=/home/ubuntu/inContact/apps/monitor
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=in-contact-monitor
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
