@@ -9,7 +9,6 @@ export class ReadSystemHealth extends UseCaseBase {
     async execute() {
         const serviceStatuses = await new System().readStatuses();
         const resourceUsage = await new System().readResourceUsage();
-        //todo: find way how to handle results one by one
         return {
             serviceStatuses,
             resourceUsage

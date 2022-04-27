@@ -4,11 +4,14 @@ import UseCaseBase from './UseCaseBase.mjs';
 
 export class ReadContacts extends UseCaseBase {
     static validationRules = {
-
+        page: ['required', 'integer'],
+        size: ['required', 'integer']
     }
+
     async execute(params) {
         const contacts = await new Contact().readList(params);
-        //todo: find way how to handle results one by one
-        return contacts;
+        const total = await new Contact().getTotal();
+
+        return { contacts, total };
     }
 }

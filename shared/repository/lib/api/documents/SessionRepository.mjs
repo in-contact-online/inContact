@@ -40,6 +40,31 @@ export class SessionRepository extends RepoBase {
     }
 
     /**
+ * @method
+ * @param {Number} page - page number
+ * @param {Number} size - page size
+ * @return {Promise<Object>} returns data saved in DB
+ */
+    async readList({ page, size }) {
+        const sql = `SELECT * FROM sessions LIMIT ${size} OFFSET ${page * size}`;
+        const result = await this.db.queryAsync(sql).catch((err) => {
+            throw new RepoError(err);
+        });
+        return result && result.rows;
+    }
+
+    /**
+     * @method
+     * @return {Promise<Object>} returns data saved in DB
+     */
+    async total() {
+        const result = await this.db.queryAsync('SELECT count(*) FROM sessions').catch((err) => {
+            throw new RepoError(err);
+        });
+        return result && result.rows;
+    }
+
+    /**
      * @method
      * @param {String} phone - Phone nubmer that activates the session
      * @param {String} authKey - Telegram session authentication key

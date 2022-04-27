@@ -4,11 +4,12 @@ import UseCaseBase from './UseCaseBase.mjs';
 
 export class ReadUsers extends UseCaseBase {
     static validationRules = {
-
+        page: ['required', 'integer'],
+        size: ['required', 'integer']
     }
     async execute(params) {
         const users = await new User().readList(params);
-        //todo: find way how to handle results one by one
-        return users;
+        const total = await new User().getTotal();
+        return { users, total };
     }
 }

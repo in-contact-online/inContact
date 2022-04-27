@@ -5,8 +5,8 @@ export const contacts = {
     readList: makeRequestHandler(
         ReadContacts,
         (req) => ({
-            from: req.query.from,
-            to: req.query.to,
+            page: req.query.page,
+            size: req.query.size,
         }),
         (result, res) => {
             res.send(result);

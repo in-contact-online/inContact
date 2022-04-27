@@ -5,8 +5,8 @@ export const sessions = {
     readList: makeRequestHandler(
         ReadSessions,
         (req) => ({
-            from: req.query.from,
-            to: req.query.to,
+            page: req.query.page,
+            size: req.query.size,
         }),
         (result, res) => {
             res.send(result);

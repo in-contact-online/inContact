@@ -30,6 +30,31 @@ export class UserRepository extends RepoBase {
 
     /**
      * @method
+     * @param {Number} page - page number
+     * @param {Number} size - page size
+     * @return {Promise<Object>} returns data saved in DB
+     */
+    async readList({ page, size }) {
+        const sql = `SELECT * FROM users LIMIT ${size} OFFSET ${page * size}`;
+        const result = await this.db.queryAsync(sql).catch((err) => {
+            throw new RepoError(err);
+        });
+        return result && result.rows;
+    }
+
+    /**
+     * @method
+     * @return {Promise<Object>} returns data saved in DB
+     */
+     async total() {
+        const result = await this.db.queryAsync('SELECT count(*) FROM users').catch((err) => {
+            throw new RepoError(err);
+        });
+        return result && result.rows;
+    }
+
+    /**
+     * @method
      * @param {Number} userId - user identifier
      * @param {Number} chatId - chat identifier
      * @param {String} firstName - user first name

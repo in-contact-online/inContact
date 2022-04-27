@@ -1,7 +1,7 @@
 import logger from '../logger';
 
 export async function runUseCase(UseCase, { params }) {
-    return new UseCase().execute(params);
+    return new UseCase().run(params);
 }
 
 export function makeRequestHandler(UseCase, mapToParams, mapToResponse) {

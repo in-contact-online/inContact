@@ -4,11 +4,13 @@ import UseCaseBase from './UseCaseBase.mjs';
 
 export class ReadSessions extends UseCaseBase {
     static validationRules = {
-
+        page: ['required', 'integer'],
+        size: ['required', 'integer']
     }
+
     async execute(params) {
-        const sessionList = await new Session().readList(params);
-        //todo: find way how to handle results one by one
-        return sessionList;
+        const sessions = await new Session().readList(params);
+        const total = await new Session().getTotal();
+        return { sessions, total };
     }
 }

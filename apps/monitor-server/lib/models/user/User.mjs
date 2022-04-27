@@ -8,11 +8,20 @@ export class User extends ModelBase {
 
     /**
      * @method
-     * @param {String} params - filter parameters
+     * @param {Object} params - filter parameters
+     * @param {Number} params.page - page number
+     * @param {Number} params.size - page size
      * @returns {Promise<Object>}
      */
     async readList(params) {
-        console.log(params);
-        return this.repository.session.readAll();
+        return this.repository.user.readList(params);
+    }
+
+    /**
+     * @method
+     * @returns {Promise<Object>}
+     */
+     async getTotal() {
+        return this.repository.user.total();
     }
 }
