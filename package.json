@@ -14,7 +14,8 @@
     "clean:node_modules": "rimraf node_modules",
     "reset": "yarn run clean && yarn install",
     "start:ui": "cd apps/ui && yarn start",
-    "start:scanner": "cd apps/data-scanner && yarn start"
+    "start:scanner": "cd apps/data-scanner && yarn start",
+    "start:monitor": "cd apps/monitor-server && yarn start"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "apps/data-analyzer",
     "apps/data-scanner",
     "apps/notificator",
+    "apps/monitor-server",
     "apps/ui"
   ],
   "private": true,
