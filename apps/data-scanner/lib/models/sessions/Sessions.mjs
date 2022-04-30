@@ -27,10 +27,7 @@ export class Sessions {
      */
     static async init(config) {
         if (Sessions.pool) return;
-        Sessions.pool = {
-            available: new Map(),
-            filled: new Map(),
-        };
+        Sessions.pool = [];
 
         const sessions = await new Session().readAll();
 
@@ -38,10 +35,43 @@ export class Sessions {
             const client = new Client(session, config);
             await client.init();
 
-            if (session.isFull) Sessions.pool.filled.set(session.id, { sessionId: session.id, client });
-            else Sessions.available.set(session.id, { sessionId: session.id, client });
+            Sessions.pool.push({
+                id: session.id,
+                client,
+                isFull: session.is_full,
+                valid: session_valid,
+            });
         }
     }
+
+    /* 
+
+    pool = [
+        {
+            id: session.id,
+            client,
+            isFull: session.is_full,
+            valid: session_valid
+        }
+    ]
+
+
+  pool = 
+  {
+      filled: 
+             {
+                 "123":client1, 
+                 "345":client2, 
+                  ...
+             },
+  
+       avaliable: 
+             {
+                   "666":client3, 
+                   "777":client4, 
+                    ...
+             }
+   } */
 
     // async add(session) {
     // todo: implement logic to add session to the pool
@@ -51,12 +81,6 @@ export class Sessions {
     // todo: implement logic to remove session to the pool
     // todo: mark in DB as expired
     // }
-
-    static async findSessionById(sessionId) {
-        if (Sessions.pool.filled[sessionId]) return Sessions.pool.filled[sessionId];
-        else if (Sessions.pool.available[sessionId]) return Sessions.pool.available[sessionId];
-        else return null;
-    }
 
     static async addContact(client, phoneNumber) {
         await client
@@ -77,37 +101,33 @@ export class Sessions {
             });
     }
 
-    static async addSessionToFilled(session) {
-        Sessions.pool.available.delete(session.sessionId);
-        Sessions.pool.filled.set(session.sessionId, session);
-        await new Session().update({ sessionId: session.sessionId, isFull: true });
-    }
-
     /**
      * @method
      * @returns {Promise<Object>}
      */
     async addContacts(phones) {
         for (let phoneNumber of phones) {
-            const iterator = pool.available.entries();
-            let session = iterator.next().value;
+            for (const index in Sessions.pool) {
+                if (Sessions.pool.isFull || !Sessions.pool.valid) break;
 
-            let result = null;
-
-            while (session && !result) {
+                let result = null;
                 let attempts = 0;
-                while (!result && attempts < 3) {
-                    result = await Session.addContact(session.client, phoneNumber);
-                    if (result)
-                        await new Contact().update({
-                            trackedPhone: result,
-                            sessionId: session.sessionId,
-                        });
 
-                    attempts += 1;
+                while (!result || attempts < 3) {
+                    result = await Sessions.addContact(Sessions.pool[index].client, phoneNumber);
+                    attempts++;
                 }
-                if (!result) await addSessionToFilled(session);
-                session = session.next().value;
+
+                if (result) {
+                    await new Contact().update({
+                        trackedPhone: result,
+                        sessionId: Sessions.pool[index].id,
+                    });
+                    break;
+                } else {
+                    Sessions.pool[index].isFull = true;
+                    await new Session().update({ sessionId: Sessions.pool[index].id, isFull: true });
+                }
             }
         }
     }
@@ -122,11 +142,13 @@ export class Sessions {
      * @returns {Promise<void>}
      */
     static async invokeEach(command) {
-        for (const client of Sessions.pool) {
+        for (const poolItem of Sessions.pool) {
             // todo: implement mechanism/functionality that define session expiration/invalid state
             // if session was expired or become invalid than clear this session id in tracked_phoned table
             // remove session from pool invoke this.del(sessionId)
-            const result = await client.invoke(command);
+
+            if (!poolItem.valid) break;
+            const result = await poolItem.client.invoke(command);
 
             for (let user of result.users) {
                 if (user.status) {
@@ -134,14 +156,12 @@ export class Sessions {
                         user.status.className === 'UserStatusOnline' ? null : humanReadableDate(user.status.wasOnline);
 
                     if (wasOnline !== undefined) {
-                        const params = {
+                        await new Status().save({
                             phoneNumber: user.phone,
                             username: user.username,
                             wasOnline,
                             checkDate: new Date().toISOString(),
-                        };
-
-                        await new Status().save(params);
+                        });
                     }
                 }
             }
