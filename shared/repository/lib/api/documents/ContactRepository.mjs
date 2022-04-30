@@ -40,40 +40,44 @@ export class ContactRepository extends RepoBase {
      * @param {boolean} withSession - flag that indicates does contact have session
      * @return {Promise<Object>} returns data saved in DB
      */
-    async read({ userId, tracked, trackedPhone, sessionId, withSession }) {
+    async read(params) {
         let sql = 'SELECT * FROM tracked_phones';
-        let params = '';
+        let sqlParams = '';
 
-        if (typeof userId === 'number') {
-            params += ` user_id = ${userId}`;
-        }
+        if (params) {
+            const { userId, tracked, trackedPhone, sessionId, withSession } = params;
 
-        if (typeof tracked === 'boolean') {
-            params += params ? ' AND' : '';
-            params += ` tracked = ${tracked}`;
-        }
-
-        if (typeof trackedPhone === 'string') {
-            params += params ? ' AND' : '';
-            params += ` tracked_phone = ${trackedPhone}`;
-        }
-
-        if (typeof sessionId === 'string') {
-            params += params ? ' AND' : '';
-            params += ` session_id = ${sessionId}`;
-        }
-
-        if (typeof withSession === 'boolean') {
-            if (withSession) {
-                params += params ? ' AND' : '';
-                params += ' session_id IS NOT NULL';
-            } else {
-                params += params ? ' AND' : '';
-                params += ' session_id IS NULL';
+            if (typeof userId === 'number') {
+                sqlParams += ` user_id = ${userId}`;
             }
-        }
 
-        if (params !== '') sql += ' WHERE' + params;
+            if (typeof tracked === 'boolean') {
+                sqlParams += sqlParams ? ' AND' : '';
+                sqlParams += ` tracked = ${tracked}`;
+            }
+
+            if (typeof trackedPhone === 'string') {
+                sqlParams += sqlParams ? ' AND' : '';
+                sqlParams += ` tracked_phone = ${trackedPhone}`;
+            }
+
+            if (typeof sessionId === 'string') {
+                sqlParams += sqlParams ? ' AND' : '';
+                sqlParams += ` session_id = ${sessionId}`;
+            }
+
+            if (typeof withSession === 'boolean') {
+                if (withSession) {
+                    sqlParams += sqlParams ? ' AND' : '';
+                    sqlParams += ' session_id IS NOT NULL';
+                } else {
+                    sqlParams += sqlParams ? ' AND' : '';
+                    sqlParams += ' session_id IS NULL';
+                }
+            }
+
+            if (sqlParams !== '') sql += ' WHERE' + sqlParams;
+        }
 
         const result = await this.db.queryAsync(sql).catch((err) => {
             throw new RepoError(err);

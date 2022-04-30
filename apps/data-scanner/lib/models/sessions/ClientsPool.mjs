@@ -29,10 +29,9 @@ export class ClientsPool {
         if (ClientsPool.pool) return;
         ClientsPool.pool = [];
 
-        const sessions = await new Session().readAll();
+        const sessions = await new Session().readAll({ valid: true });
 
         for (const session of sessions) {
-            if (!session.valid) continue;
             const client = new Client(session, config);
             await client.init();
             ClientsPool.pool.push(client);
@@ -63,7 +62,8 @@ export class ClientsPool {
                 })
             )
             .then(async (data) => {
-                return data.users[0].phone ? '+' + data.users[0].phone : null;
+                console.log('Adding ' + JSON.stringify(data));
+                return data.users[0] ? '+' + data.users[0].phone : null;
             });
     }
 

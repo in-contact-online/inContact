@@ -60,20 +60,26 @@ export class SessionRepository extends RepoBase {
      * @param {boolean} valid - is session valid
      * @return {Promise<Object>} returns data saved in DB
      */
-    async readAll({ valid, isFull }) {
+    async readAll(params) {
         let sql = 'SELECT * FROM sessions';
-        const params = [];
-        if (typeof valid === 'boolean') {
-            sql += ' WHERE valid = $1';
-            params.push(valid);
+        let sqlParams = '';
+
+        if (params) {
+            const { valid, isFull } = params;
+
+            if (typeof valid === 'boolean') {
+                sqlParams += ` valid = ${valid}`;
+            }
+
+            if (typeof isFull === 'boolean') {
+                sqlParams += sqlParams ? ' AND' : '';
+                sqlParams += ` is_full = ${isFull}`;
+            }
+
+            if (sqlParams !== '') sql += ' WHERE' + sqlParams;
         }
 
-        if (typeof isFull === 'boolean') {
-            sql += ' AND is_full = $2';
-            params.push(isFull);
-        }
-
-        const result = await this.db.queryAsync(sql, params).catch((err) => {
+        const result = await this.db.queryAsync(sql).catch((err) => {
             throw new RepoError(err);
         });
         return result && result.rows;
