@@ -4,7 +4,7 @@ import { humanReadableDate } from '../../utils/index.mjs';
 import { Status } from '../status/index.mjs';
 import { Api } from 'telegram';
 import { generateRandomBigInt } from 'telegram/Helpers';
-import { Phones } from '../index.mjs';
+import { Contact } from '../index.mjs';
 
 export class Sessions {
     /**
@@ -27,19 +27,19 @@ export class Sessions {
      */
     static async init(config) {
         if (Sessions.pool) return;
-        Sessions.pool = [];
+        Sessions.pool = {
+            available: new Map(),
+            filled: new Map(),
+        };
 
         const sessions = await new Session().readAll();
 
         for (const session of sessions) {
-            const client = new Client(session, config); //todo: extend Client class with the sessionId prop
+            const client = new Client(session, config);
             await client.init();
-            Sessions.pool.push(client); // todo: replace array with object { sessionId: client }
-            // [{sessionId, api }, {sessionId, api }, {sessionId, api }]
-            // {
-            //     1234: {sessionId:1234, api },
-            //     3456: {sessionId:3456, api },
-            // }
+
+            if (session.isFull) Sessions.pool.filled.set(session.id, { sessionId: session.id, client });
+            else Sessions.available.set(session.id, { sessionId: session.id, client });
         }
     }
 
@@ -52,18 +52,14 @@ export class Sessions {
     // todo: mark in DB as expired
     // }
 
-    // #findSessionById(sessionId) {}
+    static async findSessionById(sessionId) {
+        if (Sessions.pool.filled[sessionId]) return Sessions.pool.filled[sessionId];
+        else if (Sessions.pool.available[sessionId]) return Sessions.pool.available[sessionId];
+        else return null;
+    }
 
-    async addOnePhone(phoneNumber) {
-        const avaliablePool = this.#pool['avaliable'];
-        let result = null;
-
-        if (avaliablePool.length === 0) {
-            console.log('There are no avaliable sessions!');
-            return false;
-        }
-
-        await avaliablePool[0].client
+    static async addContact(client, phoneNumber) {
+        await client
             .invoke(
                 new Api.contacts.ImportContacts({
                     contacts: [
@@ -77,41 +73,44 @@ export class Sessions {
                 })
             )
             .then(async (data) => {
-                if (data.users[0].phone) {
-                    result = '+' + data.users[0].phone;
-                    await new Phones().updateSession({
-                        trackedPhone: result,
-                        sessionId: avaliablePool[0].sessionId,
-                    });
-                }
+                return data.users[0].phone ? '+' + data.users[0].phone : null;
             });
+    }
 
-        return { addedPhone: result, sessionId: avaliablePool[0].sessionId };
+    static async addSessionToFilled(session) {
+        Sessions.pool.available.delete(session.sessionId);
+        Sessions.pool.filled.set(session.sessionId, session);
+        await new Session().update({ sessionId: session.sessionId, isFull: true });
     }
 
     /**
      * @method
      * @returns {Promise<Object>}
      */
-    async addPhones(phones, attempts = 2) {
-        const addedPhones = [];
-        let result = null;
-        let errors = 0;
+    async addContacts(phones) {
+        for (let phoneNumber of phones) {
+            const iterator = pool.available.entries();
+            let session = iterator.next().value;
 
-        for (let phone of phones) {
-            do {
-                result = await addOnePhone(phone);
-                errors++;
-            } while (!result.addedPhone || errors < attempts);
+            let result = null;
 
-            if (result.addedPhone) addedPhones.push(result);
-            else await new Session().update({ sessionId: result.sessionId, full: false, valid: true });
+            while (session && !result) {
+                let attempts = 0;
+                while (!result && attempts < 3) {
+                    result = await Session.addContact(session.client, phoneNumber);
+                    if (result)
+                        await new Contact().update({
+                            trackedPhone: result,
+                            sessionId: session.sessionId,
+                        });
+
+                    attempts += 1;
+                }
+                if (!result) await addSessionToFilled(session);
+                session = session.next().value;
+            }
         }
-        return addedPhones;
     }
-
-    // todo: addPones method. find session with the flag full eqaul to false and add phone to this session
-    // todo: add session full flag in case session could not add more phones
 
     // todo: deletePones method. find session and remove phone contact
     // client = this.#pool.find(_clit => client.sessionId=== sessionsId)

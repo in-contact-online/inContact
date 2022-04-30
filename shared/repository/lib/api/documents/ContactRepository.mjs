@@ -49,24 +49,27 @@ export class ContactRepository extends RepoBase {
         }
 
         if (typeof tracked === 'boolean') {
-            params !== '' ? (params += ` AND tracked = ${tracked}`) : (params += ` tracked = ${tracked}`);
+            params += params ? ' AND' : '';
+            params += ` tracked = ${tracked}`;
         }
 
         if (typeof trackedPhone === 'string') {
-            params !== ''
-                ? (params += ` AND tracked_phone = ${trackedPhone}`)
-                : (params += ` tracked_phone = ${trackedPhone}`);
+            params += params ? ' AND' : '';
+            params += ` tracked_phone = ${trackedPhone}`;
         }
 
         if (typeof sessionId === 'string') {
-            params !== '' ? (params += ` AND session_id = ${sessionId}`) : (params += ` session_id = ${sessionId}`);
+            params += params ? ' AND' : '';
+            params += ` session_id = ${sessionId}`;
         }
 
         if (typeof withSession === 'boolean') {
             if (withSession) {
-                params !== '' ? (params += ' AND session_id IS NOT NULL') : (params += ' session_id IS NOT NULL');
+                params += params ? ' AND' : '';
+                params += ' session_id IS NOT NULL';
             } else {
-                params !== '' ? (params += ' AND session_id IS NULL') : (params += ' session_id IS NULL');
+                params += params ? ' AND' : '';
+                params += ' session_id IS NULL';
             }
         }
 
@@ -95,18 +98,19 @@ export class ContactRepository extends RepoBase {
 
     /**
      * @method
-     * @param {Number} userId - user identifier
-     * @param {String} trackedPhone - contact added by user that should be tracked
-     * @param {Boolean} tracked - The flag that indicates is the contact tracked
+     * @param {number} userId - user identifier
+     * @param {boolean} tracked - flag that indicates is the contact tracked
+     * @param {string} trackedPhone - contact added by user that should be tracked
+     * @param {string} sessionId - identifier of session that tracks this contact
      * @returns {Promise<Object>}
      */
 
-    async update({ userId, trackedPhone, tracked }) {
+    async update({ userId, trackedPhone, tracked, sessionId }) {
         //todo: find out why no error on bad requests
         const result = await this.db
             .queryAsync(
-                'UPDATE tracked_phones SET tracked = $1, updated_at = NOW() WHERE user_id = $2 AND tracked_phone = $3',
-                [tracked, userId, trackedPhone]
+                'UPDATE tracked_phones SET tracked = $1, session_id = $2, updated_at = NOW() WHERE user_id = $3 AND tracked_phone = $4',
+                [tracked, sessionId, userId, trackedPhone]
             )
             .catch((err) => {
                 throw new RepoError(err);
@@ -120,7 +124,7 @@ export class ContactRepository extends RepoBase {
      * @param {Boolean} tracked - The flag that indicates is the contact tracked
      * @returns {Promise<Object>}
      */
-    async updateUserContacts({ userId, tracked }) {
+    async updateTrackedList({ userId, tracked }) {
         const result = await this.db
             .queryAsync('UPDATE tracked_phones SET tracked = $1, updated_at = NOW() WHERE user_id = $2', [
                 tracked,
@@ -136,7 +140,7 @@ export class ContactRepository extends RepoBase {
     /**
      * @method
      * @param {String} trackedPhone - tracked phonenumber which session we should update
-     * @param {String} sessionId - session identifier
+     * @param {String} sessionId - identifier of session that tracks this contact
      * @returns {Promise<Object>}
      */
     async updateSessionId({ trackedPhone, sessionId }) {

@@ -22,7 +22,7 @@ export class Session extends ModelBase {
      * @method
      * @param {String} sessionId - session idetifier that equel phone number that activates the session
      * @param {Boolean} valid - if session is valid
-     * @param {Boolean} full - if session is full of phone numbers
+     * @param {Boolean} isFull - if session is full of phone numbers
      * @returns {Promise<Object>}
      */
     async update(params) {
@@ -32,7 +32,7 @@ export class Session extends ModelBase {
     /**
      * @method
      * @param {Boolean} valid - if session is valid
-     * @param {Boolean} full - if session is full of phone numbers
+     * @param {Boolean} isFull - if session is full of phone numbers
      * @returns {Promise<Object>}
      */
     async readAll(params) {
@@ -47,7 +47,7 @@ export class Session extends ModelBase {
      * @param {String} serverAddress - Telegram session server address
      * @param {String} port - Telegram session port
      * @param {Boolean} valid - if session is valid
-     * @param {Boolean} full - if session is full of phone numbers
+     * @param {Boolean} isFull - if session is full of phone numbers
      * @returns {Promise<Object>}
      */
     async save(params) {
