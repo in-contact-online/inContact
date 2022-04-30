@@ -5,7 +5,7 @@ export class Client {
      * @typedef {Class} Client
      * @method init
      * @method invoke
-     * @property uid
+     * @property sessionId
      */
 
     /**
@@ -15,22 +15,30 @@ export class Client {
     /**
      * @property {String|null}
      */
-    #uid = null;
+    #sessionId = null;
+    #valid = null;
+    #isFull = null;
 
     /**
-     * @param {Object} sessionConfig - Telegram command to be invoked
-     * @param {String} sessionConfig.id - Session identifier
-     * @param {String} sessionConfig.dc_id - Telegram DC ID
-     * @param {String} sessionConfig.server_address - Telegram session server address
-     * @param {Number} sessionConfig.port - Telegram session port
-     * @param {String} sessionConfig.auth_key - Telegram session authentication key
+     * @param {Object} session - Telegram command to be invoked
+     * @param {Object} session.valid - is session valid
+     * @param {Object} session.is_full - is session full
+     * @param {String} session.id - Session identifier
+     * @param {String} session.dc_id - Telegram DC ID
+     * @param {String} session.server_address - Telegram session server address
+     * @param {Number} session.port - Telegram session port
+     * @param {String} session.auth_key - Telegram session authentication key
      * @param {Object} apiConfig - Telegram api configuration
      * @param {String} apiConfig.apiId - Telegram Api id
      * @param {String} apiConfig.apiHash - Telegram Api hash
+
      */
-    constructor(sessionConfig, apiConfig) {
-        this.#uid = sessionConfig.id;
-        this.#api = new TelegramClientAdapter(sessionConfig, apiConfig);
+
+    constructor(session, apiConfig) {
+        this.#sessionId = session.id;
+        this.#api = new TelegramClientAdapter(session, apiConfig);
+        this.#valid = session.valid;
+        this.#isFull = session.is_full;
     }
 
     /**
@@ -54,7 +62,19 @@ export class Client {
      * @property
      * @returns {String}
      */
-    get uid() {
-        return this.#uid;
+    get sessionId() {
+        return this.#sessionId;
+    }
+
+    get valid() {
+        return this.#valid;
+    }
+
+    get isFull() {
+        return this.#isFull;
+    }
+
+    set isFull(value) {
+        this.#isFull = value;
     }
 }

@@ -6,9 +6,9 @@ import { Api } from 'telegram';
 import { generateRandomBigInt } from 'telegram/Helpers';
 import { Contact } from '../index.mjs';
 
-export class Sessions {
+export class ClientsPool {
     /**
-     * @typedef {Class} Sessions
+     * @typedef {Class} ClientsPool
      * @method init
      * @method invokeEach
      */
@@ -26,52 +26,18 @@ export class Sessions {
      * @returns {Promise<void>}
      */
     static async init(config) {
-        if (Sessions.pool) return;
-        Sessions.pool = [];
+        if (ClientsPool.pool) return;
+        ClientsPool.pool = [];
 
         const sessions = await new Session().readAll();
 
         for (const session of sessions) {
+            if (!session.valid) continue;
             const client = new Client(session, config);
             await client.init();
-
-            Sessions.pool.push({
-                id: session.id,
-                client,
-                isFull: session.is_full,
-                valid: session_valid,
-            });
+            ClientsPool.pool.push(client);
         }
     }
-
-    /* 
-
-    pool = [
-        {
-            id: session.id,
-            client,
-            isFull: session.is_full,
-            valid: session_valid
-        }
-    ]
-
-
-  pool = 
-  {
-      filled: 
-             {
-                 "123":client1, 
-                 "345":client2, 
-                  ...
-             },
-  
-       avaliable: 
-             {
-                   "666":client3, 
-                   "777":client4, 
-                    ...
-             }
-   } */
 
     // async add(session) {
     // todo: implement logic to add session to the pool
@@ -83,7 +49,7 @@ export class Sessions {
     // }
 
     static async addContact(client, phoneNumber) {
-        await client
+        return client
             .invoke(
                 new Api.contacts.ImportContacts({
                     contacts: [
@@ -105,28 +71,25 @@ export class Sessions {
      * @method
      * @returns {Promise<Object>}
      */
-    async addContacts(phones) {
-        for (let phoneNumber of phones) {
-            for (const index in Sessions.pool) {
-                if (Sessions.pool.isFull || !Sessions.pool.valid) break;
+    static async addContacts(phoneNumberList) {
+        for (let phoneNumber of phoneNumberList) {
+            for (const client of ClientsPool.pool) {
+                if (client.isFull) continue;
 
                 let result = null;
                 let attempts = 0;
 
                 while (!result || attempts < 3) {
-                    result = await Sessions.addContact(Sessions.pool[index].client, phoneNumber);
+                    result = await ClientsPool.addContact(client, phoneNumber);
                     attempts++;
                 }
 
                 if (result) {
-                    await new Contact().update({
-                        trackedPhone: result,
-                        sessionId: Sessions.pool[index].id,
-                    });
+                    await new Contact().update({ trackedPhone: result, sessionId: client.sessionId });
                     break;
                 } else {
-                    Sessions.pool[index].isFull = true;
-                    await new Session().update({ sessionId: Sessions.pool[index].id, isFull: true });
+                    client.isFull = true;
+                    await new Session().update({ sessionId: client.sessionId, isFull: true });
                 }
             }
         }
@@ -141,16 +104,16 @@ export class Sessions {
      * @param {Object} command - Telegram command to be invoked
      * @returns {Promise<void>}
      */
-    static async invokeEach(command) {
-        for (const poolItem of Sessions.pool) {
+    static async checkStatuses() {
+        const command = new Api.contacts.GetContacts({});
+        for (const client of ClientsPool.pool) {
             // todo: implement mechanism/functionality that define session expiration/invalid state
             // if session was expired or become invalid than clear this session id in tracked_phoned table
             // remove session from pool invoke this.del(sessionId)
 
-            if (!poolItem.valid) break;
-            const result = await poolItem.client.invoke(command);
+            const result = await client.invoke(command);
 
-            for (let user of result.users) {
+            for (const user of result.users) {
                 if (user.status) {
                     const wasOnline =
                         user.status.className === 'UserStatusOnline' ? null : humanReadableDate(user.status.wasOnline);
