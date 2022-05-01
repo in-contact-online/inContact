@@ -8,8 +8,8 @@ export class ReadUsers extends UseCaseBase {
         size: ['required', 'integer']
     }
     async execute(params) {
-        const users = await new User().readList(params);
+        const data = await new User().readList(params);
         const total = await new User().getTotal();
-        return { users, total };
+        return { data, total };
     }
 }

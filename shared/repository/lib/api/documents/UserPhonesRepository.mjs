@@ -38,7 +38,7 @@ export class UserPhonesRepository extends RepoBase {
         const result = await this.db.queryAsync('SELECT count(*) FROM tracked_phones').catch((err) => {
             throw new RepoError(err);
         });
-        return result && result.rows;
+        return result && Number(result.rows[0].count);
     }
 
     /**

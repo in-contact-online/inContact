@@ -61,7 +61,7 @@ export class SessionRepository extends RepoBase {
         const result = await this.db.queryAsync('SELECT count(*) FROM sessions').catch((err) => {
             throw new RepoError(err);
         });
-        return result && result.rows;
+        return result && Number(result.rows[0].count);
     }
 
     /**

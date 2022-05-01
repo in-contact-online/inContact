@@ -1,0 +1,496 @@
+{
+     "users": {
+          "data": [
+               {
+                    "id": "103996401",
+                    "username": null,
+                    "first_name": "Leno4ek_01",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964102",
+                    "username": null,
+                    "first_name": "Leno4ek_02",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964103",
+                    "username": null,
+                    "first_name": "Leno4ek_03",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964104",
+                    "username": null,
+                    "first_name": "Leno4ek_04",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964105",
+                    "username": null,
+                    "first_name": "Leno4ek_05",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964106",
+                    "username": null,
+                    "first_name": "Leno4ek_06",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964107",
+                    "username": null,
+                    "first_name": "Leno4ek_07",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964108",
+                    "username": null,
+                    "first_name": "Leno4ek_08",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964109",
+                    "username": null,
+                    "first_name": "Leno4ek_09",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964110",
+                    "username": null,
+                    "first_name": "Leno4ek_10",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964111",
+                    "username": null,
+                    "first_name": "Leno4ek_11",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964112",
+                    "username": null,
+                    "first_name": "Leno4ek_12",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964113",
+                    "username": null,
+                    "first_name": "Leno4ek_13",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964114",
+                    "username": null,
+                    "first_name": "Leno4ek_14",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964115",
+                    "username": null,
+                    "first_name": "Leno4ek_15",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964116",
+                    "username": null,
+                    "first_name": "Leno4ek_16",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964117",
+                    "username": null,
+                    "first_name": "Leno4ek_17",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964118",
+                    "username": null,
+                    "first_name": "Leno4ek_18",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               },
+               {
+                    "id": "1039964119",
+                    "username": null,
+                    "first_name": "Leno4ek_19",
+                    "second_name": null,
+                    "phone": null,
+                    "active": true,
+                    "created_at": "2022-01-31T20:09:16.551Z",
+                    "updated_at": "2022-01-31T20:09:16.551Z"
+               }
+          ],
+          "total": 19
+     },
+     "contacts": {
+          "data": [
+               {
+                    "user_id": "628714995",
+                    "tracked_phone": "+380502262601",
+                    "tracked": false,
+                    "created_at": "2022-01-30T12:17:55.872Z",
+                    "updated_at": "2022-02-01T18:26:40.467Z",
+                    "id": 1,
+                    "session_id": null
+               },
+               {
+                    "user_id": "628714995",
+                    "tracked_phone": "+380951465502",
+                    "tracked": false,
+                    "created_at": "2022-01-30T12:17:47.979Z",
+                    "updated_at": "2022-02-01T18:26:40.467Z",
+                    "id": 2,
+                    "session_id": null
+               },
+               {
+                    "user_id": "628714995",
+                    "tracked_phone": "+380509340403",
+                    "tracked": false,
+                    "created_at": "2022-01-31T20:32:11.370Z",
+                    "updated_at": "2022-02-01T18:26:40.467Z",
+                    "id": 3,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465504",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 4,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465505",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 5,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465506",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 6,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465507",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 7,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465508",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 8,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465509",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 9,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465510",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 10,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465511",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 11,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465512",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 12,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465513",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 13,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465514",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 14,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465515",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 15,
+                    "session_id": null
+               },
+               {
+                    "user_id": "1039964138",
+                    "tracked_phone": "+380951465516",
+                    "tracked": true,
+                    "created_at": "2022-01-31T20:09:41.422Z",
+                    "updated_at": "2022-01-31T20:09:41.422Z",
+                    "id": 16,
+                    "session_id": null
+               }
+          ],
+          "total": 16
+     },
+     "sessions": {
+          "data": [
+               {
+                    "id": "+79118384701",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384702",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384703",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384704",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384705",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384706",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384707",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384708",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384709",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384710",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384711",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384712",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384713",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384714",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384715",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384716",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               },
+               {
+                    "id": "+79118384717",
+                    "auth_key": { "type": "Buffer", "data": [219,190,249,161] },
+                    "dc_id": "2",
+                    "server_address": "149.154.167.51",
+                    "port": 443,
+                    "active": true
+               }
+          ],
+          "total": 17
+     },
+     "systemHealth": {
+          "serviceStatuses":{},
+          "resourceUsage": {
+               "cpuUsage": 34,
+               "freeMemory": "648 MB",
+               "totalMemory": "15820 MB",
+               "serverUptime":" 10 days"
+          }
+     }
+}
