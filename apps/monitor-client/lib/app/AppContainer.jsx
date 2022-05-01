@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { AppContext } from '../context/index.mjs';
+import { Login } from '../features/auth/Login';
 
 export function AppContainer() {
   const { api } = useContext(AppContext);
@@ -34,6 +35,9 @@ export function AppContainer() {
         <div>{JSON.stringify(contacts)}</div>
         <div>System Health:</div>
         <div>{JSON.stringify(systemHealth)}</div>
+      </div>
+      <div>
+        <Login />
       </div>
     </>
   )
