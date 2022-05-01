@@ -7,7 +7,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  devtool: debug ? 'inline-sourcemap' : '',
   entry: {
     app: ['@babel/polyfill', './lib/index.jsx'],
   },
@@ -32,41 +31,21 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: [require('tailwindcss'), require('autoprefixer')],
-            },
-          },
         ],
       },
       {test: /\.html$/, loader: 'html-loader'},
     ],
   },
-  node: {
-    crypto: 'empty',
-    net: 'empty',
-    dns: 'empty',
-    fs: 'empty',
-  },
   resolve: {
     modules: ['node_modules'],
-    extensions: ['.js', '.jsx', '.mjs'],
-    alias: {
-      "@util-validation": path.resolve(__dirname, '../../packages/util-validation'),
-      "@util-web-api-client": path.resolve(__dirname, '../../packages/util-web-api-client')
-    }
+    extensions: ['.js', '.jsx', '.mjs']
   },
   devServer: {
-    publicPath: 'http://127.0.0.1:8086/',
-    contentBase: './',
     hot: true,
-    inline: true,
-    headers: {'Access-Control-Allow-Origin': '*'},
-    historyApiFallback: true,
-    // TODO: Investigate security risk behind 'disableHostCheck'
-    disableHostCheck: true,
+    port: 8086,
+    host: '127.0.0.1',
+    server: 'http',
+    headers: {'Access-Control-Allow-Origin': '*'}
   },
   output: {
     globalObject: 'this',
@@ -77,7 +56,25 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      chunks: 'initial',
+      chunks: 'async',
+      minSize: 20000,
+      minRemainingSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      enforceSizeThreshold: 50000,
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
     },
   },
   externals: [

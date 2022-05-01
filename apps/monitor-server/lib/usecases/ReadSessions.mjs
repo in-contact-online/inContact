@@ -9,8 +9,8 @@ export class ReadSessions extends UseCaseBase {
     }
 
     async execute(params) {
-        const sessions = await new Session().readList(params);
+        const data = await new Session().readList(params);
         const total = await new Session().getTotal();
-        return { sessions, total };
+        return { data, total };
     }
 }

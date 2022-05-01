@@ -9,9 +9,9 @@ export class ReadContacts extends UseCaseBase {
     }
 
     async execute(params) {
-        const contacts = await new Contact().readList(params);
+        const data = await new Contact().readList(params);
         const total = await new Contact().getTotal();
 
-        return { contacts, total };
+        return { data, total };
     }
 }

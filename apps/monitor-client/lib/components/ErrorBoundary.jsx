@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types';
 export class ErrorBoundary extends Component {
      constructor(props) {
           super(props)
@@ -11,8 +11,8 @@ export class ErrorBoundary extends Component {
      }
 
      componentDidCatch(error) {
-          const { logger } = this.context
-          logger.error({ message: error.message, stack: JSON.stringify(error.stack) })
+          // const { logger } = this.context
+          // logger.error({ message: error.message, stack: JSON.stringify(error.stack) })
      }
 
      render() {
@@ -27,7 +27,7 @@ export class ErrorBoundary extends Component {
      }
 }
 
-ErrorBoundary.contextType = AppContext
+// ErrorBoundary.contextType = AppContext
 
 ErrorBoundary.defaultProps = {
      children: null,

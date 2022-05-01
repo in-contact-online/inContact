@@ -44,13 +44,13 @@ export class UserRepository extends RepoBase {
 
     /**
      * @method
-     * @return {Promise<Object>} returns data saved in DB
+     * @return {Promise<Number>} returns data saved in DB
      */
      async total() {
         const result = await this.db.queryAsync('SELECT count(*) FROM users').catch((err) => {
             throw new RepoError(err);
         });
-        return result && result.rows;
+        return result && Number(result.rows[0].count);
     }
 
     /**

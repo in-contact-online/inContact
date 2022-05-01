@@ -1,15 +1,21 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { HashRouter } from 'react-router-dom'
-import { AppContainer } from './app/AppContainer'
-import { ErrorBoundary } from './components/ErrorBoundary'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
+import { AppContainer } from './app/AppContainer';
+import { AppProvider } from './context/index.mjs';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import './index.css';
 
-ReactDOM.render(
+
+const container = document.getElementById('app');
+const root = ReactDOM.createRoot(container);
+
+root.render(
      <HashRouter>
-          <ErrorBoundary>
-               <AppContainer />
-          </ErrorBoundary>
-     </HashRouter>,
-     document.getElementById('app')
-)
+          <AppProvider>
+               <ErrorBoundary>
+                    <AppContainer />
+               </ErrorBoundary>
+          </AppProvider>
+     </HashRouter>
+);
