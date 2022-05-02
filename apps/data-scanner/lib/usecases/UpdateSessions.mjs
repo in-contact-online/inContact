@@ -1,4 +1,4 @@
-import { Session } from '../models/index.mjs';
+import { Client, ClientsPool, Session } from '../models/index.mjs';
 import { readDir, readSqlite } from '../utils/index.mjs';
 import * as ConfigContainer from '../config.cjs';
 
@@ -20,6 +20,7 @@ export class UpdateSessions {
             if (!session) {
                 await session.save({ sessionId, dcId, serverAddress, port, authKey });
                 newSessions.push(await session.readBySessionId({ sessionId }));
+                if (ClientsPool.pool) ClientsPool.addClient(new Client(session, ConfigContainer.config.service));
             }
         }
 

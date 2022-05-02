@@ -23,9 +23,26 @@ export class Contact extends ModelBase {
      * @param {String} sessionId - session identifier
      * @returns {Promise<Object>}
      */
-    async update(params) {
-        const contact = await this.repository.contact.readOne(params);
-        contact.sessionId = params.sessionId;
-        return this.repository.contact.updateSessionId(contact);
+    async updateSession({ trackedPhone, sessionId }) {
+        return this.repository.contact.updateSessionId({ trackedPhone, sessionId });
+    }
+
+    /**
+     * @method
+     * @param {String} sessionId - session identifier
+     * @returns {Promise<Object>}
+     */
+    async removeSessionId({ sessionId }) {
+        return this.repository.contact.removeSessionId({ sessionId });
+    }
+
+    /**
+     * @method
+     * @param {String} trackedPhone - tracked phonenumber which session we should update
+     * @param {String} tracked - is phone number tracked
+     * @returns {Promise<Object>}
+     */
+    async updateTrackedStatus({ trackedPhone, tracked }) {
+        return this.repository.contact.updatePhoneTrackedStatus({ trackedPhone, tracked });
     }
 }

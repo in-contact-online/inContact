@@ -36,16 +36,17 @@ export class ClientsPool {
             await client.init();
             ClientsPool.pool.push(client);
         }
+
+        ClientsPool.pool.sort((a, b) => a.contactsCount - b.contactsCount);
     }
 
-    // async add(session) {
-    // todo: implement logic to add session to the pool
-    // }
+    static async addClient(client) {
+        ClientsPool.pool.push(client);
+    }
 
-    // async del() {
-    // todo: implement logic to remove session to the pool
-    // todo: mark in DB as expired
-    // }
+    static async removeClient(client) {
+        ClientsPool.pool = ClientsPool.pool.filter((item) => item.sessionId !== client.sessionId);
+    }
 
     static async addContact(client, phoneNumber) {
         return client
@@ -62,7 +63,9 @@ export class ClientsPool {
                 })
             )
             .then(async (data) => {
-                console.log('Adding ' + JSON.stringify(data));
+                console.log(
+                    'Adding ' + phoneNumber + `: ${data.users[0] ? data.users[0].phone : null} : ${client.sessionId}`
+                );
                 return data.users[0] ? '+' + data.users[0].phone : null;
             });
     }
@@ -71,33 +74,38 @@ export class ClientsPool {
      * @method
      * @returns {Promise<Object>}
      */
-    static async addContacts(phoneNumberList) {
-        for (let phoneNumber of phoneNumberList) {
+    static async addContacts(contactsList) {
+        for (const contact of contactsList) {
+            let result = null;
+
             for (const client of ClientsPool.pool) {
-                if (client.isFull) continue;
-
-                let result = null;
-                let attempts = 0;
-
-                while (!result || attempts < 3) {
-                    result = await ClientsPool.addContact(client, phoneNumber);
-                    attempts++;
-                }
+                result = await ClientsPool.addContact(client, contact.tracked_phone);
 
                 if (result) {
-                    await new Contact().update({ trackedPhone: result, sessionId: client.sessionId });
+                    await new Contact().updateSession({ trackedPhone: result, sessionId: client.sessionId });
                     break;
-                } else {
-                    client.isFull = true;
-                    await new Session().update({ sessionId: client.sessionId, isFull: true });
                 }
+            }
+
+            if (!result) {
+                await new Contact().updateTrackedStatus({ trackedPhone: contact.tracked_phone, tracked: false });
             }
         }
     }
 
-    // todo: deletePones method. find session and remove phone contact
-    // client = this.#pool.find(_clit => client.sessionId=== sessionsId)
-    // await client.invoke(remove phone command)
+    static async removeContacts(contactsList) {
+        for (const contact of contactsList) {
+            const client = ClientsPool.pool.find((client) => client.sessionId === contact.session_id);
+            const result = await client.invoke(
+                new Api.contacts.DeleteByPhones({
+                    phones: [contact.tracked_phone],
+                })
+            );
+
+            console.log('removeContacts:' + result);
+            await new Contact().updateSession({ trackedPhone: contact.tracked_phone, sessionId: null });
+        }
+    }
 
     /**
      * @method
@@ -107,11 +115,13 @@ export class ClientsPool {
     static async checkStatuses() {
         const command = new Api.contacts.GetContacts({});
         for (const client of ClientsPool.pool) {
-            // todo: implement mechanism/functionality that define session expiration/invalid state
-            // if session was expired or become invalid than clear this session id in tracked_phoned table
-            // remove session from pool invoke this.del(sessionId)
-
             const result = await client.invoke(command);
+
+            if (!result) {
+                await new Contact().removeSessionId({ sessionId: client.sessionId });
+                await new Session().update({ sessionId: client.sessionId, valid: false });
+                ClientsPool.removeClient(client);
+            }
 
             for (const user of result.users) {
                 if (user.status) {

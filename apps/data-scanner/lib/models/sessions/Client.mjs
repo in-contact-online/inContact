@@ -1,4 +1,5 @@
 import { TelegramClientAdapter } from './TelegramClientAdapter.mjs';
+import { Api } from 'telegram';
 
 export class Client {
     /**
@@ -6,6 +7,9 @@ export class Client {
      * @method init
      * @method invoke
      * @property sessionId
+     * @property valid
+     * @property isFull
+     * @property contactsCount
      */
 
     /**
@@ -18,6 +22,7 @@ export class Client {
     #sessionId = null;
     #valid = null;
     #isFull = null;
+    #contactsCount = null;
 
     /**
      * @param {Object} session - Telegram command to be invoked
@@ -47,6 +52,14 @@ export class Client {
      */
     async init() {
         await this.#api.connect();
+
+        this.#contactsCount = (
+            await this.#api.invoke(
+                new Api.contacts.GetContacts({
+                    hash: 0,
+                })
+            )
+        ).users.length;
     }
 
     /**
@@ -72,6 +85,10 @@ export class Client {
 
     get isFull() {
         return this.#isFull;
+    }
+
+    get contactsCount() {
+        return this.#contactsCount;
     }
 
     set isFull(value) {

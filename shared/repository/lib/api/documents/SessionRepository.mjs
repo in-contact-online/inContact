@@ -45,7 +45,7 @@ export class SessionRepository extends RepoBase {
                 params += ` valid = ${valid}`;
             }
 
-            const sql = 'UPDATE sessions SET' + params + ` WHERE id = ${sessionId}`;
+            const sql = 'UPDATE sessions SET' + params + ` WHERE id = '${sessionId}'`;
 
             const result = await this.db.queryAsync(sql).catch((err) => {
                 throw new RepoError(err);
