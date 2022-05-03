@@ -40,11 +40,11 @@ export class ClientsPool {
         ClientsPool.pool.sort((a, b) => a.contactsCount - b.contactsCount);
     }
 
-    static async addClient(client) {
+    static addClient(client) {
         ClientsPool.pool.unshift(client);
     }
 
-    static async removeClient(client) {
+    static removeClient(client) {
         ClientsPool.pool = ClientsPool.pool.filter((item) => item.sessionId !== client.sessionId);
     }
 
@@ -134,7 +134,7 @@ export class ClientsPool {
                     }
                 }
             } catch (e) {
-                await ClientsPool.removeClient(client);
+                ClientsPool.removeClient(client);
                 await new Contact().removeSessionId({ sessionId: client.sessionId });
                 await new Session().update({ sessionId: client.sessionId, valid: false });
             }
