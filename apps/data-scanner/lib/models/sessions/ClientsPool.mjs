@@ -42,9 +42,6 @@ export class ClientsPool {
 
     static async addClient(client) {
         ClientsPool.pool.unshift(client);
-        /* 
-        console.log(ClientsPool.pool);
-        console.log(client.sessionId); */
     }
 
     static async removeClient(client) {
@@ -137,7 +134,7 @@ export class ClientsPool {
                     }
                 }
             } catch (e) {
-                ClientsPool.removeClient(client);
+                await ClientsPool.removeClient(client);
                 await new Contact().removeSessionId({ sessionId: client.sessionId });
                 await new Session().update({ sessionId: client.sessionId, valid: false });
             }
