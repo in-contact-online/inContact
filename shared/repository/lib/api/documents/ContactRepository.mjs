@@ -110,7 +110,6 @@ export class ContactRepository extends RepoBase {
      */
 
     async update({ userId, trackedPhone, tracked, sessionId }) {
-        console.log(userId, trackedPhone, tracked, sessionId);
         //todo: find out why no error on bad requests
         const result = await this.db
             .queryAsync(
@@ -126,20 +125,28 @@ export class ContactRepository extends RepoBase {
     /**
      * @method
      * @param {Number} userId - user identifier
+     * @param {String} trackedPhone - tracked phonenumber which session we should update
      * @param {Boolean} tracked - The flag that indicates is the contact tracked
      * @returns {Promise<Object>}
      */
-    async updateTrackedList({ userId, tracked }) {
-        const result = await this.db
-            .queryAsync('UPDATE tracked_phones SET tracked = $1, updated_at = NOW() WHERE user_id = $2', [
-                tracked,
-                userId,
-            ])
-            .catch((err) => {
+    async updateTrackedList({ userId, trackedPhone, tracked }) {
+        if ((userId || trackedPhone) && typeof tracked === 'boolean') {
+            let params = '';
+
+            if (userId) params += ` user_id = ${userId}`;
+            if (trackedPhone) {
+                if (params.length > 0) params += ' AND';
+                params += ` tracked_phone = '${trackedPhone}'`;
+            }
+
+            const sql = `UPDATE tracked_phones SET tracked = ${tracked}` + ' WHERE' + params;
+
+            const result = await this.db.queryAsync(sql).catch((err) => {
                 throw new RepoError(err);
             });
 
-        return result;
+            return result;
+        }
     }
 
     /**
@@ -165,21 +172,6 @@ export class ContactRepository extends RepoBase {
     async removeSessionId({ sessionId }) {
         const result = await this.db
             .queryAsync('UPDATE tracked_phones SET session_id = null WHERE session_id = $1', [sessionId])
-            .catch((err) => {
-                throw new RepoError(err);
-            });
-        return result;
-    }
-
-    /**
-     * @method
-     * @param {String} trackedPhone - tracked phonenumber which session we should update
-     * @param {String} tracked - is phone number tracked
-     * @returns {Promise<Object>}
-     */
-    async updatePhoneTrackedStatus({ trackedPhone, tracked }) {
-        const result = await this.db
-            .queryAsync('UPDATE tracked_phones SET tracked = $1 WHERE tracked_phone = $2', [tracked, trackedPhone])
             .catch((err) => {
                 throw new RepoError(err);
             });

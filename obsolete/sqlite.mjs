@@ -3,11 +3,10 @@ import { open } from 'sqlite';
 import { StringSession } from 'telegram/sessions/index.js';
 import { Api, TelegramClient } from 'telegram/index.js';
 import { AuthKey } from 'telegram/crypto/AuthKey.js';
-import { config } from './config';
-
+import { config } from './config.mjs';
 
 open({
-    filename: './accs/+79858679537.session',
+    filename: './accs/+79817830914.session',
     driver: sqlite3.Database,
 }).then(async (db) => {
     const { dc_id, server_address, port, auth_key } = await db.get('SELECT * FROM sessions');
@@ -20,11 +19,16 @@ open({
     session.setAuthKey(authKey);
 
     const client = new TelegramClient(session, config.apiId, config.apiHash, {});
-    await client.connect();
 
-    console.log('connected...');
+    try {
+        await client.connect();
+    } catch (e) {
+        console.log(e);
+    }
+
+    /*  console.log('connected...');
     console.log(client.session.save());
 
     let { users } = await client.invoke(new Api.contacts.GetContacts({}));
-    console.log(users);
+    console.log(users); */
 });

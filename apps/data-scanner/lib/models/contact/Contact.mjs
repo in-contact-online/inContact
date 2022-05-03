@@ -43,6 +43,6 @@ export class Contact extends ModelBase {
      * @returns {Promise<Object>}
      */
     async updateTrackedStatus({ trackedPhone, tracked }) {
-        return this.repository.contact.updatePhoneTrackedStatus({ trackedPhone, tracked });
+        return this.repository.contact.updateTrackedList({ trackedPhone, tracked });
     }
 }

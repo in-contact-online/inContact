@@ -8,7 +8,6 @@ export class Client {
      * @method invoke
      * @property sessionId
      * @property valid
-     * @property isFull
      * @property contactsCount
      */
 
@@ -21,13 +20,11 @@ export class Client {
      */
     #sessionId = null;
     #valid = null;
-    #isFull = null;
     #contactsCount = null;
 
     /**
      * @param {Object} session - Telegram command to be invoked
      * @param {Object} session.valid - is session valid
-     * @param {Object} session.is_full - is session full
      * @param {String} session.id - Session identifier
      * @param {String} session.dc_id - Telegram DC ID
      * @param {String} session.server_address - Telegram session server address
@@ -43,7 +40,6 @@ export class Client {
         this.#sessionId = session.id;
         this.#api = new TelegramClientAdapter(session, apiConfig);
         this.#valid = session.valid;
-        this.#isFull = session.is_full;
     }
 
     /**
@@ -83,15 +79,7 @@ export class Client {
         return this.#valid;
     }
 
-    get isFull() {
-        return this.#isFull;
-    }
-
     get contactsCount() {
         return this.#contactsCount;
-    }
-
-    set isFull(value) {
-        this.#isFull = value;
     }
 }

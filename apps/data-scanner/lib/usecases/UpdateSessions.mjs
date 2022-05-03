@@ -15,12 +15,14 @@ export class UpdateSessions {
                 'sessions'
             );
 
-            const session = new Session().readBySessionId({ sessionId });
+            let session = await new Session().readBySessionId({ sessionId });
 
             if (!session) {
-                await session.save({ sessionId, dcId, serverAddress, port, authKey });
-                newSessions.push(await session.readBySessionId({ sessionId }));
-                if (ClientsPool.pool) ClientsPool.addClient(new Client(session, ConfigContainer.config.service));
+                const newSession = await new Session().save({ sessionId, dcId, serverAddress, port, authKey });
+                console.log(newSession);
+                const client = new Client(newSession, ConfigContainer.config.service);
+                if (ClientsPool.pool) await ClientsPool.addClient(client);
+                newSessions.push(newSession);
             }
         }
 

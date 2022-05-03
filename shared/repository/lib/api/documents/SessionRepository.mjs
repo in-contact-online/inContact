@@ -25,61 +25,34 @@ export class SessionRepository extends RepoBase {
         const result = await this.db.queryAsync('SELECT * FROM sessions WHERE id = $1', [sessionId]).catch((err) => {
             throw new RepoError(err);
         });
+
         return result && result.rows[0];
     }
 
     /**
      * @method
      * @param {string} sessionId - identifier of session
-     * @param {boolean} isFull - is session full of contacts
      * @param {boolean} valid - is session valid
      * @return {Promise<Object>} returns data saved in DB
      */
-    async update({ sessionId, isFull, valid }) {
-        if ((typeof isFull === 'boolean' || typeof valid === 'boolean') && sessionId) {
-            let params = '';
+    async update({ sessionId, valid }) {
+        const sql = 'UPDATE sessions SET valid = $2 WHERE id = $1';
 
-            if (typeof isFull === 'boolean') params += ` is_full = ${isFull}`;
-            if (typeof valid === 'boolean') {
-                if (params.length > 0) params += ',';
-                params += ` valid = ${valid}`;
-            }
-
-            const sql = 'UPDATE sessions SET' + params + ` WHERE id = '${sessionId}'`;
-
-            const result = await this.db.queryAsync(sql).catch((err) => {
-                throw new RepoError(err);
-            });
-            return result;
-        }
+        const result = await this.db.queryAsync(sql, [sessionId, valid]).catch((err) => {
+            throw new RepoError(err);
+        });
+        return result;
     }
 
     /**
      * @method
-     * @param {boolean} isFull - is session full of contacts
      * @param {boolean} valid - is session valid
      * @return {Promise<Object>} returns data saved in DB
      */
-    async readAll(params) {
-        let sql = 'SELECT * FROM sessions';
-        let sqlParams = '';
+    async readAll({ valid }) {
+        let sql = 'SELECT * FROM sessions WHERE valid = $1';
 
-        if (params) {
-            const { valid, isFull } = params;
-
-            if (typeof valid === 'boolean') {
-                sqlParams += ` valid = ${valid}`;
-            }
-
-            if (typeof isFull === 'boolean') {
-                sqlParams += sqlParams ? ' AND' : '';
-                sqlParams += ` is_full = ${isFull}`;
-            }
-
-            if (sqlParams !== '') sql += ' WHERE' + sqlParams;
-        }
-
-        const result = await this.db.queryAsync(sql).catch((err) => {
+        const result = await this.db.queryAsync(sql, [valid]).catch((err) => {
             throw new RepoError(err);
         });
         return result && result.rows;
@@ -112,7 +85,6 @@ export class SessionRepository extends RepoBase {
 
     /**
      * @method
-     * @param {String} phone - Phone nubmer that activates the session
      * @param {string} sessionId - identifier of session
      * @param {String} authKey - Telegram session authentication key
      * @param {String} dcId - Telegram DC ID
@@ -121,15 +93,15 @@ export class SessionRepository extends RepoBase {
      * @returns {Promise<Object>}
      */
 
-    async save({ sessionId, authKey, dcId, serverAddress, port, valid, isFull }) {
+    async save({ sessionId, authKey, dcId, serverAddress, port }) {
         const result = await this.db
             .queryAsync(
-                'INSERT INTO sessions (id, auth_key, dc_id, server_address, port, valid, is_full) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-                [sessionId, authKey, dcId, serverAddress, port, valid, isFull]
+                'INSERT INTO sessions (id, auth_key, dc_id, server_address, port) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+                [sessionId, authKey, dcId, serverAddress, port]
             )
             .catch((err) => {
                 throw new RepoError(err);
             });
-        return result;
+        return result && result.rows[0];
     }
 }

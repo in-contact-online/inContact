@@ -41,7 +41,10 @@ export class ClientsPool {
     }
 
     static async addClient(client) {
-        ClientsPool.pool.push(client);
+        ClientsPool.pool.unshift(client);
+        /* 
+        console.log(ClientsPool.pool);
+        console.log(client.sessionId); */
     }
 
     static async removeClient(client) {
@@ -63,9 +66,6 @@ export class ClientsPool {
                 })
             )
             .then(async (data) => {
-                console.log(
-                    'Adding ' + phoneNumber + `: ${data.users[0] ? data.users[0].phone : null} : ${client.sessionId}`
-                );
                 return data.users[0] ? '+' + data.users[0].phone : null;
             });
     }
@@ -96,14 +96,15 @@ export class ClientsPool {
     static async removeContacts(contactsList) {
         for (const contact of contactsList) {
             const client = ClientsPool.pool.find((client) => client.sessionId === contact.session_id);
-            const result = await client.invoke(
-                new Api.contacts.DeleteByPhones({
-                    phones: [contact.tracked_phone],
-                })
-            );
 
-            console.log('removeContacts:' + result);
-            await new Contact().updateSession({ trackedPhone: contact.tracked_phone, sessionId: null });
+            if (client) {
+                await client.invoke(
+                    new Api.contacts.DeleteByPhones({
+                        phones: [contact.tracked_phone],
+                    })
+                );
+                await new Contact().updateSession({ trackedPhone: contact.tracked_phone, sessionId: null });
+            }
         }
     }
 
@@ -115,28 +116,30 @@ export class ClientsPool {
     static async checkStatuses() {
         const command = new Api.contacts.GetContacts({});
         for (const client of ClientsPool.pool) {
-            const result = await client.invoke(command);
+            try {
+                const result = await client.invoke(command);
 
-            if (!result) {
-                await new Contact().removeSessionId({ sessionId: client.sessionId });
-                await new Session().update({ sessionId: client.sessionId, valid: false });
-                ClientsPool.removeClient(client);
-            }
+                for (const user of result.users) {
+                    if (user.status) {
+                        const wasOnline =
+                            user.status.className === 'UserStatusOnline'
+                                ? null
+                                : humanReadableDate(user.status.wasOnline);
 
-            for (const user of result.users) {
-                if (user.status) {
-                    const wasOnline =
-                        user.status.className === 'UserStatusOnline' ? null : humanReadableDate(user.status.wasOnline);
-
-                    if (wasOnline !== undefined) {
-                        await new Status().save({
-                            phoneNumber: user.phone,
-                            username: user.username,
-                            wasOnline,
-                            checkDate: new Date().toISOString(),
-                        });
+                        if (wasOnline !== undefined) {
+                            await new Status().save({
+                                phoneNumber: user.phone,
+                                username: user.username,
+                                wasOnline,
+                                checkDate: new Date().toISOString(),
+                            });
+                        }
                     }
                 }
+            } catch (e) {
+                ClientsPool.removeClient(client);
+                await new Contact().removeSessionId({ sessionId: client.sessionId });
+                await new Session().update({ sessionId: client.sessionId, valid: false });
             }
         }
     }

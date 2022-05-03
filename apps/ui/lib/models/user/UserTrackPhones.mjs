@@ -55,7 +55,7 @@ export class UserTrackPhones extends ModelBase {
      * @returns {Promise<Object>}
      */
     async activate(params) {
-        return this.repository.contact.update({ ...params, tracked: true });
+        return this.repository.contact.updateTrackedList({ ...params, tracked: true });
     }
 
     /**
@@ -65,9 +65,7 @@ export class UserTrackPhones extends ModelBase {
      * @returns {Promise<Object>}
      */
     async deactivate(params) {
-        const contacts = await this.repository.contact.read(params);
-        contacts[0].tracked = false;
-        return this.repository.contact.update(contacts[0]);
+        return this.repository.contact.updateTrackedList({ ...params, tracked: false });
     }
 
     /**
