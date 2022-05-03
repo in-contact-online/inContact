@@ -102,28 +102,6 @@ export class ContactRepository extends RepoBase {
 
     /**
      * @method
-     * @param {number} userId - user identifier
-     * @param {boolean} tracked - flag that indicates is the contact tracked
-     * @param {string} trackedPhone - contact added by user that should be tracked
-     * @param {string} sessionId - identifier of session that tracks this contact
-     * @returns {Promise<Object>}
-     */
-
-    async update({ userId, trackedPhone, tracked, sessionId }) {
-        //todo: find out why no error on bad requests
-        const result = await this.db
-            .queryAsync(
-                'UPDATE tracked_phones SET tracked = $1, session_id = $2, updated_at = NOW() WHERE user_id = $3 AND tracked_phone = $4',
-                [tracked, sessionId, userId, trackedPhone]
-            )
-            .catch((err) => {
-                throw new RepoError(err);
-            });
-        return result;
-    }
-
-    /**
-     * @method
      * @param {Number} userId - user identifier
      * @param {String} trackedPhone - tracked phonenumber which session we should update
      * @param {Boolean} tracked - The flag that indicates is the contact tracked

@@ -19,7 +19,6 @@ export class UpdateSessions {
 
             if (!session) {
                 const newSession = await new Session().save({ sessionId, dcId, serverAddress, port, authKey });
-                console.log(newSession);
                 const client = new Client(newSession, ConfigContainer.config.service);
                 if (ClientsPool.pool) await ClientsPool.addClient(client);
                 newSessions.push(newSession);
