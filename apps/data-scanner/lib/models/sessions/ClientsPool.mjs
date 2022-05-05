@@ -78,6 +78,8 @@ export class ClientsPool {
             for (const client of ClientsPool.pool) {
                 result = await ClientsPool.addContact(client, contact.tracked_phone);
 
+                console.log(result);
+
                 if (result) {
                     await new Contact().updateSession({ trackedPhone: result, sessionId: client.sessionId });
                     break;
@@ -90,16 +92,32 @@ export class ClientsPool {
         }
     }
 
+    static async clearContacts() {
+        for (const client of ClientsPool.pool) {
+            const result = await client.invoke(new Api.contacts.GetContacts({}));
+            const phones = result.users.map((user) => user.phone);
+
+            console.log(phones);
+
+            await client.invoke(
+                new Api.contacts.DeleteByPhones({
+                    phones,
+                })
+            );
+        }
+    }
+
     static async removeContacts(contactsList) {
         for (const contact of contactsList) {
             const client = ClientsPool.pool.find((client) => client.sessionId === contact.session_id);
 
             if (client) {
-                await client.invoke(
+                const result = await client.invoke(
                     new Api.contacts.DeleteByPhones({
                         phones: [contact.tracked_phone],
                     })
                 );
+
                 await new Contact().updateSession({ trackedPhone: contact.tracked_phone, sessionId: null });
             }
         }
