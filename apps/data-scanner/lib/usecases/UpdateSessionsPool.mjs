@@ -5,12 +5,10 @@ export class UpdateSessionsPool {
     async execute(params) {
         console.log('UpdateSessionsPool...');
 
-        ClientsPool.clearContacts();
-
-        /*         const addList = await new Contact().getList({ tracked: true, withSession: false });
+        const addList = await new Contact().getList({ tracked: true, withSession: false });
         await ClientsPool.addContacts(addList);
 
         const removeList = await new Contact().getList({ tracked: false, withSession: true });
-        await ClientsPool.removeContacts(removeList); */
+        await ClientsPool.removeContacts(removeList);
     }
 }

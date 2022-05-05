@@ -19,8 +19,13 @@ export class UpdateSessions {
 
             if (!session) {
                 const newSession = await new Session().save({ sessionId, dcId, serverAddress, port, authKey });
-                const client = new Client(newSession, ConfigContainer.config.service);
-                if (ClientsPool.pool) ClientsPool.addClient(client);
+
+                if (ClientsPool.pool) {
+                    const client = new Client(newSession, ConfigContainer.config.service);
+                    await client.init();
+                    ClientsPool.addClient(client);
+                }
+
                 newSessions.push(newSession);
             }
         }

@@ -78,8 +78,6 @@ export class ClientsPool {
             for (const client of ClientsPool.pool) {
                 result = await ClientsPool.addContact(client, contact.tracked_phone);
 
-                console.log(result);
-
                 if (result) {
                     await new Contact().updateSession({ trackedPhone: result, sessionId: client.sessionId });
                     break;
@@ -95,13 +93,10 @@ export class ClientsPool {
     static async clearContacts() {
         for (const client of ClientsPool.pool) {
             const result = await client.invoke(new Api.contacts.GetContacts({}));
-            const phones = result.users.map((user) => user.phone);
-
-            console.log(phones);
-
+            const ids = result.users.map((user) => user.id.value);
             await client.invoke(
-                new Api.contacts.DeleteByPhones({
-                    phones,
+                new Api.contacts.DeleteContacts({
+                    id: ids,
                 })
             );
         }
@@ -110,11 +105,13 @@ export class ClientsPool {
     static async removeContacts(contactsList) {
         for (const contact of contactsList) {
             const client = ClientsPool.pool.find((client) => client.sessionId === contact.session_id);
+            const result = await client.invoke(new Api.contacts.GetContacts({}));
+            const user = result.users.find((user) => '+' + user.phone === contact.tracked_phone);
 
             if (client) {
-                const result = await client.invoke(
-                    new Api.contacts.DeleteByPhones({
-                        phones: [contact.tracked_phone],
+                await client.invoke(
+                    new Api.contacts.DeleteContacts({
+                        id: [user.id.value],
                     })
                 );
 
@@ -148,6 +145,9 @@ export class ClientsPool {
                                 wasOnline,
                                 checkDate: new Date().toISOString(),
                             });
+                        } else {
+                            console.log(user.status);
+                            await new Contact().updateTrackedStatus({ trackedPhone: '+' + user.phone, tracked: false });
                         }
                     }
                 }
