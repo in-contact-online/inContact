@@ -41,6 +41,7 @@ export class ClientsPool {
     }
 
     static addClient(client) {
+        await client.init();
         ClientsPool.pool.unshift(client);
     }
 
@@ -145,10 +146,8 @@ export class ClientsPool {
                                 wasOnline,
                                 checkDate: new Date().toISOString(),
                             });
-                        } else {
-                            console.log(user.status);
+                        } else
                             await new Contact().updateTrackedStatus({ trackedPhone: '+' + user.phone, tracked: false });
-                        }
                     }
                 }
             } catch (e) {
