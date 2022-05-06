@@ -15,12 +15,20 @@ export class Client {
      * @property {Object|null}
      */
     #api = null;
+
     /**
      * @property {String|null}
      */
     #sessionId = null;
+
+    /**
+     * @property {Boolean|null}
+     */
     #valid = null;
-    #contactsCount = null;
+
+    /**
+     * @property {Number|null}
+     */ #contactsCount = null;
 
     /**
      * @param {Object} session - Telegram command to be invoked
@@ -81,5 +89,9 @@ export class Client {
 
     get contactsCount() {
         return this.#contactsCount;
+    }
+
+    set contactsCount(value) {
+        this.#contactsCount = value;
     }
 }
