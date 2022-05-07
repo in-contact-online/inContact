@@ -3,7 +3,7 @@ Description="In Contact Monitor Service"
 
 [Service]
 ExecStart=/usr/bin/node --experimental-modules --es-module-specifier-resolution=node app
-WorkingDirectory=/home/ubuntu/inContact/apps/monitor
+WorkingDirectory=/home/ubuntu/inContact/apps/monitor-server
 Restart=always
 RestartSec=10
 StandardOutput=syslog
