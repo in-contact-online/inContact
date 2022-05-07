@@ -41,7 +41,6 @@ export class ClientsPool {
     }
 
     static addClient(client) {
-        await client.init();
         ClientsPool.pool.unshift(client);
     }
 

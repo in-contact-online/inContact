@@ -14,14 +14,14 @@ export class Contact extends ModelBase {
      * @returns {Promise<Object>}
      */
     async readList(params) {
-        return this.repository.userPhones.readList(params);
+        return this.repository.contact.readList(params);
     }
 
     /**
      * @method
      * @returns {Promise<Object>}
      */
-     async getTotal() {
-        return this.repository.userPhones.total();
+    async getTotal() {
+        return this.repository.contact.total();
     }
 }

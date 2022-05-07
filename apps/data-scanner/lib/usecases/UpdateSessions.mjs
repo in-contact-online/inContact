@@ -22,6 +22,7 @@ export class UpdateSessions {
 
                 if (ClientsPool.pool) {
                     const client = new Client(newSession, ConfigContainer.config.service);
+                    await client.init();
                     ClientsPool.addClient(client);
                 }
 
