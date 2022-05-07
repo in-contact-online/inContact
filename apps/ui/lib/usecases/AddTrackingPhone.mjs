@@ -4,7 +4,7 @@ import * as ConfigContainer from '../config.cjs';
 
 export class AddTrackingPhone extends UseCaseBase {
     static validationRules = {
-        phone: ['phone_number'],
+        trackedPhone: ['phone_number'],
         userId: ['required', 'positive_integer'],
     };
 
@@ -22,12 +22,12 @@ export class AddTrackingPhone extends UseCaseBase {
 
         if (!trackedPhone) {
             await userTrackPhones.save(params);
-            result = UserMessages.phoneStartTrackingMessage(params.phone);
+            result = UserMessages.phoneStartTrackingMessage(params.trackedPhone);
         } else if (trackedPhone.tracked) {
-            result = UserMessages.dublicatePhoneMessage(params.phone);
+            result = UserMessages.dublicatePhoneMessage(params.trackedPhone);
         } else {
             await userTrackPhones.activate(params);
-            result = UserMessages.phoneActivateTrackingMessage(params.phone);
+            result = UserMessages.phoneActivateTrackingMessage(params.trackedPhone);
         }
 
         return result;

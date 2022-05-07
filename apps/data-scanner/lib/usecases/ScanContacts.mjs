@@ -1,12 +1,10 @@
-import { Api } from 'telegram';
-import { Sessions } from '../models/index.mjs';
-
+import { ClientsPool } from '../models/index.mjs';
 
 export class ScanContacts {
     async execute(params) {
-        console.log('ScanContacts: ', params);
+        console.log('ScanContacts...');
         //todo: find way how to handle results one by one
-        return Sessions.invokeEach(new Api.contacts.GetContacts({}));
+        return ClientsPool.checkStatuses();
         // todo: handle result;
     }
 }

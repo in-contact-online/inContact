@@ -6,7 +6,7 @@ export const sessions = {
         UpdateSessions,
         () => {},
         (result, res) => {
-            let sessionMessage = 'No message to ADD!';
+            let sessionMessage = 'No sessions to ADD!';
             if (result.length !== 0) sessionMessage = result.map((session) => session.id).join(', ');
             res.send('New sessions: ' + sessionMessage);
         }

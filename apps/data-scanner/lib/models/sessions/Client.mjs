@@ -1,36 +1,53 @@
-import { v4 as uuidv4 } from 'uuid'
-import { TelegramClientAdapter } from './TelegramClientAdapter.mjs'
+import { TelegramClientAdapter } from './TelegramClientAdapter.mjs';
+import { Api } from 'telegram';
 
 export class Client {
     /**
      * @typedef {Class} Client
      * @method init
      * @method invoke
-     * @property uid
-    */
+     * @property sessionId
+     * @property valid
+     * @property contactsCount
+     */
 
     /**
      * @property {Object|null}
      */
     #api = null;
+
     /**
      * @property {String|null}
      */
-    #uid = null;
+    #sessionId = null;
 
     /**
-     * @param {Object} sessionConfig - Telegram command to be invoked
-     * @param {String} sessionConfig.dc_id - Telegram DC ID
-     * @param {String} sessionConfig.server_address - Telegram session server address
-     * @param {Number} sessionConfig.port - Telegram session port
-     * @param {String} sessionConfig.auth_key - Telegram session authentication key
+     * @property {Boolean|null}
+     */
+    #valid = null;
+
+    /**
+     * @property {Number|null}
+     */ #contactsCount = null;
+
+    /**
+     * @param {Object} session - Telegram command to be invoked
+     * @param {Object} session.valid - is session valid
+     * @param {String} session.id - Session identifier
+     * @param {String} session.dc_id - Telegram DC ID
+     * @param {String} session.server_address - Telegram session server address
+     * @param {Number} session.port - Telegram session port
+     * @param {String} session.auth_key - Telegram session authentication key
      * @param {Object} apiConfig - Telegram api configuration
      * @param {String} apiConfig.apiId - Telegram Api id
      * @param {String} apiConfig.apiHash - Telegram Api hash
+
      */
-    constructor(sessionConfig, apiConfig) {
-        this.#uid = uuidv4();// todo: replce uid with sessionId
-        this.#api = new TelegramClientAdapter(sessionConfig, apiConfig);
+
+    constructor(session, apiConfig) {
+        this.#sessionId = session.id;
+        this.#api = new TelegramClientAdapter(session, apiConfig);
+        this.#valid = session.valid;
     }
 
     /**
@@ -39,6 +56,14 @@ export class Client {
      */
     async init() {
         await this.#api.connect();
+
+        this.#contactsCount = (
+            await this.#api.invoke(
+                new Api.contacts.GetContacts({
+                    hash: 0,
+                })
+            )
+        ).users.length;
     }
 
     /**
@@ -48,14 +73,25 @@ export class Client {
      */
     async invoke(command) {
         return this.#api.invoke(command);
-
     }
 
     /**
      * @property
      * @returns {String}
      */
-    get uid() {
-        return this.#uid;
+    get sessionId() {
+        return this.#sessionId;
+    }
+
+    get valid() {
+        return this.#valid;
+    }
+
+    get contactsCount() {
+        return this.#contactsCount;
+    }
+
+    set contactsCount(value) {
+        this.#contactsCount = value;
     }
 }

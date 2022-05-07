@@ -1,4 +1,4 @@
-import { Session } from '../models/index.mjs';
+import { Client, ClientsPool, Session } from '../models/index.mjs';
 import { readDir, readSqlite } from '../utils/index.mjs';
 import * as ConfigContainer from '../config.cjs';
 
@@ -8,20 +8,25 @@ export class UpdateSessions {
         const newSessions = [];
 
         for (const sessionFile of sessionFiles) {
-            const phone = sessionFile.match(/([^/]*)\.session/)[1];
+            const sessionId = sessionFile.match(/([^/]*)\.session/)[1];
 
             const { dc_id: dcId, server_address: serverAddress, port, auth_key: authKey } = await readSqlite(
                 sessionFile,
                 'sessions'
             );
 
-            const session = new Session();
+            let session = await new Session().readBySessionId({ sessionId });
 
-            const sessionByPhone = await session.readByPhone({ phone });
+            if (!session) {
+                const newSession = await new Session().save({ sessionId, dcId, serverAddress, port, authKey });
 
-            if (!sessionByPhone) {
-                await session.save({ phone, dcId, serverAddress, port, authKey });
-                newSessions.push(await session.readByPhone({ phone }));
+                if (ClientsPool.pool) {
+                    const client = new Client(newSession, ConfigContainer.config.service);
+                    await client.init();
+                    ClientsPool.addClient(client);
+                }
+
+                newSessions.push(newSession);
             }
         }
 

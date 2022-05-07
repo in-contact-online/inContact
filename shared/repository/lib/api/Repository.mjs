@@ -1,10 +1,10 @@
-import { UserRepository, UserPhonesRepository, StatusRepository, SessionRepository } from './documents/index.mjs';
+import { UserRepository, ContactRepository, StatusRepository, SessionRepository } from './documents/index.mjs';
 
 export class Repository {
     /**
      * @typedef {Class} Repository
      * @property user
-     * @property userPhones
+     * @property contact
      * @property status
      * @property session
      */
@@ -15,9 +15,9 @@ export class Repository {
     user = null;
 
     /**
-     * @type {UserPhonesRepository} returns DB access to user phonnes
+     * @type {ContactRepository} returns DB access to user phonnes
      */
-    userPhones = null;
+    contact = null;
 
     /**
      * @type {StatusRepository} returns DB access to user statuses
@@ -35,7 +35,7 @@ export class Repository {
      */
     constructor(options) {
         this.user = new UserRepository(options);
-        this.userPhones = new UserPhonesRepository(options);
+        this.contact = new ContactRepository(options);
         this.status = new StatusRepository(options);
         this.session = new SessionRepository(options);
     }

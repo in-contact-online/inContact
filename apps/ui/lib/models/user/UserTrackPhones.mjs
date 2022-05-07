@@ -2,7 +2,7 @@ import ModelBase from '../ModelBase.mjs';
 
 export class UserTrackPhones extends ModelBase {
     /**
-     * @typedef {Class} User
+     * @typedef {Class} UserTrackPhones
      * @property listAll
      * @property listTracked
      * @property save
@@ -16,7 +16,7 @@ export class UserTrackPhones extends ModelBase {
      * @returns {Promise<Object>}
      */
     async listAll({ userId }) {
-        return this.repository.userPhones.read({ userId });
+        return this.repository.contact.read({ userId });
     }
 
     /**
@@ -25,47 +25,47 @@ export class UserTrackPhones extends ModelBase {
      * @returns {Promise<Object>}
      */
     async listTracked({ userId }) {
-        return this.repository.userPhones.read({ userId, tracked: true });
-    }
-
-        /**
-     * @method
-     * @param {Number} userId - user identifier
-     * @param {String} phone - tracked phone
-     * @returns {Promise<Object>}
-     */
-    async readByPhone({ userId, phone }) {
-            return this.repository.userPhones.readOne({ userId, phone });
+        return this.repository.contact.read({ userId, tracked: true });
     }
 
     /**
      * @method
      * @param {Number} userId - user identifier
-     * @param {String} phone - user tracked phone
+     * @param {String} trackedPhone - tracked phone
+     * @returns {Promise<Object>}
+     */
+    async readByPhone({ userId, trackedPhone }) {
+        return this.repository.contact.readOne({ userId, trackedPhone });
+    }
+
+    /**
+     * @method
+     * @param {Number} userId - user identifier
+     * @param {String} trackedPhone - user tracked phone
      * @returns {Promise<Object>}
      */
     async save(params) {
-        return this.repository.userPhones.save(params);
+        return this.repository.contact.save(params);
     }
 
     /**
      * @method
      * @param {Number} userId - user identifier
-     * @param {String} phone - user tracked phone
+     * @param {String} trackedPhone - user tracked phone
      * @returns {Promise<Object>}
      */
     async activate(params) {
-        return this.repository.userPhones.update({ ...params, tracked: true });
+        return this.repository.contact.updateTrackedList({ ...params, tracked: true });
     }
 
     /**
      * @method
      * @param {Number} userId - user identifier
-     * @param {String} phone - user tracked phone
+     * @param {String} trackedPhone - user tracked phone
      * @returns {Promise<Object>}
      */
     async deactivate(params) {
-        return this.repository.userPhones.update({ ...params, tracked: false });
+        return this.repository.contact.updateTrackedList({ ...params, tracked: false });
     }
 
     /**
@@ -74,6 +74,6 @@ export class UserTrackPhones extends ModelBase {
      * @returns {Promise<Object>}
      */
     async deactivateAll(params) {
-        return this.repository.userPhones.updateAll({ ...params, tracked: false });
+        return this.repository.contact.updateTrackedList({ ...params, tracked: false });
     }
 }

@@ -74,7 +74,7 @@ export const main = {
         AddTrackingPhone,
         (req) => ({
             userId: req.from.id,
-            phone: req.text,
+            trackedPhone: req.text,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;
