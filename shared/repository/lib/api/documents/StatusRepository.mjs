@@ -49,4 +49,66 @@ export class StatusRepository extends RepoBase {
             });
         return result;
     }
+
+    /**
+     * @method
+     * @param {Number} page - page number
+     * @param {Number} size - page size
+     * @param {String?} phoneNumber - tracked phone number
+     * @param {String?} checkFrom - check time
+     * @param {String?} checkTo - check time
+     * @return {Promise<Object>} returns data saved in DB
+     */
+    async readList({ page, size, phoneNumber, checkFrom, checkTo }) {
+        let whereStmt = '';
+
+        if (phoneNumber) {
+            whereStmt += `WHERE phone_number = '${phoneNumber}'`;
+        }
+
+        if (checkFrom) {
+            whereStmt += whereStmt ? ` AND ` : `WHERE `;
+            whereStmt += `check_date >= '${checkFrom}'`;
+        }
+
+        if (checkTo) {
+            whereStmt += whereStmt ? ` AND ` : `WHERE `;
+            whereStmt += `check_date <= '${checkTo}'`;
+        }
+
+        const sql = `SELECT * FROM statuses ${whereStmt} LIMIT ${size} OFFSET ${page * size}`;
+        const result = await this.db.queryAsync(sql).catch((err) => {
+            throw new RepoError(err);
+        });
+        return result && result.rows;
+    }
+
+    /**
+     * @method
+     * @param {String?} phoneNumber - tracked phone number
+     * @param {String?} checkFrom - check time
+     * @param {String?} checkTo - check time
+     * @return {Promise<Object>} returns data saved in DB
+     */
+    async total({ phoneNumber, checkFrom, checkTo }) {
+        let whereStmt = '';
+
+        if (phoneNumber) {
+            whereStmt += `WHERE phone_number = '${phoneNumber}'`;
+        }
+
+        if (checkFrom) {
+            whereStmt += whereStmt ? ` AND ` : `WHERE `;
+            whereStmt += `check_date >= '${checkFrom}'`;
+        }
+
+        if (checkTo) {
+            whereStmt += whereStmt ? ` AND ` : `WHERE `;
+            whereStmt += `check_date <= '${checkTo}'`;
+        }
+        const result = await this.db.queryAsync(`SELECT count(*) FROM statuses ${whereStmt}`).catch((err) => {
+            throw new RepoError(err);
+        });
+        return result && Number(result.rows[0].count);
+    }
 }
