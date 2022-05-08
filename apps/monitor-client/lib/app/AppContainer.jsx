@@ -7,6 +7,7 @@ export function AppContainer() {
   const [users, setUsers] = useState(null);
   const [contacts, setContacts] = useState(null);
   const [sessions, setSessons] = useState(null);
+  const [statuses, setStatuses] = useState(null);
   const [systemHealth, setSystemHealth] = useState(null);
 
   useEffect(function () {
@@ -18,7 +19,10 @@ export function AppContainer() {
     });
     api.sessions.readList({ page: 0, size: 5 }).then(result => {
       setSessons(result);
-    })
+    });
+    api.statuses.readList({ page: 0, size: 5 }).then(result => {
+      setStatuses(result);
+    });
     api.systemHealth.read().then(result => {
       setSystemHealth(result);
     })
@@ -33,6 +37,8 @@ export function AppContainer() {
         <div>{JSON.stringify(sessions)}</div>
         <div>Contacts:</div>
         <div>{JSON.stringify(contacts)}</div>
+        <div>Statuses:</div>
+        <div>{JSON.stringify(statuses)}</div>
         <div>System Health:</div>
         <div>{JSON.stringify(systemHealth)}</div>
       </div>

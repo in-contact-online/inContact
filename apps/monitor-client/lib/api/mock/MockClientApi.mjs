@@ -1,5 +1,6 @@
 import { MockContactsApi } from './MockContactsApi.mjs';
 import { MockSessionsApi } from './MockSessionsApi.mjs';
+import { MockStatusesApi } from './MockStatusesApi.mjs';
 import { MockUsersApi } from './MockUsersApi.mjs';
 import { MockSystemHealthApi } from './MockSystemHealthApi.mjs';
 import mock from './mock.json';
@@ -12,12 +13,15 @@ export class MockClientApi {
 
      #sessions = null;
 
+     #statuses = null;
+
      #systemHealth = null;
 
      constructor() {
           this.#users = new MockUsersApi(mock.users);
           this.#contacts = new MockContactsApi(mock.contacts);
           this.#sessions = new MockSessionsApi(mock.sessions);
+          this.#statuses = new MockStatusesApi(mock.statuses);
           this.#systemHealth = new MockSystemHealthApi(mock.systemHealth);
      }
 
@@ -31,6 +35,10 @@ export class MockClientApi {
 
      get sessions() {
           return this.#sessions;
+     }
+
+     get statuses() {
+          return this.#statuses;
      }
 
      get systemHealth() {

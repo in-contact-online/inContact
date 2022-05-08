@@ -3,6 +3,7 @@ import { AxiosContactsApi } from './AxiosContactsApi.mjs';
 import { AxiosSessionsApi } from './AxiosSessionsApi.mjs';
 import { AxiosUsersApi } from './AxiosUsersApi.mjs';
 import { AxiosSystemHealthApi } from './AxiosSystemHealthApi.mjs';
+import { AxiosStatusesApi } from './AxiosStatusesApi.mjs';
 
 export class AxiosClientApi {
 
@@ -11,6 +12,8 @@ export class AxiosClientApi {
      #contacts = null;
 
      #sessions = null;
+
+     #statuses = null;
 
      #systemHealth = null;
 
@@ -27,6 +30,7 @@ export class AxiosClientApi {
           this.#contacts = new AxiosContactsApi(instance);
           this.#sessions = new AxiosSessionsApi(instance);
           this.#systemHealth = new AxiosSystemHealthApi(instance);
+          this.#statuses = new AxiosStatusesApi(instance);
      }
 
      get users() {
@@ -39,6 +43,10 @@ export class AxiosClientApi {
 
      get sessions() {
           return this.#sessions;
+     }
+
+     get statuses() {
+          return this.#statuses;
      }
 
      get systemHealth() {

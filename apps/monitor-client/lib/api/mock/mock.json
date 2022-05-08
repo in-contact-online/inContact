@@ -484,6 +484,46 @@
           ],
           "total": 17
      },
+     "statuses": {
+          "data": [
+               {
+                    "id": 1,
+                    "phone_number": "380677748547",
+                    "user_name": null,
+                    "was_online": "2022-05-07 07:39:59",
+                    "check_date": "2022-05-07 07:40:01.848"
+               },
+               {
+                    "id": 2,
+                    "phone_number": "380677748547",
+                    "user_name": null,
+                    "was_online": "2022-05-07 07:39:59",
+                    "check_date": "2022-05-07 07:41:01.848"
+               },
+               {
+                    "id": 3,
+                    "phone_number": "380677748547",
+                    "user_name": null,
+                    "was_online": "2022-05-07 07:39:59",
+                    "check_date": "2022-05-07 07:42:01.848"
+               },
+               {
+                    "id": 4,
+                    "phone_number": "380677748547",
+                    "user_name": null,
+                    "was_online": "2022-05-07 07:39:59",
+                    "check_date": "2022-05-07 07:43:01.848"
+               },
+               {
+                    "id": 5,
+                    "phone_number": "380677748547",
+                    "user_name": null,
+                    "was_online": "2022-05-07 07:39:59",
+                    "check_date": "2022-05-07 07:44:01.848"
+               }
+          ],
+          "total": 5
+     },
      "systemHealth": {
           "serviceStatuses":{},
           "resourceUsage": {
