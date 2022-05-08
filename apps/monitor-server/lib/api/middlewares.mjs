@@ -1,5 +1,11 @@
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default {
     json: bodyParser.json({
@@ -19,7 +25,7 @@ export default {
     }),
     urlencoded: bodyParser.urlencoded({ extended: false }),
 
-    cors: cors({
-        exposedHeaders: ['Content-Next-Page'],
-    }),
+    cors: cors(),
+
+    static: express.static(path.join(__dirname, '../../..', '/monitor-client/build')),
 };

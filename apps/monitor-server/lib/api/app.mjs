@@ -1,22 +1,19 @@
 import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import appRouter from './rest-api/router.mjs';
+import * as swagger from './swagger';
 import logger from './logger.mjs';
 import middlewares from './middlewares.mjs';
 
 let http = null;
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export function start(config) {
     http = express()
         .use(middlewares.cors)
         .use(middlewares.json)
         .use(middlewares.urlencoded)
-        .use('/app', express.static(path.join(__dirname, '../../..', '/monitor-client/build')))
+        .use('/app', middlewares.static)
         .use('/', appRouter)
+        .use('/api-docs', swagger.serve, swagger.setup)
         .listen(config.port, () => {
             logger.info(`Listening on ${config.port}`);
         });

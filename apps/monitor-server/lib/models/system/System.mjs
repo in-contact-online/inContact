@@ -2,6 +2,32 @@ import os from 'os';
 import moment from 'moment';
 import ModelBase from '../ModelBase.mjs';
 
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      System:
+ *          type: object
+ *          properties:
+ *              serviceStatuses:
+ *                  type: object
+ *              resourceUsage:
+ *                  type: object
+ *                  properties:
+ *                      cpuUsage:
+ *                          type: number
+ *                          description: CPU usgae in perecent.
+ *                      freeMemory:
+ *                          type: string
+ *                          description: Free memory.
+ *                      totalMemory:
+ *                          type: string
+ *                          description: Total instance memory.
+ *                      serverUptime:
+ *                          type: string
+ *                          description: Server uptime.
+ */
 export class System extends ModelBase {
     /**
      * @typedef {Class} System
