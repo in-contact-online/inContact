@@ -79,13 +79,15 @@ export class ClientsPool {
                 result = await ClientsPool.addContact(client, contact.tracked_phone);
 
                 if (result) {
-                    await new Contact().updateSession({ trackedPhone: result, sessionId: client.sessionId });
+                    // todo: add user_id as identifier
+                    await new Contact().updateSession({ trackedPhone: result, sessionId: client.sessionId, userId: client.userId });
                     break;
                 }
             }
 
             if (!result) {
-                await new Contact().updateTrackedStatus({ trackedPhone: contact.tracked_phone, tracked: false });
+                // todo: add user_id as identifier
+                await new Contact().updateTrackedStatus({ trackedPhone: contact.tracked_phone, tracked: false, userId: client.userId });
             }
         }
     }
@@ -115,6 +117,7 @@ export class ClientsPool {
                     })
                 );
 
+                // todo: add user_id as identifier
                 await new Contact().updateSession({ trackedPhone: contact.tracked_phone, sessionId: null });
             }
         }
