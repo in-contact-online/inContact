@@ -1,0 +1,20 @@
+{
+     "$schema": "https://json.schemastore.org/tsconfig",
+     "display": "Node 14",
+     "extends": "@tsconfig/node14/tsconfig.json",
+     "compilerOptions": {
+          "lib": [
+               "es2020",
+               "dom"
+          ],
+          "module": "commonjs",
+          "target": "es2020",
+          "strict": true,
+          "jsx": "preserve",
+          "esModuleInterop": true,
+          "skipLibCheck": true,
+          "forceConsistentCasingInFileNames": true,
+          "moduleResolution": "node",
+          "resolveJsonModule": true
+     }
+}

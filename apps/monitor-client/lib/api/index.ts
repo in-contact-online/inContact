@@ -1,6 +1,14 @@
-import { AxiosClientApi } from './axios/index.mjs';
-import { MockClientApi } from './mock/index.mjs';
+import { AxiosClientApi, IAxiosClientApi } from './axios';
+import { IMockClientApi, MockClientApi } from './mock';
 
+type ConfigOptions = {
+     type: string,
+     options: {
+          baseURL: string
+     }
+}
+
+export type ApiClient = IAxiosClientApi | IMockClientApi;
 
 export const ClientTypes = {
      Mock: 'mock',
@@ -14,7 +22,7 @@ export const ClientTypes = {
  * @param {String} config.options.baseURL - application base url for an API client
  * @return {MockClientApi}
  */
-function createClient(config = { type: ClientTypes.Mock }) {
+function createClient(config: ConfigOptions = { type: ClientTypes.Mock, options: { baseURL: '' } }): ApiClient {
      const { type, options } = config;
      if (type === ClientTypes.Mock) {
           return new MockClientApi();
@@ -22,9 +30,9 @@ function createClient(config = { type: ClientTypes.Mock }) {
      return new AxiosClientApi(options);
 }
 
-export const client = createClient({
+export const client: ApiClient = createClient({
      type: ClientTypes.Axios,
      options: {
-          baseURL: process.env.IN_CONTACT_MONITOR_API_BASE_URL
+          baseURL: process.env.IN_CONTACT_MONITOR_API_BASE_URL || ''
      }
 });

@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
   mode: process.env.NODE_ENV,
   entry: {
-    app: ['@babel/polyfill', './lib/index.jsx'],
+    app: ['@babel/polyfill', './lib/index.tsx'],
   },
   module: {
     rules: [
@@ -19,9 +19,10 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
+            presets: ['@babel/preset-env', ["@babel/preset-react", {"runtime": "automatic"}]],
             plugins: [
-              ["@babel/plugin-proposal-class-properties"]
+              ["@babel/plugin-proposal-class-properties"],
+              ["@babel/plugin-transform-modules-commonjs"]
             ]
           },
         },
@@ -34,11 +35,16 @@ module.exports = {
         ],
       },
       {test: /\.html$/, loader: 'html-loader'},
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ],
   },
   resolve: {
     modules: ['node_modules'],
-    extensions: ['.js', '.jsx', '.mjs']
+    extensions: ['.js', '.jsx', '.mjs', '.tsx', '.ts']
   },
   devServer: {
     hot: true,
@@ -80,7 +86,7 @@ module.exports = {
   externals: [
     {
       xmlhttprequest: '{XMLHttpRequest:XMLHttpRequest}',
-    },
+    }
   ],
   plugins: [
     new Dotenv({
