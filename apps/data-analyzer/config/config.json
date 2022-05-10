@@ -1,6 +1,6 @@
 {
-  "logLevel": "{{IN_CONTACT_MONITOR_SERVER_LOG_LEVEL}}",
-  "serviceName": "{{IN_CONTACT_MONITOR_SERVER_SERVICE_NAME}}",
+  "logLevel": "{{IN_CONTACT_ANALYZER_LOG_LEVEL}}",
+  "serviceName": "{{IN_CONTACT_ANALYZER_SERVICE_NAME}}",
   "db": {
     "host": "{{IN_CONTACT_DB_HOST}}",
     "port": "{{IN_CONTACT_DB_PORT}}",
@@ -10,6 +10,7 @@
     "connectionsLimit": "{{IN_CONTACT_DB_CONNECTIONS_LIMIT}}"
   },
   "service": {
-    "port": "{{IN_CONTACT_MONITOR_SERVER_PORT}}"
+    "port": "{{IN_CONTACT_ANALYZER_PORT}}",
+    "cron": "{{IN_CONTACT_ANALYZER_CRON}}"
   }
 }
