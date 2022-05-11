@@ -86,25 +86,25 @@ export class ClientsPool {
                     trackedPhone: contact.tracked_phone,
                     sessionId: theSameContacts[0].session_id,
                 });
-                return;
+                continue;
             }
 
-            let result = null;
+            let phone = null;
 
             for (const client of ClientsPool.pool) {
-                result = await ClientsPool.addContact(client, contact.tracked_phone);
+                phone = await ClientsPool.addContact(client, contact.tracked_phone);
 
-                if (result) {
+                if (phone) {
                     await new Contact().updateSession({
                         userId: contact.user_id,
-                        trackedPhone: result,
+                        trackedPhone: phone,
                         sessionId: client.sessionId,
                     });
                     break;
                 }
             }
 
-            if (!result) {
+            if (!phone) {
                 await new Contact().updateTrackedStatus({
                     userId: contact.user_id,
                     trackedPhone: contact.tracked_phone,
@@ -128,21 +128,21 @@ export class ClientsPool {
 
     static async removeContacts(contactsList) {
         for (const contact of contactsList) {
+            await new Contact().updateSession({
+                userId: contact.user_id,
+                trackedPhone: contact.tracked_phone,
+                sessionId: null,
+            });
+
             const client = ClientsPool.pool.find((client) => client.sessionId === contact.session_id);
 
             if (client) {
-                const result = await client.invoke(new Api.contacts.GetContacts({}));
-                const user = result.users.find((user) => '+' + user.phone === contact.tracked_phone);
-
-                await new Contact().updateSession({
-                    trackedPhone: contact.tracked_phone,
-                    sessionId: null,
-                    userId: contact.user_id,
-                });
-
                 const theSameContacts = await new Contact().getTrackedByPhone({ trackedPhone: contact.tracked_phone });
 
                 if (theSameContacts.length === 0) {
+                    const result = await client.invoke(new Api.contacts.GetContacts({}));
+                    const user = result.users.find((user) => '+' + user.phone === contact.tracked_phone);
+
                     await client.invoke(
                         new Api.contacts.DeleteContacts({
                             id: [user.id.value],
