@@ -118,17 +118,21 @@ export class ClientsPool {
                 const result = await client.invoke(new Api.contacts.GetContacts({}));
                 const user = result.users.find((user) => '+' + user.phone === contact.tracked_phone);
 
-                await client.invoke(
-                    new Api.contacts.DeleteContacts({
-                        id: [user.id.value],
-                    })
-                );
-
                 await new Contact().updateSession({
                     trackedPhone: contact.tracked_phone,
                     sessionId: null,
                     userId: contact.user_id,
                 });
+
+                const theSameContacts = await new Contact().getTrackedByPhone({ trackedPhone: contact.tracked_phone });
+
+                if (theSameContacts.length === 0) {
+                    await client.invoke(
+                        new Api.contacts.DeleteContacts({
+                            id: [user.id.value],
+                        })
+                    );
+                }
             }
         }
     }

@@ -19,6 +19,15 @@ export class Contact extends ModelBase {
 
     /**
      * @method
+     * @param {String} trackedPhone - tracked phonenumber which session we should update
+     * @returns {Promise<Object>}
+     */
+    async getTrackedByPhone({ trackedPhone }) {
+        return await this.repository.contact.read({ tracked: true, trackedPhone });
+    }
+
+    /**
+     * @method
      * @param {Number} userId - user identifier
      * @param {String} trackedPhone - tracked phonenumber which session we should update
      * @param {String} sessionId - session identifier
@@ -41,7 +50,7 @@ export class Contact extends ModelBase {
      * @method
      * @param {Number} userId - user identifier
      * @param {String} trackedPhone - tracked phonenumber which session we should update
-     * @param {String} tracked - is phone number tracked
+     * @param {Boolean} tracked - is phone number tracked
      * @returns {Promise<Object>}
      */
     async updateTrackedStatus({ userId, trackedPhone, tracked }) {
