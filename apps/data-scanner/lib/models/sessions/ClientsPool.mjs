@@ -33,8 +33,13 @@ export class ClientsPool {
 
         for (const session of sessions) {
             const client = new Client(session, config);
-            await client.init();
-            ClientsPool.pool.push(client);
+
+            try {
+                await client.init();
+                ClientsPool.pool.push(client);
+            } catch (e) {
+                await new Session().update({ sessionId: client.sessionId, valid: false });
+            }
         }
 
         ClientsPool.pool.sort((a, b) => a.contactsCount - b.contactsCount);
