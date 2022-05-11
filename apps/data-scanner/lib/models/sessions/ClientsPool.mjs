@@ -73,6 +73,17 @@ export class ClientsPool {
      */
     static async addContacts(contactsList) {
         for (const contact of contactsList) {
+            const theSameContacts = await new Contact().getTrackedByPhone({ trackedPhone: contact.tracked_phone });
+
+            if (theSameContacts.length > 0) {
+                await new Contact().updateSession({
+                    userId: contact.user_id,
+                    trackedPhone: contact.tracked_phone,
+                    sessionId: theSameContacts[0].session_id,
+                });
+                return;
+            }
+
             let result = null;
 
             for (const client of ClientsPool.pool) {

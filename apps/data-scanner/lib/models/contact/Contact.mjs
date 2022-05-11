@@ -19,11 +19,12 @@ export class Contact extends ModelBase {
 
     /**
      * @method
-     * @param {String} trackedPhone - tracked phonenumber which session we should update
+     * @param {String} trackedPhone - tracked phonenumber
      * @returns {Promise<Object>}
      */
     async getTrackedByPhone({ trackedPhone }) {
-        return await this.repository.contact.read({ tracked: true, trackedPhone });
+        const contacts = await this.repository.contact.read({ trackedPhone });
+        return contacts.filter((contact) => contact.session_id && contact.tracked);
     }
 
     /**
