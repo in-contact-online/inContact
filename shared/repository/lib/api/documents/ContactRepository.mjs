@@ -129,13 +129,18 @@ export class ContactRepository extends RepoBase {
 
     /**
      * @method
+     * @param {Number} userId - user idetifier
      * @param {String} trackedPhone - tracked phonenumber which session we should update
      * @param {String} sessionId - identifier of session that tracks this contact
      * @returns {Promise<Object>}
      */
-    async updateSessionId({ trackedPhone, sessionId }) {
+    async updateSessionId({ userId, trackedPhone, sessionId }) {
         const result = await this.db
-            .queryAsync('UPDATE tracked_phones SET session_id = $1 WHERE tracked_phone = $2', [sessionId, trackedPhone])
+            .queryAsync('UPDATE tracked_phones SET session_id = $1 WHERE tracked_phone = $2 AND user_id = $3', [
+                sessionId,
+                trackedPhone,
+                userId,
+            ])
             .catch((err) => {
                 throw new RepoError(err);
             });

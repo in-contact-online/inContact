@@ -33,8 +33,13 @@ export class ClientsPool {
 
         for (const session of sessions) {
             const client = new Client(session, config);
-            await client.init();
-            ClientsPool.pool.push(client);
+
+            try {
+                await client.init();
+                ClientsPool.pool.push(client);
+            } catch (e) {
+                await new Session().update({ sessionId: client.sessionId, valid: false });
+            }
         }
 
         ClientsPool.pool.sort((a, b) => a.contactsCount - b.contactsCount);
@@ -73,21 +78,38 @@ export class ClientsPool {
      */
     static async addContacts(contactsList) {
         for (const contact of contactsList) {
+            const theSameContacts = await new Contact().getTrackedByPhone({ trackedPhone: contact.tracked_phone });
+
+            if (theSameContacts.length > 0) {
+                await new Contact().updateSession({
+                    userId: contact.user_id,
+                    trackedPhone: contact.tracked_phone,
+                    sessionId: theSameContacts[0].session_id,
+                });
+                return;
+            }
+
             let result = null;
 
             for (const client of ClientsPool.pool) {
                 result = await ClientsPool.addContact(client, contact.tracked_phone);
 
                 if (result) {
-                    // todo: add user_id as identifier
-                    await new Contact().updateSession({ trackedPhone: result, sessionId: client.sessionId, userId: client.userId });
+                    await new Contact().updateSession({
+                        userId: contact.user_id,
+                        trackedPhone: result,
+                        sessionId: client.sessionId,
+                    });
                     break;
                 }
             }
 
             if (!result) {
-                // todo: add user_id as identifier
-                await new Contact().updateTrackedStatus({ trackedPhone: contact.tracked_phone, tracked: false, userId: client.userId });
+                await new Contact().updateTrackedStatus({
+                    userId: contact.user_id,
+                    trackedPhone: contact.tracked_phone,
+                    tracked: false,
+                });
             }
         }
     }
@@ -107,18 +129,26 @@ export class ClientsPool {
     static async removeContacts(contactsList) {
         for (const contact of contactsList) {
             const client = ClientsPool.pool.find((client) => client.sessionId === contact.session_id);
-            const result = await client.invoke(new Api.contacts.GetContacts({}));
-            const user = result.users.find((user) => '+' + user.phone === contact.tracked_phone);
 
             if (client) {
-                await client.invoke(
-                    new Api.contacts.DeleteContacts({
-                        id: [user.id.value],
-                    })
-                );
+                const result = await client.invoke(new Api.contacts.GetContacts({}));
+                const user = result.users.find((user) => '+' + user.phone === contact.tracked_phone);
 
-                // todo: add user_id as identifier
-                await new Contact().updateSession({ trackedPhone: contact.tracked_phone, sessionId: null });
+                await new Contact().updateSession({
+                    trackedPhone: contact.tracked_phone,
+                    sessionId: null,
+                    userId: contact.user_id,
+                });
+
+                const theSameContacts = await new Contact().getTrackedByPhone({ trackedPhone: contact.tracked_phone });
+
+                if (theSameContacts.length === 0) {
+                    await client.invoke(
+                        new Api.contacts.DeleteContacts({
+                            id: [user.id.value],
+                        })
+                    );
+                }
             }
         }
     }
