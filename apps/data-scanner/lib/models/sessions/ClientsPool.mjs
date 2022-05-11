@@ -79,15 +79,21 @@ export class ClientsPool {
                 result = await ClientsPool.addContact(client, contact.tracked_phone);
 
                 if (result) {
-                    // todo: add user_id as identifier
-                    await new Contact().updateSession({ trackedPhone: result, sessionId: client.sessionId, userId: client.userId });
+                    await new Contact().updateSession({
+                        userId: contact.user_id,
+                        trackedPhone: result,
+                        sessionId: client.sessionId,
+                    });
                     break;
                 }
             }
 
             if (!result) {
-                // todo: add user_id as identifier
-                await new Contact().updateTrackedStatus({ trackedPhone: contact.tracked_phone, tracked: false, userId: client.userId });
+                await new Contact().updateTrackedStatus({
+                    userId: contact.user_id,
+                    trackedPhone: contact.tracked_phone,
+                    tracked: false,
+                });
             }
         }
     }
@@ -107,18 +113,22 @@ export class ClientsPool {
     static async removeContacts(contactsList) {
         for (const contact of contactsList) {
             const client = ClientsPool.pool.find((client) => client.sessionId === contact.session_id);
-            const result = await client.invoke(new Api.contacts.GetContacts({}));
-            const user = result.users.find((user) => '+' + user.phone === contact.tracked_phone);
 
             if (client) {
+                const result = await client.invoke(new Api.contacts.GetContacts({}));
+                const user = result.users.find((user) => '+' + user.phone === contact.tracked_phone);
+
                 await client.invoke(
                     new Api.contacts.DeleteContacts({
                         id: [user.id.value],
                     })
                 );
 
-                // todo: add user_id as identifier
-                await new Contact().updateSession({ trackedPhone: contact.tracked_phone, sessionId: null });
+                await new Contact().updateSession({
+                    trackedPhone: contact.tracked_phone,
+                    sessionId: null,
+                    userId: contact.user_id,
+                });
             }
         }
     }
