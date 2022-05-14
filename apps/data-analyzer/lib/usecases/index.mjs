@@ -1,1 +1,1 @@
-export * from './InitSessionsPool.mjs';
+export * from './InitWorkersQueue.mjs';

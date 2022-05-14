@@ -1,5 +1,4 @@
 import * as commands from './commands/index.mjs';
-import { COMMANDS } from './constants.mjs';
 
 class Command {
      /**
@@ -14,9 +13,7 @@ class Command {
      */
      invoke(command, config) {
           switch(command) {
-               case(COMMANDS.SESSIONS.INIT): return commands.sessions.init(config);
-               case(COMMANDS.SESSIONS.UPDATE): return commands.sessions.update(config);
-               case(COMMANDS.SCANNER.READ): return commands.scanner.read(config);
+               case('INIT'): return commands.workers.init(config);
                default: undefined;
           }
      }

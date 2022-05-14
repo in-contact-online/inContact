@@ -57,5 +57,5 @@ process.on('unhandledRejection', (error) => {
 });
 
 process.on('uncaughtException', (error) => {
-    logger.error('uncaughtException', error.stack);
+    logger.error('uncaughtException', error);
 });

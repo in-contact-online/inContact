@@ -1,6 +1,5 @@
 import { CronJob } from 'cron';
-// import appCommand from '../command-api/command.mjs';
-// import { COMMANDS } from '../command-api/constants.mjs';
+import appCommand from '../command-api/command.mjs';
 
 
 export default class Analyzer {
@@ -30,9 +29,7 @@ export default class Analyzer {
           this.#cronJob = new CronJob(
                this.#config.cron,
                async () => {
-                    // await appCommand.invoke(COMMANDS.SESSIONS.INIT, this.#config);
-                    // await appCommand.invoke(COMMANDS.SCANNER.READ, this.#config);
-                    // await appCommand.invoke(COMMANDS.SESSIONS.UPDATE, this.#config);
+                    await appCommand.invoke('INIT', this.#config);
                },
                null,
                true,
