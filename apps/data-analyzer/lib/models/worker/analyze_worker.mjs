@@ -21,12 +21,24 @@ const repository = createRepository({
 ModelBase.setRepository(repository);
 
 async function main(options) {
+     const usersMap = {};
      const contacts = await new Contact().getTrackedByUser({ userId: options.id });
      for (const contact of contacts) {
           const phoneNumber = (contact.tracked_phone || '').replace('+', '');
           const checkDate = new Date(new Date().getTime() - 10 * 60 * 1000).toISOString();
           const statuses = await new Status().readByPhone({ phoneNumber, checkDate });
+          usersMap[phoneNumber] = {};
+          statuses.forEach(status => {
+               if (status.was_online) {
+                    const wasOnline = new Date(status.was_online).toISOString();
+                    usersMap[phoneNumber][wasOnline] = wasOnline;
+               } else {
+                    const checkDate = new Date(status.check_date).toISOString();
+                    usersMap[phoneNumber][checkDate] = checkDate;
+               }
+          });
      }
+     console.log(JSON.stringify(usersMap));
      return undefined;
 }
 

@@ -27,6 +27,6 @@ export class Worker {
             this.#worker.on('error', this.handleError.bind(this, rej));
             this.#worker.on('exit', this.handleExit.bind(this, res));
             this.#worker.send(this.params);
-        })
+        });
     }
 }
