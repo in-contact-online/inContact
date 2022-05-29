@@ -1,0 +1,23 @@
+1. User add phone number which not tracked by system yet
+    Expected result:
+        - contact added to the Pool
+        - statuses of this contact apears every $time
+        - contact get session_id of tracking session
+
+2. User add phone number which tracked by other users
+    Expected result:
+        - pool doesnt get excess contact to track
+        - statuses of this contact apears every $time
+        - contact get session_id of tracking session which already tracks this contact
+
+3. User remove contact that was tracked only by him
+    Expected result:
+        - this contact was removed from the Pool
+        - session was removed from this contact
+        - statuses of this contact not apears
+
+4. User remove contact that was tracked other users too
+    Expected result:
+        - this contact wasn't removed from the Pool
+        - session was removed from this contact from this exact user
+        - statuses of this contact apears every $time
