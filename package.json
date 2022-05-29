@@ -28,6 +28,7 @@
     "apps/data-scanner",
     "apps/notificator",
     "apps/monitor-server",
+    "apps/monitor-client",
     "apps/ui"
   ],
   "private": true,

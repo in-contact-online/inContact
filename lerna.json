@@ -7,6 +7,7 @@
     "apps/notificator",
     "apps/data-scanner",
     "apps/monitor-server",
+    "apps/monitor-client",
     "apps/ui"
   ],
   "version": "1.0.0-alpha.0"
