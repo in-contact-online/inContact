@@ -33,11 +33,11 @@ export class ContactRepository extends RepoBase {
 
     /**
      * @method
-     * @param {number} userId - user identifier
-     * @param {boolean} tracked - flag that indicates is the contact tracked
-     * @param {string} trackedPhone - contact added by user that should be tracked
-     * @param {string} sessionId - identifier of session that tracks this contact
-     * @param {boolean} withSession - flag that indicates does contact have session
+     * @param {number} params.userId - user identifier
+     * @param {boolean} params.tracked - flag that indicates is the contact tracked
+     * @param {string} params.trackedPhone - contact added by user that should be tracked
+     * @param {string} params.sessionId - identifier of session that tracks this contact
+     * @param {boolean} params.withSession - flag that indicates does contact have session
      * @return {Promise<Object>} returns data saved in DB
      */
     async read(params) {

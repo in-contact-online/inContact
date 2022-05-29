@@ -1,4 +1,4 @@
-import logger from '../../api/logger.mjs';
+import { Worker } from './Worker.mjs';
 
 export class WorkersQueue {
      #pool = null;
@@ -19,7 +19,8 @@ export class WorkersQueue {
      async execute() {
           while (this.#pool.length) {
                const user = this.deque();
-               logger.info(user)
+               const worker = new Worker(user);
+               await worker.run();
           }
      }
 }
