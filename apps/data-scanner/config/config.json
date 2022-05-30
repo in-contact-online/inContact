@@ -1,6 +1,6 @@
 {
-  "logLevel": "{{IN_CONTACT_UI_LOG_LEVEL}}",
-  "serviceName": "{{IN_CONTACT_UI_SERVICE_NAME}}",
+  "logLevel": "{{IN_CONTACT_SCANNER_LOG_LEVEL}}",
+  "serviceName": "{{IN_CONTACT_SCANNER_SERVICE_NAME}}",
   "db": {
     "host": "{{IN_CONTACT_DB_HOST}}",
     "port": "{{IN_CONTACT_DB_PORT}}",

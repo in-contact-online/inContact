@@ -1,0 +1,15 @@
+[Unit]
+Description="In Contact Data Analyzer"
+
+[Service]
+ExecStart=/usr/bin/node --experimental-modules --es-module-specifier-resolution=node app
+WorkingDirectory=/home/ubuntu/inContact/apps/data-analyzer
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=in-contact-data-analyzer
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

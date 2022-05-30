@@ -3,8 +3,6 @@ import { Contact } from '../models/index.mjs';
 
 export class UpdateSessionsPool {
     async execute(params) {
-        console.log('UpdateSessionsPool...');
-
         const addList = await new Contact().getList({ tracked: true, withSession: false });
         await ClientsPool.addContacts(addList);
 

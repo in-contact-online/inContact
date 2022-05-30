@@ -12,5 +12,5 @@
     "auth": {
         "botToken": "{{IN_CONTACT_BOT_TOKEN}}"
     },
-    "trackedPhonesLimit": "{{IN_CONTACT_LIMIT_TRACKED_PHONE}}"
+    "trackedPhonesLimit": "{{IN_CONTACT_UI_LIMIT_TRACKED_PHONE}}"
 }
