@@ -6,16 +6,17 @@ import { AppProvider } from './context';
 import { ErrorBoundaryComponent } from './components/ErrorBoundary';
 import './index.css';
 
-
 const container: any = document.getElementById('app');
 const root: ReactDOM.Root = ReactDOM.createRoot(container);
 
+console.log(container);
+
 root.render(
-     <HashRouter>
-          <AppProvider>
-               <ErrorBoundaryComponent>
-                    <AppContainer />
-               </ErrorBoundaryComponent>
-          </AppProvider>
-     </HashRouter>
+    <HashRouter>
+        <AppProvider>
+            <ErrorBoundaryComponent>
+                <AppContainer />
+            </ErrorBoundaryComponent>
+        </AppProvider>
+    </HashRouter>
 );
