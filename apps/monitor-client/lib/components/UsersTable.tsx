@@ -72,7 +72,7 @@ function Row({ data, fields }: any) {
     );
 }
 
-export default function UserTable({ fields, data, collapsibleField }: any) {
+export default function TableCollapsible({ fields, data, collapsibleField }: any) {
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
