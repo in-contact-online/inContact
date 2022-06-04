@@ -165,12 +165,10 @@ export class ContactRepository extends RepoBase {
      * @method
      * @param {Number} page - page number
      * @param {Number} size - page size
-     * @param {Number} userId - user identifier
      * @return {Promise<Object>} returns data saved in DB
      */
-    async readList({ page, size, userId }) {
+    async readList({ page, size }) {
         const sql = `SELECT * FROM tracked_phones LIMIT ${size} OFFSET ${page * size}`;
-        if (userId) sql += ` WHERE id=${userId}`;
 
         const result = await this.db.queryAsync(sql).catch((err) => {
             throw new RepoError(err);

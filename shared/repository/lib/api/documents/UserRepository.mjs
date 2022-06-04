@@ -32,10 +32,12 @@ export class UserRepository extends RepoBase {
      * @method
      * @param {Number} page - page number
      * @param {Number} size - page size
+
      * @return {Promise<Object>} returns data saved in DB
      */
     async readList({ page, size }) {
-        const sql = `SELECT * FROM users LIMIT ${size} OFFSET ${page * size}`;
+        let sql = `SELECT * FROM users LIMIT ${size} OFFSET ${page * size}`;
+
         const result = await this.db.queryAsync(sql).catch((err) => {
             throw new RepoError(err);
         });
@@ -46,7 +48,7 @@ export class UserRepository extends RepoBase {
      * @method
      * @return {Promise<Number>} returns data saved in DB
      */
-     async total() {
+    async total() {
         const result = await this.db.queryAsync('SELECT count(*) FROM users').catch((err) => {
             throw new RepoError(err);
         });

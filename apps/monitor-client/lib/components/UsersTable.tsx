@@ -15,8 +15,40 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-function Row({ row }: { row: any }) {
+function RowCollapsible({ data, collapsibleHeaders, collapsibleField }: any) {
     const [open, setOpen] = React.useState(false);
+
+    /* 
+    
+    rows = [
+    {
+        id: 2112,
+        username: "dddddd",
+        first_name: "ccccc",
+        contacts: [
+            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
+            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
+            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
+        ]
+    },
+    {
+        id: 2112,
+        username: "dddddd",
+        first_name: "ccccc",
+        contacts: [
+            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
+            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
+            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
+        ]
+    },
+
+
+    ]
+    
+    */
+
+    const collapsibleData = data[collapsibleField];
+    const { contacts, ...parentData } = data;
 
     return (
         <React.Fragment>
@@ -26,18 +58,12 @@ function Row({ row }: { row: any }) {
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">
-                    {row.id}
-                </TableCell>
-                <TableCell>{row.userName}</TableCell>
-                <TableCell>{row.firstName}</TableCell>
-                <TableCell>{row.secondName}</TableCell>
-                <TableCell>{row.phone}</TableCell>
-                <TableCell>{row.active}</TableCell>
-                <TableCell>{row.createdAt}</TableCell>
-                <TableCell>{row.updatedAt}</TableCell>
-                <TableCell>{row.chatId}</TableCell>
+
+                {Object.values(parentData).map((value: any) => (
+                    <TableCell>{value}</TableCell>
+                ))}
             </TableRow>
+
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
@@ -48,21 +74,15 @@ function Row({ row }: { row: any }) {
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Date</TableCell>
-                                        <TableCell>Customer</TableCell>
-                                        <TableCell align="right">Amount</TableCell>
-                                        <TableCell align="right">Total price ($)</TableCell>
+                                        {collapsibleHeaders.map((header: any) => (
+                                            <TableCell>{header}</TableCell>
+                                        ))}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell component="th" scope="row">
-                                            {'test1'}
-                                        </TableCell>
-                                        <TableCell>{'test2'}</TableCell>
-                                        <TableCell align="right">{'test3'}</TableCell>
-                                        <TableCell align="right">{'test4'}</TableCell>
-                                    </TableRow>
+                                    {collapsibleData.map((value: any) => (
+                                        <Row data={value} />
+                                    ))}
                                 </TableBody>
                             </Table>
                         </Box>
@@ -73,29 +93,38 @@ function Row({ row }: { row: any }) {
     );
 }
 
-export default function UsersTable({ rows }: { rows: any }) {
+function Row({ data }: any) {
+    return (
+        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            {Object.values(data).map((value: any) => (
+                <TableCell>{value}</TableCell>
+            ))}
+        </TableRow>
+    );
+}
+
+export default function UserTable({ headers, rows, collapsibleField }: any) {
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
-                        <TableCell />
-                        <TableCell>user id</TableCell>
-                        <TableCell>username</TableCell>
-                        <TableCell>first name</TableCell>
-                        <TableCell>second name</TableCell>
-                        <TableCell>phone</TableCell>
-                        <TableCell>active</TableCell>
-                        <TableCell>created at</TableCell>
-                        <TableCell>updated at</TableCell>
-                        <TableCell>chat id</TableCell>
+                        {headers.parent.map((header: any) => (
+                            <TableCell>{header}</TableCell>
+                        ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows ? (
-                        rows.map((row: any) => <Row key={row.id} row={row} />)
+                        rows.map((row: any) => (
+                            <RowCollapsible
+                                data={row}
+                                collapsibleHeaders={headers.collapsible}
+                                collapsibleField={collapsibleField}
+                            />
+                        ))
                     ) : (
-                        <TableCell align="right">{'fetching data..'}</TableCell>
+                        <TableCell>{'Fetching Data...'}</TableCell>
                     )}
                 </TableBody>
             </Table>

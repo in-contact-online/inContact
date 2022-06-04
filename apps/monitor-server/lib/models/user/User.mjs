@@ -1,6 +1,5 @@
 import ModelBase from '../ModelBase.mjs';
 
-
 /**
  * @swagger
  * components:
@@ -64,7 +63,7 @@ export class User extends ModelBase {
      * @method
      * @returns {Promise<Object>}
      */
-     async getTotal() {
+    async getTotal() {
         return this.repository.user.total();
     }
 }

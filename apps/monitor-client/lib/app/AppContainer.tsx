@@ -7,41 +7,43 @@ import { array } from 'prop-types';
 export function AppContainer() {
     const { api } = useContext<IAppContext>(AppContext);
     const [users, setUsers] = useState<any | null>(null);
-    const [contacts, setContacts] = useState<any | null>(null);
-    const [sessions, setSessons] = useState<any | null>(null);
-    const [statuses, setStatuses] = useState<any | null>(null);
-    const [systemHealth, setSystemHealth] = useState<any | null>(null);
 
     useEffect(function () {
-        api?.users.readList({ page: 0, size: 5 }).then((result: any) => {
-            const users = result.data;
-            users.contacts = [];
+        async function getUsers(): Promise<void> {
+            const contacts: any = await api?.contacts.readList({ page: 0, size: 10 });
+            const users: any = await api?.users.readList({ page: 0, size: 10 });
 
-            users.forEach((user: any) => {
-                api.contacts2.readByUser({ userId: user.id }).then((result) => {
-                    users.contacts.push(result.data);
-                });
+            const usersExtanded = users.data.map((user: any) => {
+                user.contacts = contacts.data.filter((contact: any) => contact.userId === user.id);
+                return user;
             });
 
-            setUsers(users);
-        });
-        api?.contacts.readList({ page: 0, size: 5 }).then((result) => {
-            setContacts(result);
-        });
-        api?.sessions.readList({ page: 0, size: 5 }).then((result) => {
-            setSessons(result);
-        });
-        api?.statuses.readList({ page: 0, size: 5 }).then((result) => {
-            setStatuses(result);
-        });
-        api?.systemHealth.read().then((result) => {
-            setSystemHealth(result);
-        });
+            setUsers(usersExtanded);
+        }
+
+        getUsers();
     }, []);
 
     return (
         <>
-            <UsersTable rows={users} />
+            <UsersTable
+                rows={users}
+                collapsibleField={'contacts'}
+                headers={{
+                    parent: [
+                        'id',
+                        'username',
+                        'first_name',
+                        'second_name',
+                        'phone',
+                        'active',
+                        'created_at',
+                        'updated_at',
+                        'chat_id',
+                    ],
+                    collapsible: ['tracked_phone', 'tracked', 'created_at', 'updated_at', 'id', 'session_id'],
+                }}
+            />
         </>
     );
 }
