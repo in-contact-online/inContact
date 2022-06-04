@@ -15,28 +15,6 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-function createData(
-    id: number,
-    username: string,
-    first_name: string,
-    second_name: string,
-    phone: string,
-    active: Boolean,
-    created_at: Date,
-    updated_at: Date
-) {
-    return {
-        id,
-        username,
-        first_name,
-        second_name,
-        phone,
-        active,
-        created_at,
-        updated_at,
-    };
-}
-
 function Row({ row }: { row: any }) {
     const [open, setOpen] = React.useState(false);
 
@@ -51,37 +29,74 @@ function Row({ row }: { row: any }) {
                 <TableCell component="th" scope="row">
                     {row.id}
                 </TableCell>
-                <TableCell align="right">{row.username}</TableCell>
-                <TableCell align="right">{row.first_name}</TableCell>
-                <TableCell align="right">{row.second_name}</TableCell>
-                <TableCell align="right">{row.phone}</TableCell>
-                <TableCell align="right">{row.active}</TableCell>
-                <TableCell align="right">{row.created_at}</TableCell>
-                <TableCell align="right">{row.updated_at}</TableCell>
+                <TableCell>{row.userName}</TableCell>
+                <TableCell>{row.firstName}</TableCell>
+                <TableCell>{row.secondName}</TableCell>
+                <TableCell>{row.phone}</TableCell>
+                <TableCell>{row.active}</TableCell>
+                <TableCell>{row.createdAt}</TableCell>
+                <TableCell>{row.updatedAt}</TableCell>
+                <TableCell>{row.chatId}</TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Box sx={{ margin: 1 }}>
+                            <Typography variant="h6" gutterBottom component="div">
+                                Contacts
+                            </Typography>
+                            <Table size="small" aria-label="purchases">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell>Customer</TableCell>
+                                        <TableCell align="right">Amount</TableCell>
+                                        <TableCell align="right">Total price ($)</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                            {'test1'}
+                                        </TableCell>
+                                        <TableCell>{'test2'}</TableCell>
+                                        <TableCell align="right">{'test3'}</TableCell>
+                                        <TableCell align="right">{'test4'}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </Box>
+                    </Collapse>
+                </TableCell>
             </TableRow>
         </React.Fragment>
     );
 }
 
 export default function UsersTable({ rows }: { rows: any }) {
-    console.log(rows);
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
                         <TableCell />
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        <TableCell>user id</TableCell>
+                        <TableCell>username</TableCell>
+                        <TableCell>first name</TableCell>
+                        <TableCell>second name</TableCell>
+                        <TableCell>phone</TableCell>
+                        <TableCell>active</TableCell>
+                        <TableCell>created at</TableCell>
+                        <TableCell>updated at</TableCell>
+                        <TableCell>chat id</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row: any) => (
-                        <Row key={row.id} row={row} />
-                    ))}
+                    {rows ? (
+                        rows.map((row: any) => <Row key={row.id} row={row} />)
+                    ) : (
+                        <TableCell align="right">{'fetching data..'}</TableCell>
+                    )}
                 </TableBody>
             </Table>
         </TableContainer>
