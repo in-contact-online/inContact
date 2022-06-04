@@ -15,77 +15,46 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-function RowCollapsible({ data, collapsibleHeaders, collapsibleField }: any) {
+function RowCollapsible({ data, fields, collapsibleField }: any) {
     const [open, setOpen] = React.useState(false);
-
-    /* 
-    
-    rows = [
-    {
-        id: 2112,
-        username: "dddddd",
-        first_name: "ccccc",
-        contacts: [
-            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
-            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
-            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
-        ]
-    },
-    {
-        id: 2112,
-        username: "dddddd",
-        first_name: "ccccc",
-        contacts: [
-            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
-            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
-            {tracked_phone: "+38050991231154", tracked: false, session_id: "79020536324"},
-        ]
-    },
-
-
-    ]
-    
-    */
 
     const collapsibleData = data[collapsibleField];
     const { contacts, ...parentData } = data;
 
     return (
         <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableRow>
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                    <IconButton size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
 
-                {Object.values(parentData).map((value: any) => (
-                    <TableCell>{value}</TableCell>
+                {fields.parent.map((item: any) => (
+                    <TableCell>{parentData[item.field]}</TableCell>
                 ))}
             </TableRow>
 
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0, border: 1 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box sx={{ margin: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
-                                Contacts
-                            </Typography>
-                            <Table size="small" aria-label="purchases">
-                                <TableHead>
-                                    <TableRow>
-                                        {collapsibleHeaders.map((header: any) => (
-                                            <TableCell>{header}</TableCell>
-                                        ))}
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {collapsibleData.map((value: any) => (
-                                        <Row data={value} />
+                        <Typography variant="h6" gutterBottom component="div">
+                            Contacts
+                        </Typography>
+                        <Table size="small">
+                            <TableHead style={{ backgroundColor: 'black' }}>
+                                <TableRow>
+                                    {fields.collapsible.map((item: any) => (
+                                        <TableCell style={{ color: 'white' }}>{item.header}</TableCell>
                                     ))}
-                                </TableBody>
-                            </Table>
-                        </Box>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {collapsibleData.map((row: any) => (
+                                    <Row data={row} fields={fields.collapsible} />
+                                ))}
+                            </TableBody>
+                        </Table>
                     </Collapse>
                 </TableCell>
             </TableRow>
@@ -93,35 +62,32 @@ function RowCollapsible({ data, collapsibleHeaders, collapsibleField }: any) {
     );
 }
 
-function Row({ data }: any) {
+function Row({ data, fields }: any) {
     return (
-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-            {Object.values(data).map((value: any) => (
-                <TableCell>{value}</TableCell>
+        <TableRow>
+            {fields.map((item: any) => (
+                <TableCell>{data[item.field]}</TableCell>
             ))}
         </TableRow>
     );
 }
 
-export default function UserTable({ headers, rows, collapsibleField }: any) {
+export default function UserTable({ fields, data, collapsibleField }: any) {
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
-                <TableHead>
+                <TableHead style={{ backgroundColor: 'black' }}>
                     <TableRow>
-                        {headers.parent.map((header: any) => (
-                            <TableCell>{header}</TableCell>
+                        <TableCell />
+                        {fields.parent.map((field: any) => (
+                            <TableCell style={{ color: 'white' }}>{field.header}</TableCell>
                         ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows ? (
-                        rows.map((row: any) => (
-                            <RowCollapsible
-                                data={row}
-                                collapsibleHeaders={headers.collapsible}
-                                collapsibleField={collapsibleField}
-                            />
+                    {data ? (
+                        data.map((row: any) => (
+                            <RowCollapsible data={row} fields={fields} collapsibleField={collapsibleField} />
                         ))
                     ) : (
                         <TableCell>{'Fetching Data...'}</TableCell>

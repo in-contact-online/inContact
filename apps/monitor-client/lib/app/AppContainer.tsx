@@ -13,6 +13,8 @@ export function AppContainer() {
             const contacts: any = await api?.contacts.readList({ page: 0, size: 10 });
             const users: any = await api?.users.readList({ page: 0, size: 10 });
 
+            console.log(contacts);
+
             const usersExtanded = users.data.map((user: any) => {
                 user.contacts = contacts.data.filter((contact: any) => contact.userId === user.id);
                 return user;
@@ -27,21 +29,28 @@ export function AppContainer() {
     return (
         <>
             <UsersTable
-                rows={users}
+                data={users}
                 collapsibleField={'contacts'}
-                headers={{
+                fields={{
                     parent: [
-                        'id',
-                        'username',
-                        'first_name',
-                        'second_name',
-                        'phone',
-                        'active',
-                        'created_at',
-                        'updated_at',
-                        'chat_id',
+                        { header: 'User ID', field: 'id' },
+                        { header: 'Username', field: 'userName' },
+                        { header: 'First Name', field: 'firstName' },
+                        { header: 'Second Name', field: 'secondName' },
+                        { header: 'Phone', field: 'phone' },
+                        { header: 'Active', field: 'active' },
+                        { header: 'Created At', field: 'createdAt' },
+                        { header: 'Updated At', field: 'updatedAt' },
+                        { header: 'Chat ID', field: 'charId' },
                     ],
-                    collapsible: ['tracked_phone', 'tracked', 'created_at', 'updated_at', 'id', 'session_id'],
+                    collapsible: [
+                        { header: 'Contact ID', field: 'id' },
+                        { header: 'Tracked Phone', field: 'trackedPhone' },
+                        { header: 'Tracked', field: 'tracked' },
+                        { header: 'Created At', field: 'createdAt' },
+                        { header: 'Updated At', field: 'updatedAt' },
+                        { header: 'Session ID', field: 'sessionId' },
+                    ],
                 }}
             />
         </>
