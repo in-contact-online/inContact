@@ -3,6 +3,7 @@ import moment from 'moment';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';
 import { Status } from '../status/index.mjs';
+import { Report } from '../report/index.mjs';
 import { createPgDbConnection } from '../../db/index.mjs';
 import * as ConfigContainer from '../../config.cjs';
 import ModelBase from '../ModelBase.mjs';
@@ -22,27 +23,24 @@ const repository = createRepository({
 ModelBase.setRepository(repository);
 
 async function main(options) {
-     const usersMap = {};
      const contacts = await new Contact().getTrackedByUser({ userId: options.id });
      for (const contact of contacts) {
           const timeline = {};
           const phoneNumber = (contact.tracked_phone || '').replace('+', '');
           const checkDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString();
           const statuses = await new Status().readByPhone({ phoneNumber, checkDate });
-          usersMap[phoneNumber] = {};
           statuses.forEach(status => {
                if (status.was_online) {
                     const wasOnline = moment(status.was_online).startOf('minute');
-                    timeline[wasOnline] = wasOnline;
+                    timeline[wasOnline] = true;
                } else {
                     const checkDate = moment(status.check_date).startOf('minute');
-                    timeline[checkDate] = checkDate;
+                    timeline[checkDate] = true;
                }
           });
-          // save timeline as report to report table
-          // createdAt, report, type
+          await new Report().save({ data: JSON.stringify(timeline), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
      }
-     console.log(JSON.stringify(usersMap));
+
      return undefined;
 }
 
