@@ -40,7 +40,7 @@ export class ReportRepository extends RepoBase {
     async save({ phone, data, type }) {
         const result = await this.db
             .queryAsync(
-                'INSERT INTO reports (phone_number, data, type, created_at) VALUES ($1, $2, $3)',
+                'INSERT INTO reports (phone_number, data, type, created_at) VALUES ($1, $2, $3, $4)',
                 [phone, data, type, new Date().toISOString()]
             )
             .catch((err) => {
