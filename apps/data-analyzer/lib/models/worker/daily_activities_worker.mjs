@@ -1,4 +1,5 @@
 import { createRepository } from '@rtls-platform/repository';
+import moment from 'moment';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';
 import { Status } from '../status/index.mjs';
@@ -24,19 +25,22 @@ async function main(options) {
      const usersMap = {};
      const contacts = await new Contact().getTrackedByUser({ userId: options.id });
      for (const contact of contacts) {
+          const timeline = {};
           const phoneNumber = (contact.tracked_phone || '').replace('+', '');
-          const checkDate = new Date(new Date().getTime() - 10 * 60 * 1000).toISOString();
+          const checkDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString();
           const statuses = await new Status().readByPhone({ phoneNumber, checkDate });
           usersMap[phoneNumber] = {};
           statuses.forEach(status => {
                if (status.was_online) {
-                    const wasOnline = new Date(status.was_online).toISOString();
-                    usersMap[phoneNumber][wasOnline] = wasOnline;
+                    const wasOnline = moment(status.was_online).startOf('minute');
+                    timeline[wasOnline] = wasOnline;
                } else {
-                    const checkDate = new Date(status.check_date).toISOString();
-                    usersMap[phoneNumber][checkDate] = checkDate;
+                    const checkDate = moment(status.check_date).startOf('minute');
+                    timeline[checkDate] = checkDate;
                }
           });
+          // save timeline as report to report table
+          // createdAt, report, type
      }
      console.log(JSON.stringify(usersMap));
      return undefined;
@@ -51,10 +55,10 @@ async function main(options) {
 async function handleMessage(report) {
      try {
           await main(report);
-          logger.info('Done');
+          logger.info('[Daily Activities Worker] Done');
           process.exit(0);
      } catch (err) {
-          logger.error('Error');
+          logger.error('[Daily Activities Worker] Error');
           logger.error(err);
           process.exit(1);
      }
@@ -63,14 +67,14 @@ async function handleMessage(report) {
 process.on('message', handleMessage);
 
 process.on('uncaughtException', (reason) => {
-     logger.error('uncaughtException');
-     logger.error('reason ', JSON.stringify(reason));
+     logger.error('[Daily Activities Worker] uncaughtException');
+     logger.error('[Daily Activities Worker] reason ', JSON.stringify(reason));
      process.exit(1);
 });
 
 process.on('unhandledRejection', (reason) => {
-     logger.error(' unhandledRejection');
-     logger.error('reason ', JSON.stringify(reason));
+     logger.error('[Daily Activities Worker] unhandledRejection');
+     logger.error('[Daily Activities Worker] reason ', JSON.stringify(reason));
      process.exit(1);
 });
 

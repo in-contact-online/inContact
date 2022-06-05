@@ -16,10 +16,10 @@ export class WorkersQueue {
           return this.#pool.shift();
      }
 
-     async execute() {
+     async execute(command) {
           while (this.#pool.length) {
                const user = this.deque();
-               const worker = new Worker(user);
+               const worker = new Worker(user, command);
                await worker.run();
           }
      }
