@@ -58,26 +58,6 @@ export function CollapsedView() {
                     ],
                 }}
             />
-
-            <h3>Sessions</h3>
-            <TableCollapsible
-                data={sessions}
-                collapsibleField={'contacts'}
-                fields={{
-                    parent: [
-                        { header: 'Session ID', field: 'id' },
-                        { header: 'Valid', field: 'valid' },
-                    ],
-                    collapsible: [
-                        { header: 'Contact ID', field: 'id' },
-                        { header: 'Tracked Phone', field: 'trackedPhone' },
-                        { header: 'Tracked', field: 'tracked' },
-                        { header: 'Created At', field: 'createdAt' },
-                        { header: 'Updated At', field: 'updatedAt' },
-                        { header: 'Session ID', field: 'sessionId' },
-                    ],
-                }}
-            />
         </>
     );
 }
