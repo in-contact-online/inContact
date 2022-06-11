@@ -1,0 +1,15 @@
+[Unit]
+Description="In Contact Notification Service"
+
+[Service]
+ExecStart=/usr/bin/node --experimental-modules --es-module-specifier-resolution=node app
+WorkingDirectory=/home/ubuntu/inContact/apps/notificator
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=in-contact-notificator
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
