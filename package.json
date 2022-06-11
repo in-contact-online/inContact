@@ -24,9 +24,9 @@
   "workspaces": [
     "shared/logger",
     "shared/repository",
+    "shared/notificator",
     "apps/data-analyzer",
     "apps/data-scanner",
-    "apps/notificator",
     "apps/monitor-server",
     "apps/monitor-client",
     "apps/ui"
