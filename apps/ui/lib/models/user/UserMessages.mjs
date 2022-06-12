@@ -25,6 +25,9 @@ export class UserMessages {
     static phoneActivateTrackingMessage(phone) {
         return `По номеру ${phone} возобновлено отслеживание`;
     }
+    static emailUpdated() {
+        return `Ваша почта обновлена`;
+    }
     static welcomeAddingMessage() {
         return `Добавьте номер на отслеживание в формате <b>+380992112233</b> или <b>+71234567890</b>`;
     }
@@ -44,6 +47,6 @@ export class UserMessages {
         return `Неправильный номер телефона`;
     }
     static notifyYouWhenTrackedOnline() {
-        return `Мы оповестим вас когда отслеживаемые контакты будут онлайн`;
+        return `Мы оповестим вас когда отслеживаемые контакты будут онлайн. Для оповещения введите свой емейл`;
     }
 }

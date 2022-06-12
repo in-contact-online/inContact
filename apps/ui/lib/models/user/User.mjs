@@ -19,10 +19,11 @@ export class User extends ModelBase {
 
     /**
      * @method
-     * @param {Number} userId - user identifier
-     * @param {Number} chatId - chat identifier
-     * @param {String} firstName - user first name
-     * @param {String} lastName - user last name
+     * @param {Object} params - user identifier
+     * @param {Number} params.userId - user identifier
+     * @param {Number} params.chatId - chat identifier
+     * @param {String} params.firstName - user first name
+     * @param {String} params.lastName - user last name
      * @returns {Promise<Object>}
      */
     async save(params) {
@@ -31,8 +32,10 @@ export class User extends ModelBase {
 
     /**
      * @method
-     * @param {Number} userId - user identifier
-     * @param {String} active - user active status
+     * @param {Object} params - user params
+     * @param {Number} params.userId - user identifier
+     * @param {String?} params.active - user active status
+     * @param {String?} params.email - user email
      * @returns {Promise<Object>}
      */
     async update(params) {

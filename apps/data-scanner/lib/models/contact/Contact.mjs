@@ -69,11 +69,16 @@ export class Contact extends ModelBase {
         for (const contact of contacts) {
             if (contact.notify) {
                 await this.repository.contact.updateTrackedList({ userId: contact.user_id, trackedPhone, notify: false });
-                await this.notificator.email.send({
-                    to: 'yzhbankov@gmail.com',
-                    text: `Tracked contact ${trackedPhone} is online`,
-                    subject: 'Tracked contact is online'
-                });
+                const user = await this.repository.user.read({ userId: contact.user_id });
+                if (user.email) {
+                    await this.notificator.email.send({
+                        to: user.email,
+                        text: `Tracked contact ${trackedPhone} is online`,
+                        subject: 'Tracked contact is online'
+                    });
+                } else {
+                    console.warn('User has no email');
+                }
             }
         }
     }

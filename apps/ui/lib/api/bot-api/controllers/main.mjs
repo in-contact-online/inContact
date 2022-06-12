@@ -9,6 +9,7 @@ import {
     AddTrackingMenu,
     GetUserStatus,
     AddPhoneOnlineNotify,
+    AddEmail,
 } from '../../../usecases/index.mjs';
 
 export const main = {
@@ -74,7 +75,19 @@ export const main = {
     trackPhone: makeRequestHandler(
         AddTrackingPhone,
         (req) => ({
+            trackedPhone: req.text,
             userId: req.from.id,
+        }),
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
+        }
+    ),
+    addEmail: makeRequestHandler(
+        AddEmail,
+        (req) => ({
+            userId: req.from.id,
+            email: req.text,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;
@@ -85,7 +98,6 @@ export const main = {
         AddPhoneOnlineNotify,
         (req) => ({
             userId: req.from.id,
-            trackedPhone: req.text,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;

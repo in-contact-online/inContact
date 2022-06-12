@@ -1,6 +1,7 @@
 export const BOT_COMMAND = {
     START: 'start',
     ADD_TRACK_PHONE: 'add_track_phone',
+    ADD_EMAIL: 'add_email',
     ADD_TRACK_PHONE_MENU: 'add_track_phone_menu',
     NOTIFY_WHEN_ONLINE: 'notify_when_online',
     EDIT_TRACK_PHONES_MENU: 'edit_track_phones_menu',
