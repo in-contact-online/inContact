@@ -38,6 +38,10 @@ export default async function (request, client) {
             await router(Controllers.main.trackPhone);
             break;
         }
+        case BOT_COMMAND.NOTIFY_WHEN_ONLINE: {
+            await router(Controllers.main.notifyOnline);
+            break;
+        }
         case BOT_COMMAND.ADD_TRACK_PHONE_MENU: {
             await router(Controllers.main.trackPhoneMenu);
             break;

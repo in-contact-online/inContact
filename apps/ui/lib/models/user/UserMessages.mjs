@@ -43,4 +43,7 @@ export class UserMessages {
     static invalidPhoneNumber() {
         return `Неправильный номер телефона`;
     }
+    static notifyYouWhenTrackedOnline() {
+        return `Мы оповестим вас когда отслеживаемые контакты будут онлайн`;
+    }
 }

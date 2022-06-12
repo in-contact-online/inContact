@@ -6,3 +6,4 @@ export * from './UserLeaveChat.mjs';
 export * from './UserRestartChat.mjs';
 export * from './GetUserStatus.mjs';
 export * from './AddTrackingMenu.mjs';
+export * from './AddPhoneOnlineNotify.mjs';
