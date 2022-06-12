@@ -5,10 +5,6 @@ export function ServerView({}) {
     return <div>Server View</div>;
 }
 
-ServerView.propTypes = {
-    '': PropTypes.func,
-};
+ServerView.propTypes = {};
 
-ServerView.defaultProps = {
-    '': () => {},
-};
+ServerView.defaultProps = {};

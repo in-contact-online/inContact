@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, Box, Toolbar, Container } from '@mui/material';
-
-import { Copyright } from './Copyright';
+import { CssBaseline, Box, Toolbar, Container, Grid } from '@mui/material';
 
 const mdTheme = createTheme({
     palette: {
@@ -16,7 +15,7 @@ const mdTheme = createTheme({
     },
 });
 
-export function Layout({ renderHeader, renderSidebar, renderContent }: any) {
+export function Layout({ renderHeader, renderSidebar, renderContent, renderFooter }: any) {
     const [open, setOpen] = useState(true);
 
     const drawerWidth: number = 240;
@@ -44,11 +43,27 @@ export function Layout({ renderHeader, renderSidebar, renderContent }: any) {
                 >
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        {renderContent()}
-                        <Copyright />
+                        <Grid container spacing={3}>
+                            {renderContent()}
+                        </Grid>
+                        {renderFooter()}
                     </Container>
                 </Box>
             </Box>
         </ThemeProvider>
     );
 }
+
+Layout.propTypes = {
+    renderHeader: PropTypes.func,
+    renderSidebar: PropTypes.func,
+    renderContent: PropTypes.func,
+    renderFooter: PropTypes.func,
+};
+
+Layout.defaultProps = {
+    renderHeader: () => {},
+    renderSidebar: () => {},
+    renderContent: () => {},
+    renderFooter: () => {},
+};

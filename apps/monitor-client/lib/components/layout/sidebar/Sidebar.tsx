@@ -66,9 +66,13 @@ export function Sidebar({ drawerWidth, open, toggleDrawer }: SidebarProps) {
 }
 
 Sidebar.propTypes = {
-    '': PropTypes.func,
+    drawerWidth: PropTypes.number,
+    open: PropTypes.bool,
+    toggleDrawer: PropTypes.func,
 };
 
 Sidebar.defaultProps = {
-    '': () => {},
+    drawerWidth: 240,
+    open: true,
+    toggleDrawer: () => {},
 };

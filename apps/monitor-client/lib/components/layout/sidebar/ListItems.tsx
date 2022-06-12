@@ -41,15 +41,11 @@ export function MainListItems() {
     );
 }
 
-MainListItems.propTypes = {
-    '': PropTypes.func,
-};
+MainListItems.propTypes = {};
 
-MainListItems.defaultProps = {
-    '': () => {},
-};
+MainListItems.defaultProps = {};
 
-export function SecondaryListItems({}) {
+export function SecondaryListItems() {
     return (
         <React.Fragment>
             <ListSubheader component="div" inset>
@@ -77,10 +73,6 @@ export function SecondaryListItems({}) {
     );
 }
 
-SecondaryListItems.propTypes = {
-    '': PropTypes.func,
-};
+SecondaryListItems.propTypes = {};
 
-SecondaryListItems.defaultProps = {
-    '': () => {},
-};
+SecondaryListItems.defaultProps = {};

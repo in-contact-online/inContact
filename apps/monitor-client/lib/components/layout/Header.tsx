@@ -72,9 +72,15 @@ export function Header({ drawerWidth, open, toggleDrawer, text }: HeaderProps) {
 }
 
 Header.propTypes = {
-    '': PropTypes.func,
+    drawerWidth: PropTypes.number,
+    open: PropTypes.bool,
+    toggleDrawer: PropTypes.func,
+    text: PropTypes.string,
 };
 
 Header.defaultProps = {
-    '': () => {},
+    drawerWidth: 240,
+    open: true,
+    toggleDrawer: () => {},
+    text: '',
 };

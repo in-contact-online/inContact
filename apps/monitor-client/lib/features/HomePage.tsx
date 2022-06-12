@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Layout } from '../components/layout/Layout';
-import { Sidebar } from '../components/layout/Sidebar';
-import { Header } from '../components/layout/Header';
-import { Content } from '../components/layout/Content';
+import { Layout, Sidebar, Header } from '../components/layout';
 
 import { ServerView } from './ServerView';
 import { UsersView } from './UsersView';
 import { SessionsView } from './SessionsView';
+import { Copyrights } from '../components/Copyrights';
 
-export function HomePage({}) {
+export function HomePage() {
     const [appBarText, setAppBarText] = useState('Server');
 
     return (
@@ -19,22 +17,17 @@ export function HomePage({}) {
             renderHeader={(props: any) => <Header {...props} text={appBarText} />}
             renderSidebar={(props: any) => <Sidebar {...props} />}
             renderContent={() => (
-                <Content>
-                    <Routes>
-                        <Route path="/server" element={<ServerView />} />
-                        <Route path="/users" element={<UsersView />} />
-                        <Route path="/sessions" element={<SessionsView />} />
-                    </Routes>
-                </Content>
+                <Routes>
+                    <Route path="/server" element={<ServerView />} />
+                    <Route path="/users" element={<UsersView />} />
+                    <Route path="/sessions" element={<SessionsView />} />
+                </Routes>
             )}
+            renderFooter={() => <Copyrights text={'In Contact'} />}
         />
     );
 }
 
-HomePage.propTypes = {
-    '': PropTypes.func,
-};
+HomePage.propTypes = {};
 
-HomePage.defaultProps = {
-    '': () => {},
-};
+HomePage.defaultProps = {};
