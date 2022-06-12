@@ -13,6 +13,7 @@ const cache = {
  * @param {Number} options.smtp.port - email sending port
  * @param {String} options.smtp.user - email service user
  * @param {String} options.smtp.password - email service password
+ * @param {String} options.smtp.from - sender address
  * @return {Object} - Notificator API
  */
 export function createNotificator(options) {

@@ -40,8 +40,9 @@ export class UserTrackPhones extends ModelBase {
 
     /**
      * @method
-     * @param {Number} userId - user identifier
-     * @param {String} trackedPhone - user tracked phone
+     * @param {Object} params - user params
+     * @param {Number} params.userId - user identifier
+     * @param {String} params.trackedPhone - user tracked phone
      * @returns {Promise<Object>}
      */
     async save(params) {
@@ -50,8 +51,19 @@ export class UserTrackPhones extends ModelBase {
 
     /**
      * @method
-     * @param {Number} userId - user identifier
-     * @param {String} trackedPhone - user tracked phone
+     * @param {Object} params - user params
+     * @param {Number} params.userId - user identifier
+     * @returns {Promise<Object>}
+     */
+    async markAsNotified(params) {
+        return this.repository.contact.updateTrackedList({ ...params, notify: true });
+    }
+
+    /**
+     * @method
+     * @param {Object} params - user params
+     * @param {Number} params.userId - user identifier
+     * @param {String} params.trackedPhone - user tracked phone
      * @returns {Promise<Object>}
      */
     async activate(params) {
@@ -60,8 +72,9 @@ export class UserTrackPhones extends ModelBase {
 
     /**
      * @method
-     * @param {Number} userId - user identifier
-     * @param {String} trackedPhone - user tracked phone
+     * @param {Object} params - user params
+     * @param {Number} params.userId - user identifier
+     * @param {String} params.trackedPhone - user tracked phone
      * @returns {Promise<Object>}
      */
     async deactivate(params) {
@@ -70,7 +83,8 @@ export class UserTrackPhones extends ModelBase {
 
     /**
      * @method
-     * @param {Number} userId - user identifier
+     * @param {Object} params - user params
+     * @param {Number} params.userId - user identifier
      * @returns {Promise<Object>}
      */
     async deactivateAll(params) {
