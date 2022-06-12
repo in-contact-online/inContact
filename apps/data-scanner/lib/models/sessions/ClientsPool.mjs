@@ -155,7 +155,6 @@ export class ClientsPool {
 
     /**
      * @method
-     * @param {Object} command - Telegram command to be invoked
      * @returns {Promise<void>}
      */
     static async checkStatuses() {
@@ -163,14 +162,12 @@ export class ClientsPool {
         for (const client of ClientsPool.pool) {
             try {
                 const result = await client.invoke(command);
-
                 for (const user of result.users) {
                     if (user.status) {
-                        const wasOnline =
-                            user.status.className === 'UserStatusOnline'
-                                ? null
-                                : humanReadableDate(user.status.wasOnline);
-
+                        const wasOnline = user.status.className === 'UserStatusOnline' ? null : humanReadableDate(user.status.wasOnline);
+                        if (wasOnline === null) {
+                            await new Contact().notifyTrackedOnline({ trackedPhone: '+' + user.phone })
+                        }
                         if (wasOnline !== undefined) {
                             await new Status().save({
                                 phoneNumber: user.phone,

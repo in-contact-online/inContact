@@ -23,6 +23,7 @@ export class Notificator {
      * @param {Number} options.port - email sending port
      * @param {String} options.user - email service user
      * @param {String} options.password - email service password
+     * @param {String} options.from - sender address
      * @return {Object} - Notificator API
      */
     constructor(options) {

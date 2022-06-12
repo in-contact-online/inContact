@@ -38,6 +38,7 @@ export class ContactRepository extends RepoBase {
      * @param {string} params.trackedPhone - contact added by user that should be tracked
      * @param {string} params.sessionId - identifier of session that tracks this contact
      * @param {boolean} params.withSession - flag that indicates does contact have session
+     * @param {boolean} params.notify - flag that indicates does should be sent notification if user online
      * @return {Promise<Object>} returns data saved in DB
      */
     async read(params) {
@@ -45,7 +46,7 @@ export class ContactRepository extends RepoBase {
         let sqlParams = '';
 
         if (params) {
-            const { userId, tracked, trackedPhone, sessionId, withSession } = params;
+            const { userId, tracked, trackedPhone, sessionId, withSession, notify } = params;
 
             if (userId) {
                 sqlParams += ` user_id = ${userId}`;
@@ -54,6 +55,11 @@ export class ContactRepository extends RepoBase {
             if (typeof tracked === 'boolean') {
                 sqlParams += sqlParams ? ' AND' : '';
                 sqlParams += ` tracked = ${tracked}`;
+            }
+
+            if (typeof notify === 'boolean') {
+                sqlParams += sqlParams ? ' AND' : '';
+                sqlParams += ` notify = ${notify}`;
             }
 
             if (trackedPhone) {

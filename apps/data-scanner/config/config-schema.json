@@ -16,7 +16,8 @@
       "host" : ["required", "string"],
       "port" : ["required", "positive_integer"],
       "user": ["required", "string"],
-      "password": ["required", "string"]
+      "password": ["required", "string"],
+      "from": ["required", "string"]
     }
   }],
   "service": ["required", {

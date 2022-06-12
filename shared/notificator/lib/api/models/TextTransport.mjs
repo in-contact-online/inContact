@@ -14,6 +14,7 @@ export class TextTransport {
      * @param {Number} options.port - email sending port
      * @param {String} options.user - email service user
      * @param {String} options.password - email service password
+     * @param {String} options.from - sender address
      */
     constructor(options) {
         this.#transport = nodemailer.createTransport({

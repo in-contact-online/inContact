@@ -57,4 +57,24 @@ export class Contact extends ModelBase {
     async updateTrackedStatus({ userId, trackedPhone, tracked }) {
         return this.repository.contact.updateTrackedList({ userId, trackedPhone, tracked });
     }
+
+    /**
+     * @method
+     * @param {Object} params - user params
+     * @param {String} params.trackedPhone - tracked phone number which session we should update
+     * @returns {Promise<Object>}
+     */
+    async notifyTrackedOnline({ trackedPhone }) {
+        const contacts = await this.repository.contact.read({ trackedPhone, notify: true });
+        for (const contact of contacts) {
+            if (contact.notify) {
+                await this.repository.contact.updateTrackedList({ userId: contact.user_id, trackedPhone, notify: false });
+                await this.notificator.email.send({
+                    to: 'yzhbankov@gmail.com',
+                    text: `Tracked contact ${trackedPhone} is online`,
+                    subject: 'Tracked contact is online'
+                });
+            }
+        }
+    }
 }

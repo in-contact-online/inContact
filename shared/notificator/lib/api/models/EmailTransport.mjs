@@ -8,12 +8,15 @@ export class EmailTransport {
 
     #transport = null;
 
+    #config = null;
+
     /**
      * @param {Object} options - email service options
      * @param {String} options.host - email sending host
      * @param {Number} options.port - email sending port
      * @param {String} options.user - email service user
      * @param {String} options.password - email service password
+     * @param {String} options.from - sender address
      */
     constructor(options) {
         this.#transport = nodemailer.createTransport({
@@ -25,6 +28,8 @@ export class EmailTransport {
                 pass: options.password, // generated ethereal password
             },
         });
+
+        this.#config = options;
     }
 
      /**
@@ -38,9 +43,8 @@ export class EmailTransport {
      */
       async send(params) {
         try {
-            console.log('Send email');
             await this.#transport.sendMail({
-                from: params.from, // sender address
+                from: params.from || this.#config.from, // sender address
                 to: params.to, // list of receivers
                 subject: params.subject, // Subject line
                 text: params.text, // plain text body
