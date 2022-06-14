@@ -5,6 +5,7 @@ import { Status } from '../status/index.mjs';
 import { Api } from 'telegram';
 import { generateRandomBigInt } from 'telegram/Helpers';
 import { Contact } from '../index.mjs';
+import logger from '../../api/logger.mjs';
 
 export class ClientsPool {
     /**
@@ -38,6 +39,7 @@ export class ClientsPool {
                 await client.init();
                 ClientsPool.pool.push(client);
             } catch (e) {
+                logger.error(e);
                 await new Session().update({ sessionId: client.sessionId, valid: false });
             }
         }
