@@ -8,6 +8,8 @@ import {
     UserRestartChat,
     AddTrackingMenu,
     GetUserStatus,
+    AddPhoneOnlineNotify,
+    AddEmail,
 } from '../../../usecases/index.mjs';
 
 export const main = {
@@ -74,8 +76,29 @@ export const main = {
     trackPhone: makeRequestHandler(
         AddTrackingPhone,
         (req) => ({
-            userId: req.from.id,
             trackedPhone: req.text,
+            userId: req.from.id,
+        }),
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
+        }
+    ),
+    addEmail: makeRequestHandler(
+        AddEmail,
+        (req) => ({
+            userId: req.from.id,
+            email: req.text,
+        }),
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
+        }
+    ),
+    notifyOnline: makeRequestHandler(
+        AddPhoneOnlineNotify,
+        (req) => ({
+            userId: req.from.id,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;

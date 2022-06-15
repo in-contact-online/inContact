@@ -1,5 +1,6 @@
 import { CronJob } from 'cron';
 import { InitWorkersQueue } from '../../usecases/index.mjs';
+import { WORKER_TYPES } from '../../models';
 
 
 export default class Analyzer {
@@ -13,9 +14,12 @@ export default class Analyzer {
 
      #cronJob = null;
 
+     #dailyCronJob = null;
+
      /**
      * @param {Object} config - Application configuration
      * @param {String} config.cron - cron configuration
+     * @param {String} config.dailyCron - daily cron configuration
      */
      constructor(config) {
           this.#config = config;
@@ -29,13 +33,23 @@ export default class Analyzer {
           this.#cronJob = new CronJob(
                this.#config.cron,
                async () => {
-                    await new InitWorkersQueue().execute();
+                    await new InitWorkersQueue().execute(WORKER_TYPES.IN_CONTACT_ACTIVITIES);
                },
                null,
                true,
                null
           );
+        this.#dailyCronJob = new CronJob(
+            this.#config.dailyCron,
+            async () => {
+                await new InitWorkersQueue().execute(WORKER_TYPES.DAILY_ACTIVITIES);
+            },
+            null,
+            true,
+            null
+        );
           this.#cronJob.start();
+          this.#dailyCronJob.start();
      }
      
      /**
@@ -44,5 +58,6 @@ export default class Analyzer {
      */
      stop() {
           this.#cronJob.stop();
+          this.#dailyCronJob.stop();
      }
 }

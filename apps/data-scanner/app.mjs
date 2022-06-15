@@ -1,4 +1,5 @@
 import { createRepository } from '@rtls-platform/repository/index.mjs';
+import { createNotificator } from '@rtls-platform/notificator/index.mjs';
 import { createLogger, LoggerTypes } from '@rtls-platform/logger/index.mjs';
 import * as App from './lib/api/index.mjs';
 import * as DataScanner from './lib/api/app.mjs';
@@ -28,8 +29,19 @@ const repository = createRepository({
     }),
 });
 
+const notificator = createNotificator({
+    smtp: {
+        port: ConfigContainer.config.smtp.port,
+        host: ConfigContainer.config.smtp.host,
+        user: ConfigContainer.config.smtp.user,
+        password: ConfigContainer.config.smtp.password,
+        from: ConfigContainer.config.smtp.from
+    }
+});
+
 // Init Domain Model Layer
 ModelBase.setRepository(repository);
+ModelBase.setNotificator(notificator);
 
 // Init Controllers Layer (API)
 DataScanner.start(ConfigContainer.config.service);

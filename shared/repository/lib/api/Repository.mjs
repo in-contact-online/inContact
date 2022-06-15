@@ -1,4 +1,4 @@
-import { UserRepository, ContactRepository, StatusRepository, SessionRepository } from './documents/index.mjs';
+import { UserRepository, ContactRepository, StatusRepository, SessionRepository, ReportRepository } from './documents/index.mjs';
 
 export class Repository {
     /**
@@ -30,6 +30,11 @@ export class Repository {
     session = null;
 
     /**
+     * @type {ReportRepository} returns DB access to sessions
+     */
+    report = null;
+
+    /**
      * @param {Object} options - repository options
      * @param {Object} options.db - postgres connection
      */
@@ -38,5 +43,6 @@ export class Repository {
         this.contact = new ContactRepository(options);
         this.status = new StatusRepository(options);
         this.session = new SessionRepository(options);
+        this.report = new ReportRepository(options);
     }
 }

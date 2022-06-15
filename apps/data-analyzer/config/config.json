@@ -11,6 +11,7 @@
   },
   "service": {
     "port": "{{IN_CONTACT_ANALYZER_PORT}}",
-    "cron": "{{IN_CONTACT_ANALYZER_CRON}}"
+    "cron": "{{IN_CONTACT_ANALYZER_CRON}}",
+    "dailyCron": "{{IN_CONTACT_ANALYZER_DAILY_CRON}}"
   }
 }

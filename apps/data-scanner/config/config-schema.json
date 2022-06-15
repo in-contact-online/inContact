@@ -11,6 +11,15 @@
       "connectionsLimit": ["required", "positive_integer"]
     }
   }],
+  "smtp": ["required", {
+    "nested_object": {
+      "host" : ["required", "string"],
+      "port" : ["required", "positive_integer"],
+      "user": ["required", "string"],
+      "password": ["required", "string"],
+      "from": ["required", "string"]
+    }
+  }],
   "service": ["required", {
     "nested_object": {
       "port": ["required", "positive_integer"],

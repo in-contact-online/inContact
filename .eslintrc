@@ -25,7 +25,8 @@
       "alias": {
         "map": [
           ["@rtls-platform/repository", "./shared/repository"],
-          ["@rtls-platform/logger", "./shared/logger"]
+          ["@rtls-platform/logger", "./shared/logger"],
+          ["@rtls-platform/notificator", "./shared/notificator"]
         ],
         "extensions": [
           ".ts",

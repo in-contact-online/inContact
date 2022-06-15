@@ -1,7 +1,10 @@
 import { User, WorkersQueue } from '../models/index.mjs';
 
 export class InitWorkersQueue {
-    async execute() {
+    /**
+     * @param {String} command - command name
+     */
+    async execute(command) {
         const workerQueue = new WorkersQueue();
         let page = 0;
         const size = 10;
@@ -15,7 +18,7 @@ export class InitWorkersQueue {
                     workerQueue.enque(user);
                 }
             }
-            await workerQueue.execute();
+            await workerQueue.execute(command);
 
             page += 1;
         }

@@ -1,6 +1,7 @@
 import { phone } from 'phone';
 
-const COUNTRIES = ['RU', 'UA', 'BY', 'KZ'];
+// todo: move to env
+const COUNTRIES = ['RU', 'UA', 'BY', 'KZ', 'LV'];
 
 export function isValidPhone(phoneNumber) {
     for (let country of COUNTRIES) {

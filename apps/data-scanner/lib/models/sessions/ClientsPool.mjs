@@ -5,6 +5,7 @@ import { Status } from '../status/index.mjs';
 import { Api } from 'telegram';
 import { generateRandomBigInt } from 'telegram/Helpers';
 import { Contact } from '../index.mjs';
+import logger from '../../api/logger.mjs';
 
 export class ClientsPool {
     /**
@@ -38,6 +39,7 @@ export class ClientsPool {
                 await client.init();
                 ClientsPool.pool.push(client);
             } catch (e) {
+                logger.error(e);
                 await new Session().update({ sessionId: client.sessionId, valid: false });
             }
         }
@@ -155,7 +157,6 @@ export class ClientsPool {
 
     /**
      * @method
-     * @param {Object} command - Telegram command to be invoked
      * @returns {Promise<void>}
      */
     static async checkStatuses() {
@@ -163,14 +164,12 @@ export class ClientsPool {
         for (const client of ClientsPool.pool) {
             try {
                 const result = await client.invoke(command);
-
                 for (const user of result.users) {
                     if (user.status) {
-                        const wasOnline =
-                            user.status.className === 'UserStatusOnline'
-                                ? null
-                                : humanReadableDate(user.status.wasOnline);
-
+                        const wasOnline = user.status.className === 'UserStatusOnline' ? null : humanReadableDate(user.status.wasOnline);
+                        if (wasOnline === null) {
+                            await new Contact().notifyTrackedOnline({ trackedPhone: '+' + user.phone })
+                        }
                         if (wasOnline !== undefined) {
                             await new Status().save({
                                 phoneNumber: user.phone,
