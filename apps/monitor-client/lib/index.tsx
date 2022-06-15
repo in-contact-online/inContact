@@ -9,8 +9,6 @@ import './index.css';
 const container: any = document.getElementById('app');
 const root: ReactDOM.Root = ReactDOM.createRoot(container);
 
-console.log(container);
-
 root.render(
     <HashRouter>
         <AppProvider>

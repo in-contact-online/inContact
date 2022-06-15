@@ -17,21 +17,21 @@ export function MainListItems() {
 
     return (
         <>
-            <ListItemButton onClick={() => navigate('/server')}>
+            <ListItemButton onClick={() => navigate('/admin/server')}>
                 <ListItemIcon>
                     <WebhookIcon />
                 </ListItemIcon>
                 <ListItemText primary="Server" />
             </ListItemButton>
 
-            <ListItemButton onClick={() => navigate('/users')}>
+            <ListItemButton onClick={() => navigate('/admin/users')}>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
                 <ListItemText primary="Users" />
             </ListItemButton>
 
-            <ListItemButton onClick={() => navigate('/sessions')}>
+            <ListItemButton onClick={() => navigate('/admin/sessions')}>
                 <ListItemIcon>
                     <ViewListIcon />
                 </ListItemIcon>

@@ -12,6 +12,7 @@ const mdTheme = createTheme({
     },
     typography: {
         fontFamily: 'Montserrat',
+        fontSize: 22,
     },
 });
 

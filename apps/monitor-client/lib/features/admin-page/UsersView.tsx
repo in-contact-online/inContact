@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { AppContext, IAppContext } from '../context';
+import { AppContext, IAppContext } from '../../context';
 import { GridRowsProp, GridColDef, DataGrid } from '@mui/x-data-grid';
 import { Grid } from '@mui/material';
-import { dateConvertor } from '../utils/dateConvertor';
+import { dateConvertor } from '../../utils/';
 import { styled } from '@mui/material/styles';
 
 const StyledDataGrid = styled(DataGrid)({
