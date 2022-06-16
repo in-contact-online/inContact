@@ -9,9 +9,9 @@ export function AppContainer() {
     return (
         <Routes>
             <Route index element={<LandingPage />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="login" element={<Login />} />
             <Route path="admin" element={<AdminPage />}>
-                <Route path="server" element={<ServerView />} />
+                <Route index element={<ServerView />} />
                 <Route path="users" element={<UsersView />} />
                 <Route path="sessions" element={<SessionsView />} />
             </Route>

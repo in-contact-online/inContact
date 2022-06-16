@@ -17,7 +17,7 @@ export function MainListItems() {
 
     return (
         <>
-            <ListItemButton onClick={() => navigate('/admin/server')}>
+            <ListItemButton onClick={() => navigate('/admin')}>
                 <ListItemIcon>
                     <WebhookIcon />
                 </ListItemIcon>
