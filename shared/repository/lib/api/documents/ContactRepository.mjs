@@ -184,6 +184,7 @@ export class ContactRepository extends RepoBase {
      */
     async readList({ page, size }) {
         const sql = `SELECT * FROM tracked_phones LIMIT ${size} OFFSET ${page * size}`;
+
         const result = await this.db.queryAsync(sql).catch((err) => {
             throw new RepoError(err);
         });

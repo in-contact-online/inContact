@@ -23,6 +23,7 @@ export const main = {
             chatId: req.chat.id,
         }),
         (result, res, req) => {
+            console.log(req);
             const chatId = req.chat.id;
             res.sendMessage(chatId, result, { parse_mode: 'HTML' });
         }
