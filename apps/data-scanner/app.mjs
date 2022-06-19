@@ -4,7 +4,7 @@ import { createLogger, LoggerTypes } from '@rtls-platform/logger/index.mjs';
 import * as App from './lib/api/index.mjs';
 import * as DataScanner from './lib/api/app.mjs';
 import * as ConfigContainer from './lib/config.cjs';
-import { createPgDbConnection } from './lib/db/index.mjs';
+import { createPgDbConnection, dbUpgrade } from './lib/db/index.mjs';
 import ModelBase from './lib/models/ModelBase.mjs';
 
 // Init Logger
@@ -43,6 +43,9 @@ const notificator = createNotificator({
 // Init Domain Model Layer
 ModelBase.setRepository(repository);
 ModelBase.setNotificator(notificator);
+
+// Run DB Migrations
+await dbUpgrade();
 
 // Init Controllers Layer (API)
 DataScanner.start(ConfigContainer.config.service);

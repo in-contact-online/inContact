@@ -1,5 +1,5 @@
 {
-     "prod": {
+     "production": {
           "driver": "pg",
           "user": { "ENV": "IN_CONTACT_DB_USER" },
           "password": { "ENV": "IN_CONTACT_DB_PASSWORD" },
