@@ -41,6 +41,7 @@ export class EmailTransport {
      * @param {String} params.to - email address
      * @param {String} params.subject - email address
      * @param {String} params.html - email address
+     * @param {String} params.attachments - email attachments
      * @returns {Promise<void>}
      */
       async send(params) {
@@ -51,6 +52,7 @@ export class EmailTransport {
                 subject: params.subject || '', // Subject line
                 text: params.text || '', // plain text body
                 html: params.html || '', // html body
+                attachments: params.attachments || null,
             });
         } catch (err) {
             console.error(err);

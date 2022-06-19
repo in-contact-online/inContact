@@ -7,6 +7,7 @@ import { Status } from '../status/index.mjs';
 import { Report } from '../report/index.mjs';
 import { createPgDbConnection } from '../../db/index.mjs';
 import * as ConfigContainer from '../../config.cjs';
+import { prepareReport } from '../utils/index.mjs';
 import ModelBase from '../ModelBase.mjs';
 
 // Init Repository Layer
@@ -28,9 +29,6 @@ const notificator = createNotificator({
           password: ConfigContainer.config.smtp.password,
           from: ConfigContainer.config.smtp.from,
           secure: ConfigContainer.config.smtp.secure,
-     },
-     telegram: {
-          token: ConfigContainer.config.telegram.token,
      }
 });
 // Init Domain Model Layer
@@ -52,7 +50,7 @@ ModelBase.setNotificator(notificator);
  * @return {Promise<void>}
  */
 async function main(options) {
-     const contacts = await new Contact().getTrackedByUser({ userId: options.id });
+     const contacts = await new Contact().getTrackedByUser({ userId: options.id, tracked: true });
      const report = {};
      for (const contact of contacts) {
           const timeline = {};
@@ -60,18 +58,23 @@ async function main(options) {
           const checkDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString();
           const statuses = await new Status().readByPhone({ phoneNumber, checkDate });
           statuses.forEach(status => {
+               let wasOnline;
                if (status.was_online) {
-                    const wasOnline = moment(status.was_online).startOf('minute');
-                    timeline[wasOnline] = true;
+                    wasOnline = moment(status.was_online).startOf('hour').format('YYYY-MM-DD HH:mm');
                } else {
-                    const checkDate = moment(status.check_date).startOf('minute');
-                    timeline[checkDate] = true;
+                    wasOnline = moment(status.check_date).startOf('hour').format('YYYY-MM-DD HH:mm');
+               }
+               if (!timeline[wasOnline]) {
+                    timeline[wasOnline] = 1;
+               } else {
+                    timeline[wasOnline] += 1;
                }
           });
           report[phoneNumber] = timeline;
           await new Report().save({ data: JSON.stringify(timeline), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
      }
-     await new Contact().sendReport({ userId: options.id, report: JSON.stringify(report) });
+
+     await new Contact().sendReport({ userId: options.id, report: await prepareReport(report) });
 
      return undefined;
 }

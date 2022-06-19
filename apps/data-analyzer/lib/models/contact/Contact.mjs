@@ -11,17 +11,21 @@ export class Contact extends ModelBase {
     /**
      * @method
      * @param {String} userId - user identifier
+     * @param {Boolean} tracked - user identifier
      * @returns {Promise<Object>}
      */
-    async getTrackedByUser({ userId }) {
-        return await this.repository.contact.read({ userId });
+    async getTrackedByUser({ userId, tracked = true }) {
+        return await this.repository.contact.read({ userId, tracked });
     }
 
     /**
      * @method
      * @param {Object} params - user params
      * @param {Number} params.userId - user identification
-     * @param {String} params.report - user report
+     * @param {Object} params.report - user report
+     * @param {String} params.report.html - email content
+     * @param {String} params.report.subject - email subject
+     * @param {Array<Object>} params.report.attachments - email attachments
      * @returns {Promise<Object>}
      */
     async sendReport({ userId, report }) {
@@ -29,9 +33,10 @@ export class Contact extends ModelBase {
         if (user.email) {
             await this.notificator.email.send({
                 to: user.email,
-                text: report,
-                subject: 'Tracked contacts information',
-                html: report
+                text: "",
+                subject: report.subject,
+                html: report.html,
+                attachments: report.attachments,
             });
         } else {
             logger.warn('User has no email');
