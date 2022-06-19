@@ -78,17 +78,22 @@ export class UserRepository extends RepoBase {
     /**
      * @method
      * @param {Number} userId - user identifier
+     * @param {Number} chatId - chat identifier
      * @param {Boolean} active - user active status
      * @param {String} email - user email
      * @returns {Promise<Object>}
      */
-    async update({ userId, active, email }) {
+    async update({ userId, active, email, chatId }) {
         let values = '';
         if (typeof active === 'boolean') {
             values += `active = ${active}`;
         }
         if (email) {
             values += values ? `, email = '${email}'` : `email = '${email}'`;
+        }
+
+        if (chatId) {
+            values += values ? `, chat_id = '${chatId}'` : `chat_id = '${chatId}'`;
         }
 
         return this.db

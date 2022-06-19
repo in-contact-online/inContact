@@ -21,6 +21,11 @@
       "secure": ["required", "boolean"]
     }
   }],
+  "telegram": ["required", {
+    "nested_object": {
+      "token" : ["required", "string"]
+    }
+  }],
   "service": ["required", {
     "nested_object": {
       "port": ["required", "positive_integer"],

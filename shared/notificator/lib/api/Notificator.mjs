@@ -1,10 +1,10 @@
-import { EmailTransport, TextTransport } from './models/index.mjs';
+import { EmailTransport, TelegramTransport } from './models/index.mjs';
 
 export class Notificator {
     /**
      * @typedef {Class} Notificator
      * @property email
-     * @property text
+     * @property bot
      */
 
     /**
@@ -13,17 +13,18 @@ export class Notificator {
     email = null;
 
     /**
-     * @type {TextTransport} returns text transport
+     * @type {TelegramTransport} returns text transport
      */
-    text = null;
+    bot = null;
 
     /**
      * @param {Object} options - email service options
      * @param {Object} options.smtp - SMTP server connection options
+     * @param {Object} options.telegram - telegram bot options
      * @return {Object} - Notificator API
      */
     constructor(options) {
         this.email = new EmailTransport(options.smtp);
-        this.text = new TextTransport(options.smtp);
+        this.bot = new TelegramTransport(options.telegram);
     }
 }

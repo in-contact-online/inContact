@@ -23,7 +23,6 @@ export const main = {
             chatId: req.chat.id,
         }),
         (result, res, req) => {
-            console.log(req);
             const chatId = req.chat.id;
             res.sendMessage(chatId, result, { parse_mode: 'HTML' });
         }
@@ -34,7 +33,6 @@ export const main = {
             firstName: req.from.first_name,
             lastName: req.from.last_name,
             userId: req.from.id,
-            idBot: req.from.is_bot,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;
@@ -78,6 +76,7 @@ export const main = {
         (req) => ({
             trackedPhone: req.text,
             userId: req.from.id,
+            chatId: req.chat.id,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;
@@ -87,6 +86,7 @@ export const main = {
     addEmail: makeRequestHandler(
         AddEmail,
         (req) => ({
+            chatId: req.chat.id,
             userId: req.from.id,
             email: req.text,
         }),
@@ -99,6 +99,7 @@ export const main = {
         AddPhoneOnlineNotify,
         (req) => ({
             userId: req.from.id,
+            chatId: req.chat.id,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;
