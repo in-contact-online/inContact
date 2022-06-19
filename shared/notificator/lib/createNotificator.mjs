@@ -8,12 +8,8 @@ const cache = {
 /**
  * @function
  * @param {Object} options - smtp options
- * @param {String} options.shared - flag that indicates is the notificator shared
- * @param {String} options.smtp.host - email sending host
- * @param {Number} options.smtp.port - email sending port
- * @param {String} options.smtp.user - email service user
- * @param {String} options.smtp.password - email service password
- * @param {String} options.smtp.from - sender address
+ * @param {Boolean} options.shared - flag that indicates is the notificator shared
+ * @param {Object} options.smtp - SMTP server connection options
  * @return {Object} - Notificator API
  */
 export function createNotificator(options) {
@@ -29,7 +25,7 @@ export function createNotificator(options) {
         }
     }
 
-    notificator = new Notificator(options.smtp);
+    notificator = new Notificator(options);
 
     if (shared) {
         cache.instance = notificator;

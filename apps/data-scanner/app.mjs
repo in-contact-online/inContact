@@ -35,7 +35,8 @@ const notificator = createNotificator({
         host: ConfigContainer.config.smtp.host,
         user: ConfigContainer.config.smtp.user,
         password: ConfigContainer.config.smtp.password,
-        from: ConfigContainer.config.smtp.from
+        from: ConfigContainer.config.smtp.from,
+        secure: ConfigContainer.config.smtp.secure,
     }
 });
 
