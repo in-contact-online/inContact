@@ -1,4 +1,5 @@
 import ModelBase from '../ModelBase.mjs';
+import logger from '../../api/logger.mjs';
 
 export class Contact extends ModelBase {
     /**
@@ -70,6 +71,14 @@ export class Contact extends ModelBase {
             if (contact.notify) {
                 await this.repository.contact.updateTrackedList({ userId: contact.user_id, trackedPhone, notify: false });
                 const user = await this.repository.user.read({ userId: contact.user_id });
+                if (user.chat_id) {
+                    await this.notificator.bot.send({
+                        chatId: user.chat_id,
+                        text: `Tracked contact ${trackedPhone} is online`
+                    });
+                } else {
+                    logger.warn('User has no chat_id');
+                }
                 if (user.email) {
                     await this.notificator.email.send({
                         to: user.email,
@@ -77,7 +86,7 @@ export class Contact extends ModelBase {
                         subject: 'Tracked contact is online'
                     });
                 } else {
-                    console.warn('User has no email');
+                    logger.warn('User has no email');
                 }
             }
         }

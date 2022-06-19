@@ -19,10 +19,10 @@ export class Status extends ModelBase {
 
     /**
      * @method
-     * @param {String} phoneNumber - contact's phone number
-     * @param {String} username - contact's username
-     * @param {String} wasOnline - time which contact was online
-     * @param {String} checkDate - time in moment of getting status
+     * @param {String} params.phoneNumber - contact's phone number
+     * @param {String} params.username - contact's username
+     * @param {String} params.wasOnline - time which contact was online
+     * @param {String} params.checkDate - time in moment of getting status
      * @returns {Promise<Object>}
      */
     async save(params) {

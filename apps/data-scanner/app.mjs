@@ -40,6 +40,9 @@ const notificator = createNotificator({
         password: ConfigContainer.config.smtp.password,
         from: ConfigContainer.config.smtp.from,
         secure: ConfigContainer.config.smtp.secure,
+    },
+    telegram: {
+        token: ConfigContainer.config.telegram.token,
     }
 });
 

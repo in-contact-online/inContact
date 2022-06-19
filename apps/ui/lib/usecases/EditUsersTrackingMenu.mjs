@@ -7,7 +7,6 @@ export class EditUsersTrackingMenu extends UseCaseBase {
         firstName: ['string'],
         lastName: ['string'],
         userId: ['required', 'positive_integer'],
-        idBot: ['boolean'],
     };
 
     async execute(params) {

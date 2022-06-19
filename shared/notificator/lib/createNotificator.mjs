@@ -10,6 +10,7 @@ const cache = {
  * @param {Object} options - smtp options
  * @param {Boolean} options.shared - flag that indicates is the notificator shared
  * @param {Object} options.smtp - SMTP server connection options
+ * @param {Object} options.telegram - telegram bot options
  * @return {Object} - Notificator API
  */
 export function createNotificator(options) {

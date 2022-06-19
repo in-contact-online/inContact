@@ -5,6 +5,7 @@ export class AddEmail extends UseCaseBase {
     static validationRules = {
         email: ['string'],
         userId: ['required', 'positive_integer'],
+        chatId: ['required', 'positive_integer'],
     };
 
     async execute(params) {

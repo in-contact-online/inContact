@@ -17,6 +17,9 @@
     "from": "{{IN_CONTACT_SMTP_FROM}}",
     "secure": "{{IN_CONTACT_SMTP_SECURE}}"
   },
+  "telegram": {
+    "token": "{{IN_CONTACT_BOT_TOKEN}}"
+  },
   "service": {
     "port": "{{IN_CONTACT_SCANNER_PORT}}",
     "sessionsFolder": "{{IN_CONTACT_SESSIONS_FOLDER}}",

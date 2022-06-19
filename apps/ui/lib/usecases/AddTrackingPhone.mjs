@@ -1,14 +1,16 @@
 import UseCaseBase from './UseCaseBase.mjs';
-import { UserMessages, UserTrackPhones } from '../models/index.mjs';
+import { UserMessages, UserTrackPhones, User } from '../models/index.mjs';
 import * as ConfigContainer from '../config.cjs';
 
 export class AddTrackingPhone extends UseCaseBase {
     static validationRules = {
         trackedPhone: ['phone_number'],
         userId: ['required', 'positive_integer'],
+        chatId: ['required', 'positive_integer'],
     };
 
     async execute(params) {
+        await new User().update({ userId: params.userId, chatId: params.chatId });
         const userTrackPhones = new UserTrackPhones();
 
         const limit = ConfigContainer.config.trackedPhonesLimit;

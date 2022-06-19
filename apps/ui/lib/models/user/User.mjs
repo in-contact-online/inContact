@@ -34,6 +34,7 @@ export class User extends ModelBase {
      * @method
      * @param {Object} params - user params
      * @param {Number} params.userId - user identifier
+     * @param {Number?} params.chatId - chat identifier
      * @param {String?} params.active - user active status
      * @param {String?} params.email - user email
      * @returns {Promise<Object>}
