@@ -53,6 +53,7 @@ ModelBase.setNotificator(notificator);
  */
 async function main(options) {
      const contacts = await new Contact().getTrackedByUser({ userId: options.id });
+     const report = {};
      for (const contact of contacts) {
           const timeline = {};
           const phoneNumber = (contact.tracked_phone || '').replace('+', '');
@@ -67,9 +68,10 @@ async function main(options) {
                     timeline[checkDate] = true;
                }
           });
+          report[phoneNumber] = timeline;
           await new Report().save({ data: JSON.stringify(timeline), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
      }
-     await new Contact().sendReport({ userId: options.id, report: '' });
+     await new Contact().sendReport({ userId: options.id, report: JSON.stringify(report) });
 
      return undefined;
 }
