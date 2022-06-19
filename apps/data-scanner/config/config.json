@@ -14,7 +14,8 @@
     "port": "{{IN_CONTACT_SMTP_PORT}}",
     "user": "{{IN_CONTACT_SMTP_USER}}",
     "password": "{{IN_CONTACT_SMTP_PWD}}",
-    "from": "{{IN_CONTACT_SMTP_FROM}}"
+    "from": "{{IN_CONTACT_SMTP_FROM}}",
+    "secure": "{{IN_CONTACT_SMTP_SECURE}}"
   },
   "service": {
     "port": "{{IN_CONTACT_SCANNER_PORT}}",

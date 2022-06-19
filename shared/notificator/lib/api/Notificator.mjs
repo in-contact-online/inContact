@@ -18,16 +18,12 @@ export class Notificator {
     text = null;
 
     /**
-     * @param {Object} options - smtp options
-     * @param {String} options.host - email sending host
-     * @param {Number} options.port - email sending port
-     * @param {String} options.user - email service user
-     * @param {String} options.password - email service password
-     * @param {String} options.from - sender address
+     * @param {Object} options - email service options
+     * @param {Object} options.smtp - SMTP server connection options
      * @return {Object} - Notificator API
      */
     constructor(options) {
-        this.email = new EmailTransport(options);
-        this.text = new TextTransport(options);
+        this.email = new EmailTransport(options.smtp);
+        this.text = new TextTransport(options.smtp);
     }
 }

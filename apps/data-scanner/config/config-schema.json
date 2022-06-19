@@ -17,7 +17,8 @@
       "port" : ["required", "positive_integer"],
       "user": ["required", "string"],
       "password": ["required", "string"],
-      "from": ["required", "string"]
+      "from": ["required", "string"],
+      "secure": ["required", "boolean"]
     }
   }],
   "service": ["required", {

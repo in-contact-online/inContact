@@ -15,6 +15,7 @@ export class EmailTransport {
      * @param {String} options.host - email sending host
      * @param {Number} options.port - email sending port
      * @param {String} options.user - email service user
+     * @param {Boolean} options.secure - flag that indicates do the secure protocol using, for port 465 is true
      * @param {String} options.password - email service password
      * @param {String} options.from - sender address
      */
@@ -22,7 +23,7 @@ export class EmailTransport {
         this.#transport = nodemailer.createTransport({
             host: options.host,
             port: options.port,
-            secure: false, // true for 465, false for other ports
+            secure: options.secure, // true for 465, false for other ports
             auth: {
                 user: options.user, // generated ethereal user
                 pass: options.password, // generated ethereal password
@@ -35,10 +36,11 @@ export class EmailTransport {
      /**
      * @method
      * @param {Object} params - filter parameters
-     * @param {Number} params.text - email text
-     * @param {Number} params.from - email address
-     * @param {Number} params.to - email address
-     * @param {Number} params.subject - email address
+     * @param {String} params.text - email text
+     * @param {String} params.from - email address
+     * @param {String} params.to - email address
+     * @param {String} params.subject - email address
+     * @param {String} params.html - email address
      * @returns {Promise<void>}
      */
       async send(params) {
@@ -46,9 +48,9 @@ export class EmailTransport {
             await this.#transport.sendMail({
                 from: params.from || this.#config.from, // sender address
                 to: params.to, // list of receivers
-                subject: params.subject, // Subject line
-                text: params.text, // plain text body
-                html: '', // html body
+                subject: params.subject || '', // Subject line
+                text: params.text || '', // plain text body
+                html: params.html || '', // html body
             });
         } catch (err) {
             console.error(err);

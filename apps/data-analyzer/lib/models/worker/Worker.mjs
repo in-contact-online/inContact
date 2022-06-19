@@ -44,7 +44,9 @@ export class Worker {
             this.#worker = child_process.fork(this.#getWorkerPath());
             this.#worker.on('error', this.handleError.bind(this, rej));
             this.#worker.on('exit', this.handleExit.bind(this, res));
-            this.#worker.send(this.#user);
+            this.#worker.on('message', () => {
+                this.#worker.send(this.#user);
+            });
         });
     }
 }
