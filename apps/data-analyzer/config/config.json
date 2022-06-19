@@ -9,6 +9,14 @@
     "password": "{{IN_CONTACT_DB_PASSWORD}}",
     "connectionsLimit": "{{IN_CONTACT_DB_CONNECTIONS_LIMIT}}"
   },
+  "smtp": {
+    "host": "{{IN_CONTACT_SMTP_HOST}}",
+    "port": "{{IN_CONTACT_SMTP_PORT}}",
+    "user": "{{IN_CONTACT_SMTP_USER}}",
+    "password": "{{IN_CONTACT_SMTP_PWD}}",
+    "from": "{{IN_CONTACT_SMTP_FROM}}",
+    "secure": "{{IN_CONTACT_SMTP_SECURE}}"
+  },
   "service": {
     "port": "{{IN_CONTACT_ANALYZER_PORT}}",
     "cron": "{{IN_CONTACT_ANALYZER_CRON}}",

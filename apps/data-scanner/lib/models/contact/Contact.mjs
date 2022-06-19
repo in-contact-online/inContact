@@ -79,15 +79,6 @@ export class Contact extends ModelBase {
                 } else {
                     logger.warn('User has no chat_id');
                 }
-                if (user.email) {
-                    await this.notificator.email.send({
-                        to: user.email,
-                        text: `Tracked contact ${trackedPhone} is online`,
-                        subject: 'Tracked contact is online'
-                    });
-                } else {
-                    logger.warn('User has no email');
-                }
             }
         }
     }

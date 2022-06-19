@@ -1,4 +1,5 @@
 import { createRepository } from '@rtls-platform/repository';
+import { createNotificator } from '@rtls-platform/notificator/index.mjs';
 import moment from 'moment';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';
@@ -19,9 +20,37 @@ const repository = createRepository({
           connectionsLimit: ConfigContainer.config.db.connectionsLimit,
      }),
 });
+const notificator = createNotificator({
+     smtp: {
+          port: ConfigContainer.config.smtp.port,
+          host: ConfigContainer.config.smtp.host,
+          user: ConfigContainer.config.smtp.user,
+          password: ConfigContainer.config.smtp.password,
+          from: ConfigContainer.config.smtp.from,
+          secure: ConfigContainer.config.smtp.secure,
+     },
+     telegram: {
+          token: ConfigContainer.config.telegram.token,
+     }
+});
 // Init Domain Model Layer
 ModelBase.setRepository(repository);
+ModelBase.setNotificator(notificator);
 
+/**
+ * @param {Object} options
+ * @property {Number} options.id - user identification
+ * @property {String} options.username - username
+ * @property {String} options.first_name - user first name
+ * @property {String} options.second_name - user second name
+ * @property {String} options.phone - user phone number
+ * @property {Boolean} options.active - flag identifies is the user active
+ * @property {String} options.created_at - timestamp when user was created
+ * @property {String} options.updated_at - timestamp when user was updated
+ * @property {Number} options.chat_id - telegram chat identification for user
+ * @property {String} options.email - user email
+ * @return {Promise<void>}
+ */
 async function main(options) {
      const contacts = await new Contact().getTrackedByUser({ userId: options.id });
      for (const contact of contacts) {
@@ -40,6 +69,7 @@ async function main(options) {
           });
           await new Report().save({ data: JSON.stringify(timeline), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
      }
+     await new Contact().sendReport({ userId: options.id, report: '' });
 
      return undefined;
 }
@@ -47,7 +77,16 @@ async function main(options) {
 /**
  * Description
  * @param {Object} report
- * @property {String} report.types - description
+ * @property {Number} report.id - user identification
+ * @property {String} report.username - username
+ * @property {String} report.first_name - user first name
+ * @property {String} report.second_name - user second name
+ * @property {String} report.phone - user phone number
+ * @property {Boolean} report.active - flag identifies is the user active
+ * @property {String} report.created_at - timestamp when user was created
+ * @property {String} report.updated_at - timestamp when user was updated
+ * @property {Number} report.chat_id - telegram chat identification for user
+ * @property {String} report.email - user email
  * @return {Promise<void>}
  */
 async function handleMessage(report) {
