@@ -64,12 +64,19 @@ async function main(options) {
                } else {
                     wasOnline = roundTime(status.check_date);
                }
-               if (!timeline[wasOnline]) {
-                    timeline[wasOnline] = 1;
+               const startOfHour = moment(wasOnline).startOf('hour').format('YYYY-MM-DD HH:mm');
+               if (!timeline[startOfHour]) {
+                    timeline[startOfHour] = {
+                         [wasOnline]: wasOnline
+                    };
                } else {
-                    timeline[wasOnline] += 1;
+                    timeline[startOfHour][wasOnline] = wasOnline;
                }
           });
+
+          for (const prop in timeline) {
+               timeline[prop] = Object.values(timeline[prop]).length;
+          }
           report[phoneNumber] = timeline;
           await new Report().save({ data: JSON.stringify(timeline), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
      }
