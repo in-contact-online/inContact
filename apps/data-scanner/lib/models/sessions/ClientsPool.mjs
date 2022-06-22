@@ -70,6 +70,8 @@ export class ClientsPool {
                 })
             )
             .then(async (data) => {
+                if (data.users[0])
+                    logger.info(`Contact ${data.users[0].phone} added to the Pool to tne session ${client.sessionId}`);
                 return data.users[0] ? '+' + data.users[0].phone : null;
             });
     }
@@ -166,9 +168,12 @@ export class ClientsPool {
                 const result = await client.invoke(command);
                 for (const user of result.users) {
                     if (user.status) {
-                        const wasOnline = user.status.className === 'UserStatusOnline' ? null : humanReadableDate(user.status.wasOnline);
+                        const wasOnline =
+                            user.status.className === 'UserStatusOnline'
+                                ? null
+                                : humanReadableDate(user.status.wasOnline);
                         if (wasOnline === null) {
-                            await new Contact().notifyTrackedOnline({ trackedPhone: '+' + user.phone })
+                            await new Contact().notifyTrackedOnline({ trackedPhone: '+' + user.phone });
                         }
                         if (wasOnline !== undefined) {
                             await new Status().save({
@@ -182,8 +187,10 @@ export class ClientsPool {
                     }
                 }
             } catch (e) {
+                logger.error(e);
                 ClientsPool.removeClient(client);
                 await new Contact().removeSessionId({ sessionId: client.sessionId });
+                logger.info(`Session ${client.sessionId} failed`);
                 await new Session().update({ sessionId: client.sessionId, valid: false });
             }
         }
