@@ -11,4 +11,4 @@ lerna-debug.log
 /apps/build/*
 /shared/build/*
 .DS_Store
-
+assets/
