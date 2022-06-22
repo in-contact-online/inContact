@@ -7,7 +7,7 @@ import { Status } from '../status/index.mjs';
 import { Report } from '../report/index.mjs';
 import { createPgDbConnection } from '../../db/index.mjs';
 import * as ConfigContainer from '../../config.cjs';
-import { prepareReport } from '../utils/index.mjs';
+import { prepareReport, roundTime } from '../utils/index.mjs';
 import ModelBase from '../ModelBase.mjs';
 
 // Init Repository Layer
@@ -60,9 +60,9 @@ async function main(options) {
           statuses.forEach(status => {
                let wasOnline;
                if (status.was_online) {
-                    wasOnline = moment(status.was_online).startOf('hour').format('YYYY-MM-DD HH:mm');
+                    wasOnline = roundTime(status.was_online);
                } else {
-                    wasOnline = moment(status.check_date).startOf('hour').format('YYYY-MM-DD HH:mm');
+                    wasOnline = roundTime(status.check_date);
                }
                if (!timeline[wasOnline]) {
                     timeline[wasOnline] = 1;
