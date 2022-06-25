@@ -101,8 +101,6 @@ export class DailyPolarChart {
         const myChart = new ChartJsImage();
         const config = this.#config([this.#prepareReportData()]);
 
-        console.log(config);
-
         myChart.setConfig(config)
         myChart.setWidth(500).setHeight(300).setBackgroundColor('transparent');
         return myChart.toDataUrl();
