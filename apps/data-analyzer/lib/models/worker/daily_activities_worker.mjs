@@ -1,13 +1,12 @@
 import { createRepository } from '@rtls-platform/repository';
 import { createNotificator } from '@rtls-platform/notificator/index.mjs';
-import moment from 'moment';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';
 import { Status } from '../status/index.mjs';
 import { Report } from '../report/index.mjs';
 import { createPgDbConnection } from '../../db/index.mjs';
 import * as ConfigContainer from '../../config.cjs';
-import { prepareReport, roundTime } from '../utils/index.mjs';
+import { prepareReport, trimPhone, TimeLine } from '../utils/index.mjs';
 import ModelBase from '../ModelBase.mjs';
 
 // Init Repository Layer
@@ -51,34 +50,17 @@ ModelBase.setNotificator(notificator);
  */
 async function main(options) {
      const contacts = await new Contact().getTrackedByUser({ userId: options.id, tracked: true });
+     const reportCheckDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString();
      const report = {};
      for (const contact of contacts) {
-          const timeline = {};
-          const phoneNumber = (contact.tracked_phone || '').replace('+', '');
-          const checkDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString();
-          const statuses = await new Status().readByPhone({ phoneNumber, checkDate });
-          statuses.forEach(status => {
-               let wasOnline;
-               if (status.was_online) {
-                    wasOnline = roundTime(status.was_online);
-               } else {
-                    wasOnline = roundTime(status.check_date);
-               }
-               const startOfHour = moment(wasOnline).startOf('hour').format('YYYY-MM-DD HH:mm');
-               if (!timeline[startOfHour]) {
-                    timeline[startOfHour] = {
-                         [wasOnline]: wasOnline
-                    };
-               } else {
-                    timeline[startOfHour][wasOnline] = wasOnline;
-               }
-          });
+          const timeline = new TimeLine();
+          const phoneNumber = trimPhone(contact.tracked_phone);
 
-          for (const prop in timeline) {
-               timeline[prop] = Object.values(timeline[prop]).length;
-          }
-          report[phoneNumber] = timeline;
-          await new Report().save({ data: JSON.stringify(timeline), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
+          const statuses = await new Status().readByPhone({ phoneNumber, checkDate: reportCheckDate });
+          statuses.forEach(status => timeline.handleStatus(status));
+
+          report[phoneNumber] = timeline.data;
+          await new Report().save({ data: JSON.stringify(timeline.data), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
      }
 
      await new Contact().sendReport({ userId: options.id, report: await prepareReport(report) });
