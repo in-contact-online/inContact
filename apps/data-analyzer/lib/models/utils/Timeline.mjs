@@ -27,12 +27,12 @@ export class TimeLine {
             wasOnline = roundTime(status.check_date);
         }
         const startOfHour = moment(wasOnline).startOf('hour').format('YYYY-MM-DD HH:mm');
-        if (!this.#data.timeline[startOfHour]) {
-            this.#data.timeline[startOfHour] = {
+        if (!this.#data[startOfHour]) {
+            this.#data[startOfHour] = {
                 [wasOnline]: wasOnline
             };
         } else {
-            this.#data.timeline[startOfHour][wasOnline] = wasOnline;
+            this.#data[startOfHour][wasOnline] = wasOnline;
         }
     }
 
