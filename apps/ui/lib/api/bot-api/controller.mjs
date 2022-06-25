@@ -1,7 +1,7 @@
 import * as Controllers from './controllers/index.mjs';
 import { BOT_COMMAND } from '../../system/index.mjs';
 import { getCommand } from '../utils/index.mjs';
-import { UserMessages } from '../../models/user/index.mjs';
+import { UserMessages } from '../../models/index.mjs';
 
 // Chain of responsibilities pattern. If error occurs in one of the handlers then all chain breaking
 function Router(req, res) {
@@ -30,8 +30,8 @@ export default async function (request, client) {
     const command = getCommand(request);
 
     switch (command) {
-        case BOT_COMMAND.START: {
-            await router(Controllers.main.start);
+        case BOT_COMMAND.HELP: {
+            await router(Controllers.main.help);
             break;
         }
         case BOT_COMMAND.ADD_TRACK_PHONE: {
@@ -46,16 +46,8 @@ export default async function (request, client) {
             await router(Controllers.main.notifyOnline);
             break;
         }
-        case BOT_COMMAND.ADD_TRACK_PHONE_MENU: {
-            await router(Controllers.main.trackPhoneMenu);
-            break;
-        }
         case BOT_COMMAND.EDIT_TRACK_PHONES_MENU: {
             await router(Controllers.main.editTrackingMenu);
-            break;
-        }
-        case BOT_COMMAND.GET_TRACK_STATUS: {
-            await router(Controllers.main.getStatus);
             break;
         }
         case BOT_COMMAND.STOP_TRACK_PHONE: {
