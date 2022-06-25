@@ -24,7 +24,6 @@ export class Contact extends ModelBase {
      * @param {Number} params.userId - user identification
      * @param {Object} params.report - user report
      * @param {String} params.report.html - email content
-     * @param {String} params.report.subject - email subject
      * @param {Array<Object>} params.report.attachments - email attachments
      * @returns {Promise<Object>}
      */
@@ -33,8 +32,8 @@ export class Contact extends ModelBase {
         if (user.email) {
             await this.notificator.email.send({
                 to: user.email,
-                text: "",
-                subject: report.subject,
+                text: "Hi there. We made a daily report for you ;)",
+                subject: 'InContact Daily Report',
                 html: report.html,
                 attachments: report.attachments,
             });
