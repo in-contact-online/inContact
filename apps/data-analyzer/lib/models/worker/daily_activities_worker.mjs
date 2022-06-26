@@ -1,11 +1,12 @@
 import { createRepository } from '@rtls-platform/repository';
-import moment from 'moment';
+import { createNotificator } from '@rtls-platform/notificator/index.mjs';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';
 import { Status } from '../status/index.mjs';
 import { Report } from '../report/index.mjs';
 import { createPgDbConnection } from '../../db/index.mjs';
 import * as ConfigContainer from '../../config.cjs';
+import { prepareReport, trimPhone, TimeLine } from '../utils/index.mjs';
 import ModelBase from '../ModelBase.mjs';
 
 // Init Repository Layer
@@ -19,27 +20,50 @@ const repository = createRepository({
           connectionsLimit: ConfigContainer.config.db.connectionsLimit,
      }),
 });
+const notificator = createNotificator({
+     smtp: {
+          port: ConfigContainer.config.smtp.port,
+          host: ConfigContainer.config.smtp.host,
+          user: ConfigContainer.config.smtp.user,
+          password: ConfigContainer.config.smtp.password,
+          from: ConfigContainer.config.smtp.from,
+          secure: ConfigContainer.config.smtp.secure,
+     }
+});
 // Init Domain Model Layer
 ModelBase.setRepository(repository);
+ModelBase.setNotificator(notificator);
 
+/**
+ * @param {Object} options
+ * @property {Number} options.id - user identification
+ * @property {String} options.username - username
+ * @property {String} options.first_name - user first name
+ * @property {String} options.second_name - user second name
+ * @property {String} options.phone - user phone number
+ * @property {Boolean} options.active - flag identifies is the user active
+ * @property {String} options.created_at - timestamp when user was created
+ * @property {String} options.updated_at - timestamp when user was updated
+ * @property {Number} options.chat_id - telegram chat identification for user
+ * @property {String} options.email - user email
+ * @return {Promise<void>}
+ */
 async function main(options) {
-     const contacts = await new Contact().getTrackedByUser({ userId: options.id });
+     const contacts = await new Contact().getTrackedByUser({ userId: options.id, tracked: true });
+     const reportCheckDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString();
+     const report = {};
      for (const contact of contacts) {
-          const timeline = {};
-          const phoneNumber = (contact.tracked_phone || '').replace('+', '');
-          const checkDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString();
-          const statuses = await new Status().readByPhone({ phoneNumber, checkDate });
-          statuses.forEach(status => {
-               if (status.was_online) {
-                    const wasOnline = moment(status.was_online).startOf('minute');
-                    timeline[wasOnline] = true;
-               } else {
-                    const checkDate = moment(status.check_date).startOf('minute');
-                    timeline[checkDate] = true;
-               }
-          });
-          await new Report().save({ data: JSON.stringify(timeline), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
+          const timeline = new TimeLine();
+          const phoneNumber = trimPhone(contact.tracked_phone);
+
+          const statuses = await new Status().readByPhone({ phoneNumber, checkDate: reportCheckDate });
+          statuses.forEach(status => timeline.handleStatus(status));
+
+          report[phoneNumber] = timeline.data;
+          await new Report().save({ data: JSON.stringify(timeline.data), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
      }
+
+     await new Contact().sendReport({ userId: options.id, report: await prepareReport(report) });
 
      return undefined;
 }
@@ -47,7 +71,16 @@ async function main(options) {
 /**
  * Description
  * @param {Object} report
- * @property {String} report.types - description
+ * @property {Number} report.id - user identification
+ * @property {String} report.username - username
+ * @property {String} report.first_name - user first name
+ * @property {String} report.second_name - user second name
+ * @property {String} report.phone - user phone number
+ * @property {Boolean} report.active - flag identifies is the user active
+ * @property {String} report.created_at - timestamp when user was created
+ * @property {String} report.updated_at - timestamp when user was updated
+ * @property {Number} report.chat_id - telegram chat identification for user
+ * @property {String} report.email - user email
  * @return {Promise<void>}
  */
 async function handleMessage(report) {

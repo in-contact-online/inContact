@@ -6,14 +6,12 @@ import {
     AddTrackingPhone,
     UserLeaveChat,
     UserRestartChat,
-    AddTrackingMenu,
-    GetUserStatus,
     AddPhoneOnlineNotify,
     AddEmail,
 } from '../../../usecases/index.mjs';
 
 export const main = {
-    start: makeRequestHandler(
+    help: makeRequestHandler(
         RegisterAndStart,
         (req) => ({
             firstName: req.from.first_name,
@@ -100,27 +98,6 @@ export const main = {
         (req) => ({
             userId: req.from.id,
             chatId: req.chat.id,
-        }),
-        (result, res, req) => {
-            const chatId = req.chat.id;
-            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
-        }
-    ),
-    trackPhoneMenu: makeRequestHandler(
-        AddTrackingMenu,
-        () => ({}),
-        (result, res, req) => {
-            const chatId = req.chat.id;
-            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
-        }
-    ),
-    getStatus: makeRequestHandler(
-        GetUserStatus,
-        (req) => ({
-            firstName: req.from.first_name,
-            lastName: req.from.last_name,
-            userId: req.from.id,
-            idBot: req.from.is_bot,
         }),
         (result, res, req) => {
             const chatId = req.chat.id;

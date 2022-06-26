@@ -13,8 +13,14 @@ export default class ModelBase {
      */
     repository = null;
 
+    /**
+     * @type {Notificator}
+     */
+    notificator = null;
+
     constructor() {
         this.repository = ModelBase.repositoryInstance;
+        this.notificator = ModelBase.notificatorInstance;
     }
 
     /**
@@ -25,9 +31,23 @@ export default class ModelBase {
 
     /**
      * @static
+     * @return {Notificator}
+     */
+    static notificatorInstance = null;
+
+    /**
+     * @static
      * @method
      */
     static setRepository(repository) {
         ModelBase.repositoryInstance = repository;
+    }
+
+    /**
+     * @static
+     * @method
+     */
+    static setNotificator(notificator) {
+        ModelBase.notificatorInstance = notificator;
     }
 }

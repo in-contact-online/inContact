@@ -13,8 +13,10 @@ export class TelegramTransport {
      * @param {String} options.token - telegram bot token
      */
     constructor(options) {
-        // polling should be false to be able to run second instance of the bot
-        this.#transport = new TelegramBot(options.token, { polling: false });
+        if (options && options.token) {
+            // polling should be false to be able to run second instance of the bot
+            this.#transport = new TelegramBot(options.token, {polling: false});
+        }
     }
 
      /**

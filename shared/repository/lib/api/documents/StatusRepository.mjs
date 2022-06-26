@@ -37,7 +37,7 @@ export class StatusRepository extends RepoBase {
      * @return {Promise<Object>} returns data saved in DB
      */
     async readByPhoneAndTs({ phoneNumber, checkDate }) {
-        let sql = 'SELECT * FROM statuses WHERE phone_number = $1 AND check_date > $2';
+        let sql = 'SELECT * FROM statuses WHERE phone_number = $1 AND check_date > $2 and (was_online > $2 or was_online is NULL)';
         const params = [phoneNumber, checkDate];
         const result = await this.db.queryAsync(sql, params).catch((err) => {
             throw new RepoError(err);

@@ -4,7 +4,5 @@ export * from './UserStopTrackingPhone.mjs';
 export * from './AddTrackingPhone.mjs';
 export * from './UserLeaveChat.mjs';
 export * from './UserRestartChat.mjs';
-export * from './GetUserStatus.mjs';
-export * from './AddTrackingMenu.mjs';
 export * from './AddPhoneOnlineNotify.mjs';
 export * from './AddEmail.mjs';
