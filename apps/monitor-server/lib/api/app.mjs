@@ -11,7 +11,7 @@ export function start(config) {
         .use(middlewares.cors)
         .use(middlewares.json)
         .use(middlewares.urlencoded)
-        .use('/app', middlewares.static)
+        .use(middlewares.static)
         .use('/', appRouter)
         .use('/api-docs', swagger.serve, swagger.setup)
         .listen(config.port, () => {
