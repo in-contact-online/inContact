@@ -57,7 +57,7 @@ module.exports = {
     globalObject: 'this',
     path: path.resolve(__dirname, 'build'),
     filename: 'client.min.js',
-    publicPath: '/app',
+    publicPath: '/',
     chunkFilename: '[name].chunk.js',
   },
   optimization: {
