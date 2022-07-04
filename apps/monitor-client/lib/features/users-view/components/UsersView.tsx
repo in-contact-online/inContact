@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { AppContext, IAppContext } from '../../context';
-import { GridRowsProp, GridColDef, DataGrid } from '@mui/x-data-grid';
-import { dividerClasses, Grid } from '@mui/material';
+import React from 'react';
+import { GridColDef, DataGrid } from '@mui/x-data-grid';
+import { Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useFetchContacts, useFetchUsers } from './hooks';
+import { useFetchContacts, useFetchUsers } from '../hooks';
 
 const StyledDataGrid = styled(DataGrid)({
     fontFamily: 'monospace',

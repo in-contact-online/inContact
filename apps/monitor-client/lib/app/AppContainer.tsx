@@ -2,7 +2,8 @@ import React from 'react';
 import { Route, Routes, Navigate } from 'react-router';
 
 import { Login } from '../features/auth/Login';
-import { AdminPage, ServerView, UsersView, SessionsView } from '../features/admin-page';
+import { AdminPage, ServerView, SessionsView } from '../features/admin-page';
+import { UsersView } from '../features/users-view';
 import { LandingPage } from '../features/landing-page';
 
 export function AppContainer() {

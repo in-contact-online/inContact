@@ -1,2 +1,2 @@
 export * from './dateConvertor';
-export * from './getName';
+export * from './getUserName';
