@@ -6,15 +6,20 @@ import { AppProvider } from './context';
 import { ErrorBoundaryComponent } from './components/ErrorBoundary';
 import './index.css';
 
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 const container: any = document.getElementById('app');
 const root: ReactDOM.Root = ReactDOM.createRoot(container);
 
 root.render(
     <HashRouter>
         <AppProvider>
-            <ErrorBoundaryComponent>
-                <AppContainer />
-            </ErrorBoundaryComponent>
+            <QueryClientProvider client={queryClient}>
+                <ErrorBoundaryComponent>
+                    <AppContainer />
+                </ErrorBoundaryComponent>
+            </QueryClientProvider>
         </AppProvider>
     </HashRouter>
 );
