@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GridColDef, DataGrid } from '@mui/x-data-grid';
 import { Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -12,7 +12,15 @@ const StyledDataGrid = styled(DataGrid)({
 });
 
 export function UsersView() {
-    const { users, isUsersLoading }: any = useFetchUsers();
+    const {
+        usersData,
+        isUsersLoading,
+        isUsersError,
+        usersPage,
+        setUsersPage,
+        usersPageSize,
+        setUsersPageSize,
+    }: any = useFetchUsers();
     const { contacts, isContactsLoading }: any = useFetchContacts();
 
     const columnsUsers: GridColDef[] = [
@@ -39,7 +47,19 @@ export function UsersView() {
                 {isUsersLoading ? (
                     <div>Loading...</div>
                 ) : (
-                    <StyledDataGrid rows={users} columns={columnsUsers} rowHeight={25} />
+                    <StyledDataGrid
+                        rows={usersData.users}
+                        rowCount={usersData.total}
+                        rowsPerPageOptions={[5, 10]}
+                        pagination
+                        paginationMode="server"
+                        page={usersPage}
+                        pageSize={usersPageSize}
+                        columns={columnsUsers}
+                        onPageChange={(newPage) => setUsersPage(newPage)}
+                        onPageSizeChange={(newPageSize) => setUsersPageSize(newPageSize)}
+                        rowHeight={25}
+                    />
                 )}
             </Grid>
             <Grid item xs={12} lg={6}>
