@@ -4,11 +4,10 @@ import { HashRouter } from 'react-router-dom';
 import { AppContainer } from './app/AppContainer';
 import { AppProvider } from './context';
 import { ErrorBoundaryComponent } from './components/ErrorBoundary';
+import { QueryClientProvider } from 'react-query';
+import { queryClient } from './queryClient';
 import './index.css';
 
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-const queryClient = new QueryClient();
 const container: any = document.getElementById('app');
 const root: ReactDOM.Root = ReactDOM.createRoot(container);
 

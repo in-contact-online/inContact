@@ -30,13 +30,5 @@ export function useFetchUsers() {
         }
     );
 
-    return {
-        usersData: data,
-        isUsersLoading: isLoading,
-        isUsersError: isError,
-        usersPage: page,
-        setUsersPage: setPage,
-        usersPageSize: pageSize,
-        setUsersPageSize: setPageSize,
-    };
+    return { data, isLoading, isError, page, setPage, pageSize, setPageSize };
 }
