@@ -7,24 +7,27 @@ export function useFetchContacts() {
     const { api } = useContext<IAppContext>(AppContext);
 
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(5);
+    const [pageSize, setPageSize] = useState(5);
 
-    const { data: contacts, isLoading: isContactsLoading, isError: isContactsError }: any = useQuery(
-        'contacts',
-        () => api?.contacts.readList({ page, size }),
+    const { data, isLoading, isError }: any = useQuery(
+        ['contacts', page, pageSize],
+        () => api?.contacts.readList({ page, size: pageSize }),
         {
             keepPreviousData: true,
-            select: (contacts: any) => {
-                return contacts.data.map((contact: any) => {
-                    return {
-                        ...contact,
-                        createdAt: dateConvertor(contact.createdAt),
-                        updatedAt: dateConvertor(contact.updatedAt),
-                    };
-                });
+            select: (data: any) => {
+                return {
+                    contacts: data.data.map((contact: any) => {
+                        return {
+                            ...contact,
+                            createdAt: dateConvertor(contact.createdAt),
+                            updatedAt: dateConvertor(contact.updatedAt),
+                        };
+                    }),
+                    total: data.total,
+                };
             },
         }
     );
 
-    return { contacts, isContactsLoading, isContactsError };
+    return { data, isLoading, isError, page, setPage, pageSize, setPageSize };
 }

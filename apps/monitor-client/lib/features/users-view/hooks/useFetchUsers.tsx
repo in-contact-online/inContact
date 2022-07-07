@@ -7,25 +7,28 @@ export function useFetchUsers() {
     const { api } = useContext<IAppContext>(AppContext);
 
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(5);
+    const [pageSize, setPageSize] = useState(5);
 
-    const { data: users, isLoading: isUsersLoading, isError: isUsersError }: any = useQuery(
-        'users',
-        () => api?.users.readList({ page, size }),
+    const { data, isLoading, isError }: any = useQuery(
+        ['users', page, pageSize],
+        () => api?.users.readList({ page, size: pageSize }),
         {
             keepPreviousData: true,
-            select: (users: any) => {
-                return users.data.map((user: any) => {
-                    return {
-                        ...user,
-                        username: getUserName(user),
-                        createdAt: dateConvertor(user.createdAt),
-                        updatedAt: dateConvertor(user.updatedAt),
-                    };
-                });
+            select: (data: any) => {
+                return {
+                    users: data.data.map((user: any) => {
+                        return {
+                            ...user,
+                            username: getUserName(user),
+                            createdAt: dateConvertor(user.createdAt),
+                            updatedAt: dateConvertor(user.updatedAt),
+                        };
+                    }),
+                    total: data.total,
+                };
             },
         }
     );
 
-    return { users, isUsersLoading, isUsersError };
+    return { data, isLoading, isError, page, setPage, pageSize, setPageSize };
 }
