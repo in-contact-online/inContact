@@ -16,8 +16,6 @@ export function ContactsTable() {
         { field: 'updatedAt', headerName: 'Updated At', width: 150 },
     ];
 
-    console.log(isLoading, JSON.stringify(data?.contacts));
-
     return (
         <>
             {isLoading ? (
