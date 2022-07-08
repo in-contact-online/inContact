@@ -9,26 +9,26 @@ export function useFetchUsers() {
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(5);
 
-    const { data, isLoading, isError }: any = useQuery(
-        ['users', page, pageSize],
-        () => api?.users.readList({ page, size: pageSize }),
-        {
-            keepPreviousData: true,
-            select: (data: any) => {
-                return {
-                    users: data.data.map((user: any) => {
-                        return {
-                            ...user,
-                            username: getUserName(user),
-                            createdAt: dateConvertor(user.createdAt),
-                            updatedAt: dateConvertor(user.updatedAt),
-                        };
-                    }),
-                    total: data.total,
-                };
-            },
-        }
-    );
+    const fetchUsers = ({ queryKey }: any) => {
+        return api?.users.readList({ page: queryKey[1].page, size: queryKey[1].size });
+    };
 
-    return { data, isLoading, isError, page, setPage, pageSize, setPageSize };
+    const { data, isFetching, isError }: any = useQuery(['users', { page, size: pageSize }], fetchUsers, {
+        keepPreviousData: true,
+        select: (data: any) => {
+            return {
+                users: data.data.map((user: any) => {
+                    return {
+                        ...user,
+                        username: getUserName(user),
+                        createdAt: dateConvertor(user.createdAt),
+                        updatedAt: dateConvertor(user.updatedAt),
+                    };
+                }),
+                total: data.total,
+            };
+        },
+    });
+
+    return { data, isFetching, isError, page, setPage, pageSize, setPageSize };
 }

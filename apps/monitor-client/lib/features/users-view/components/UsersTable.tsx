@@ -4,7 +4,7 @@ import { StyledDataGrid } from './StyledDataGrid';
 import { useFetchUsers } from '../hooks';
 
 export function UsersTable() {
-    const { data, isLoading, isError, page, setPage, pageSize, setPageSize }: any = useFetchUsers();
+    const { data, isFetching, isError, page, setPage, pageSize, setPageSize }: any = useFetchUsers();
 
     const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', headerAlign: 'center' },
@@ -16,10 +16,11 @@ export function UsersTable() {
 
     return (
         <>
-            {isLoading ? (
+            {isFetching ? (
                 <div>Loading...</div>
             ) : (
                 <StyledDataGrid
+                    loading={isFetching}
                     rows={data.users}
                     rowCount={data.total}
                     rowsPerPageOptions={[5, 10]}
