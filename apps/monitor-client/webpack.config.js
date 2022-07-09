@@ -4,6 +4,7 @@ const Dotenv = require('dotenv-webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -102,6 +103,12 @@ module.exports = {
     }),
     new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: 'public/favicon.ico', to: 'favicon.ico' },
+        { from: 'public/images', to: 'images' },
+      ],
+    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'public/index.html'
