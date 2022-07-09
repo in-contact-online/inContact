@@ -50,22 +50,25 @@ export class DailyBarChart {
                     xAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: moment().format('YYYY-MM-DD'),
+                            labelString: `${moment().format('YYYY-MM-DD')} (UTC+0)`,
                         }
                     }],
                     yAxes: [{
-                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Время активности, мин'
+                        },
                         ticks: {
                             beginAtZero: true,
                             steps: 10,
                             stepValue: 5,
-                            max: 100
+                            max: 60
                         }
                     }]
                 },
                 title: {
                     display: true,
-                    text: 'User Activity Report'
+                    text: `Статистика активности пользователя ${this.#user}`
                 }
             }
         }
@@ -80,7 +83,9 @@ export class DailyBarChart {
         const values = Object.values(this.#data);
         return this.#labels.map(hour => {
             const index = labels.indexOf(hour);
-            if (index !== -1) return Math.round((values[index] / 12) * 100); // check every 5 min. value in perecents of hour
+            if (index !== -1) {
+                return values[index] * 5; // check every 5 min. value in minutes
+            }
             return 0;
         });
     }
@@ -92,7 +97,6 @@ export class DailyBarChart {
     async data() {
         const myChart = new ChartJsImage();
         const config = this.#config([{
-            label: this.#user,
             data: this.#prepareReportData(),
             backgroundColor: randomColor()
         }]);
