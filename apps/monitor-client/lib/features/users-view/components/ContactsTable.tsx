@@ -4,7 +4,7 @@ import { StyledDataGrid } from './StyledDataGrid';
 import { useFetchContacts } from '../hooks';
 
 export function ContactsTable() {
-    const { data, isLoading, isError, page, setPage, pageSize, setPageSize }: any = useFetchContacts();
+    const { data, isFetching, isError, page, setPage, pageSize, setPageSize }: any = useFetchContacts();
 
     const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', flex: 1 },
@@ -18,7 +18,7 @@ export function ContactsTable() {
 
     return (
         <>
-            {isLoading ? (
+            {isFetching ? (
                 <div>Loading...</div>
             ) : (
                 <StyledDataGrid

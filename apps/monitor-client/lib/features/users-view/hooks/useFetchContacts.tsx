@@ -9,25 +9,25 @@ export function useFetchContacts() {
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(5);
 
-    const { data, isLoading, isError }: any = useQuery(
-        ['contacts', page, pageSize],
-        () => api?.contacts.readList({ page, size: pageSize }),
-        {
-            keepPreviousData: true,
-            select: (data: any) => {
-                return {
-                    contacts: data.data.map((contact: any) => {
-                        return {
-                            ...contact,
-                            createdAt: dateConvertor(contact.createdAt),
-                            updatedAt: dateConvertor(contact.updatedAt),
-                        };
-                    }),
-                    total: data.total,
-                };
-            },
-        }
-    );
+    const fetchContacts = ({ queryKey }: any) => {
+        return api?.contacts.readList({ page: queryKey[1].page, size: queryKey[1].size });
+    };
 
-    return { data, isLoading, isError, page, setPage, pageSize, setPageSize };
+    const { data, isFetching, isError }: any = useQuery(['contacts', { page, size: pageSize }], fetchContacts, {
+        keepPreviousData: true,
+        select: (data: any) => {
+            return {
+                contacts: data.data.map((contact: any) => {
+                    return {
+                        ...contact,
+                        createdAt: dateConvertor(contact.createdAt),
+                        updatedAt: dateConvertor(contact.updatedAt),
+                    };
+                }),
+                total: data.total,
+            };
+        },
+    });
+
+    return { data, isFetching, isError, page, setPage, pageSize, setPageSize };
 }
