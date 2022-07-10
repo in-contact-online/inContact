@@ -57,7 +57,7 @@ async function main(options) {
           const phoneNumber = trimPhone(contact.tracked_phone);
 
           const statuses = await new Status().readByPhone({ phoneNumber, checkDate: reportCheckDate });
-          statuses.forEach(status => timeline.handleStatus(status));
+          statuses.forEach((status, index) => timeline.handleStatus(status, index > 0 ? statuses[index - 1] : null));
 
           report[phoneNumber] = timeline.data;
           await new Report().save({ data: JSON.stringify(timeline.data), phone: phoneNumber, type: 'DAILY_ACTIVITY' });

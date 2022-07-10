@@ -1,6 +1,7 @@
 import moment from 'moment';
 import ChartJsImage from 'chartjs-to-image';
 import randomColor from 'randomcolor';
+import { secsToMin } from './timeUtils.mjs';
 
 export class DailyBarChart {
     /**
@@ -41,10 +42,7 @@ export class DailyBarChart {
             options: {
                 responsive: true,
                 legend: {
-                    position: 'bottom',
-                },
-                hover: {
-                    mode: 'label'
+                    display: false,
                 },
                 scales: {
                     xAxes: [{
@@ -84,7 +82,7 @@ export class DailyBarChart {
         return this.#labels.map(hour => {
             const index = labels.indexOf(hour);
             if (index !== -1) {
-                return values[index] * 5; // check every 5 min. value in minutes
+                return secsToMin(values[index]);
             }
             return 0;
         });
