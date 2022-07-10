@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { roundTime } from './timeUtils.mjs';
 
 export class TimeLine {
     /**
@@ -15,24 +14,23 @@ export class TimeLine {
 
     /**
      * @method
-     * @param {String} status.was_online - timestamp when user was online
+     * @param {String|null} status.was_online - timestamp when user was online
      * @param {String} status.check_date - timestamp check date
+     * @param {String|null} prevStatus.was_online - timestamp when user was online
+     * @param {String} prevStatus.check_date - timestamp check date
      * @returns {Promise<void>}
      */
-    handleStatus(status) {
-        let wasOnline;
-        if (status.was_online) {
-            wasOnline = roundTime(status.was_online);
-        } else {
-            wasOnline = roundTime(status.check_date);
-        }
-        const startOfHour = moment(wasOnline).startOf('hour').format('YYYY-MM-DD HH:mm');
-        if (!this.#data[startOfHour]) {
-            this.#data[startOfHour] = {
-                [wasOnline]: wasOnline
-            };
-        } else {
-            this.#data[startOfHour][wasOnline] = wasOnline;
+    handleStatus(status, prevStatus) {
+        const wasOnline = status.was_online ? moment(status.was_online) : null;
+        const curCheckDate = moment(status.check_date);
+        const prevCheckDate = prevStatus ? moment(prevStatus.check_date) : curCheckDate.clone().add(-5, 'minutes');
+        const startOfHour = curCheckDate.clone().startOf('hour').format('YYYY-MM-DD HH:mm');
+        if (!this.#data.hasOwnProperty(startOfHour)) this.#data[startOfHour] = 0;
+
+        if(!wasOnline) {
+            this.#data[startOfHour] += curCheckDate.diff(prevCheckDate, 'seconds');
+        } else if (wasOnline.isBetween(prevCheckDate, curCheckDate, '(]')) {
+            this.#data[startOfHour] += wasOnline.diff(prevCheckDate, 'seconds');
         }
     }
 
@@ -41,10 +39,6 @@ export class TimeLine {
      * @returns {Object}
      */
     get data() {
-        const result = this.#data && { ...this.#data };
-        for (const prop in result) {
-            result[prop] = Object.values(result[prop]).length;
-        }
-        return result;
+        return this.#data;
     }
 }
