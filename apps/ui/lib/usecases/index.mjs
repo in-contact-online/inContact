@@ -6,3 +6,4 @@ export * from './UserLeaveChat.mjs';
 export * from './UserRestartChat.mjs';
 export * from './AddPhoneOnlineNotify.mjs';
 export * from './AddEmail.mjs';
+export * from './UnknownMessage.mjs';

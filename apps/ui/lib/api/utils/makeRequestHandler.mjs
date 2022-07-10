@@ -6,8 +6,9 @@ export async function runUseCase(UseCase, { params }) {
 }
 
 export function makeRequestHandler(UseCase, mapToParams, mapToResponse) {
-    function logRequest(params, result, startTime) {
-        logger.debug({
+    function logRequest(chatId, params, result, startTime) {
+        logger.info({
+            chatId,
             useCase: UseCase.name,
             runtime: Date.now() - startTime,
             params,
@@ -23,7 +24,7 @@ export function makeRequestHandler(UseCase, mapToParams, mapToResponse) {
 
             const result = await runUseCase(UseCase, { params });
 
-            logRequest(params, result, startTime);
+            logRequest(chatId, params, result, startTime);
 
             if (mapToResponse) {
                 mapToResponse(result, res, req);
@@ -33,7 +34,12 @@ export function makeRequestHandler(UseCase, mapToParams, mapToResponse) {
             }
             next();
         } catch (err) {
-            logger.error(`[ErrorHandler] ${err}`);
+            logger.error({
+                chatId,
+                useCase: UseCase.name,
+                error: JSON.stringify(err),
+                params: req
+            });
             res.sendMessage(chatId, errorToMessage(err));
         }
     };

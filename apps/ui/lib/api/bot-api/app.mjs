@@ -15,7 +15,7 @@ export async function stopServer() {
     if (!service) return;
 
     service.close();
-    logger.info('WS Service stopped');
+    logger.info('Service stopped');
 }
 
 function startService({ auth }) {
