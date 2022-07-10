@@ -8,6 +8,7 @@ import {
     UserRestartChat,
     AddPhoneOnlineNotify,
     AddEmail,
+    UnknownMessage,
 } from '../../../usecases/index.mjs';
 
 export const main = {
@@ -104,4 +105,12 @@ export const main = {
             res.sendMessage(chatId, result, { parse_mode: 'HTML' });
         }
     ),
+    unknown: makeRequestHandler(
+        UnknownMessage,
+        () => ({}),
+        (result, res, req) => {
+            const chatId = req.chat.id;
+            res.sendMessage(chatId, result, { parse_mode: 'HTML' });
+        }
+    )
 };
