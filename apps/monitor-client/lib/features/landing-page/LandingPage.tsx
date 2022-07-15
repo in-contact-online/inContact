@@ -1,26 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router';
+
+import { LandingMenu } from './components';
 
 import './styles.css';
 
 export function LandingPage() {
-    const navigate = useNavigate();
     return (
         <>
             <div className="first-section dark-background">
                 <div className="container">
                     <div className="header">
-                        <div className="logo" />
-                        <ul className="menu">
-                            <li onClick={() => navigate('/admin')}>Админка</li>
-                            <li>Возможноти</li>
-                            <li>Тарифы</li>
-                            <li>Кабинет</li>
-                        </ul>
-                        <div className="girl" />
-                        <div className="messages-bg" />
-                        <div className="light-blur-bg" />
+                        <div className="logo"></div>
+                        <LandingMenu />
+                        <div className="girl"></div>
+                        <div className="messages-bg"></div>
+                        <div className="light-blur-bg"></div>
                     </div>
 
                     <div className="offer">
