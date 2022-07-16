@@ -20,6 +20,7 @@ export default class Analyzer {
      * @param {Object} config - Application configuration
      * @param {String} config.cron - cron configuration
      * @param {String} config.dailyCron - daily cron configuration
+     * @param {String} config.timezone - timezone
      */
      constructor(config) {
           this.#config = config;
@@ -37,7 +38,7 @@ export default class Analyzer {
                },
                null,
                true,
-               null
+              this.#config.timezone
           );
         this.#dailyCronJob = new CronJob(
             this.#config.dailyCron,
@@ -46,7 +47,7 @@ export default class Analyzer {
             },
             null,
             true,
-            null
+            this.#config.timezone
         );
           this.#cronJob.start();
           this.#dailyCronJob.start();

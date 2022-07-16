@@ -48,7 +48,7 @@ export class DailyBarChart {
                     xAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: `${moment().format('YYYY-MM-DD')} (UTC+0)`,
+                            labelString: `${moment().format('YYYY-MM-DD')} мск`,
                         }
                     }],
                     yAxes: [{

@@ -25,7 +25,8 @@
     "nested_object": {
       "port": ["required", "positive_integer"],
       "cron": ["required", "string"],
-      "dailyCron": ["required", "string"]
+      "dailyCron": ["required", "string"],
+      "timezone": ["required",  "string"]
     }
   }]
 }
