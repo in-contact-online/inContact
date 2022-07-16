@@ -1,3 +1,4 @@
+import '@rtls-platform/env/index.js'; // should be first import to read all env variables before config init
 import { createRepository } from '@rtls-platform/repository';
 import { createLogger, LoggerTypes } from '@rtls-platform/logger';
 import { runDBMigrations } from '@rtls-platform/db-migration';

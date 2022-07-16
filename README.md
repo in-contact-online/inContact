@@ -36,7 +36,7 @@
 - `psql --host=localhost --username=in_contact in_contact -W`
 
 ### Migrations
-- Follow instructions in ```./shared/db-migration/README.md```
+1. Follow instructions in ```./shared/db-migration/README.md```
 
 ## Configure Modules
 1. Follow instructions in ```./apps/ui/README.md```
@@ -44,6 +44,7 @@
 3. Follow instructions in ```./apps/data-analyzer/README.md```
 4. Follow instructions in ```./apps/monitor-client/README.md```
 5. Follow instructions in ```./apps/monitor-server/README.md```
+6. Follow instructions in ```./shared/env/README.md```
 
 ## Run in console
 Run commands:

@@ -22,6 +22,7 @@
         "build": "NODE_ENV=production webpack"
     },
     "dependencies": {
+        "@rtls-platform/env": "1.0.0",
         "@emotion/react": "^11.9.0",
         "@emotion/styled": "^11.8.1",
         "@mui/icons-material": "^5.8.2",

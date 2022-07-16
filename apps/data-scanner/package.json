@@ -28,6 +28,7 @@
         "@rtls-platform/repository": "1.0.0",
         "@rtls-platform/notificator": "1.0.0",
         "@rtls-platform/db-migration": "1.0.0",
+        "@rtls-platform/env": "1.0.0",
         "cron": "^1.8.2",
         "cross-env": "^7.0.3",
         "dotenv-defaults": "^2.0.1",

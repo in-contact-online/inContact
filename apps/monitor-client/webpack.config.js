@@ -1,3 +1,4 @@
+require('@rtls-platform/env');
 const debug = process.env.NODE_ENV !== 'production'
 const path = require('path')
 const Dotenv = require('dotenv-webpack');
@@ -99,7 +100,7 @@ module.exports = {
   ],
   plugins: [
     new Dotenv({
-      defaults: true
+      systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
     }),
     new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),

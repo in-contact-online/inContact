@@ -1,9 +1,7 @@
 # IN-CONTACT MONITORING CLIENT
 
 # Configuration
-## Create .env file
-1. copy `.env.defaults` to `.env`
-2. configure `.env` file according to you needs
+Create .env file in /shared/env
 
 # Run service
 1. ```yarn start``` - run service on hot regime

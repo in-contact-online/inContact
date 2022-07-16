@@ -5,6 +5,7 @@
     "shared/repository",
     "shared/notificator",
     "shared/db-migration",
+    "shared/env",
     "apps/data-analyzer",
     "apps/data-scanner",
     "apps/monitor-server",
