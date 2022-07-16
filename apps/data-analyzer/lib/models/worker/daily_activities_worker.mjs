@@ -1,5 +1,6 @@
 import { createRepository } from '@rtls-platform/repository';
 import { createNotificator } from '@rtls-platform/notificator/index.mjs';
+import moment from 'moment';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';
 import { Status } from '../status/index.mjs';
@@ -50,10 +51,11 @@ ModelBase.setNotificator(notificator);
  */
 async function main(options) {
      const contacts = await new Contact().getTrackedByUser({ userId: options.id, tracked: true });
-     const reportCheckDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString();
+     const reportCheckDate = moment().add(-24, 'hours').toISOString();
+     const timezone = ConfigContainer.config.service.timezone;
      const report = {};
      for (const contact of contacts) {
-          const timeline = new TimeLine();
+          const timeline = new TimeLine(timezone);
           const phoneNumber = trimPhone(contact.tracked_phone);
 
           const statuses = await new Status().readByPhone({ phoneNumber, checkDate: reportCheckDate });
