@@ -1,10 +1,11 @@
-import { createRepository } from '@rtls-platform/repository/index.mjs';
-import { createNotificator } from '@rtls-platform/notificator/index.mjs';
-import { createLogger, LoggerTypes } from '@rtls-platform/logger/index.mjs';
+import { createRepository } from '@rtls-platform/repository';
+import { createNotificator } from '@rtls-platform/notificator';
+import { runDBMigrations } from '@rtls-platform/db-migration';
+import { createLogger, LoggerTypes } from '@rtls-platform/logger';
 import * as App from './lib/api/index.mjs';
 import * as DataScanner from './lib/api/app.mjs';
 import * as ConfigContainer from './lib/config.cjs';
-import { createPgDbConnection, runDBMigrations } from './lib/db/index.mjs';
+import { createPgDbConnection } from './lib/db/index.mjs';
 import ModelBase from './lib/models/ModelBase.mjs';
 
 // Init Logger

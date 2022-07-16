@@ -3,7 +3,7 @@
           "driver": "pg",
           "user": { "ENV": "IN_CONTACT_DB_USER" },
           "password": { "ENV": "IN_CONTACT_DB_PASSWORD" },
-          "host": { "ENV": "N_CONTACT_DB_HOST" },
+          "host": { "ENV": "IN_CONTACT_DB_HOST" },
           "database": { "ENV": "IN_CONTACT_DB_SCHEMA" },
           "port": { "ENV": "IN_CONTACT_DB_PORT" }
      },
@@ -11,7 +11,7 @@
           "driver": "pg",
           "user": { "ENV": "IN_CONTACT_DB_USER" },
           "password": { "ENV": "IN_CONTACT_DB_PASSWORD" },
-          "host": { "ENV": "N_CONTACT_DB_HOST" },
+          "host": { "ENV": "IN_CONTACT_DB_HOST" },
           "database": { "ENV": "IN_CONTACT_DB_SCHEMA" },
           "port": { "ENV": "IN_CONTACT_DB_PORT" }
      }

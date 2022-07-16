@@ -28,6 +28,7 @@
   "dependencies": {
     "@rtls-platform/logger": "1.0.0",
     "@rtls-platform/repository": "1.0.0",
+    "@rtls-platform/db-migration": "1.0.0",
     "chartjs": "^0.3.24",
     "chartjs-to-image": "^1.0.5",
     "cron": "^2.0.0",

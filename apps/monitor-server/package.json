@@ -26,6 +26,7 @@
     "dependencies": {
         "@rtls-platform/logger": "1.0.0",
         "@rtls-platform/repository": "1.0.0",
+        "@rtls-platform/db-migration": "1.0.0",
         "body-parser": "^1.20.0",
         "cors": "^2.8.5",
         "cron": "^1.8.2",

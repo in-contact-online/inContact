@@ -1,8 +1,9 @@
-# INCONTACT MONITORING SERVER
+# IN-CONTACT MONITORING SERVER
 
-# 1. Database
+# Configuration
+## Create .env file
+1. copy `.env.defaults` to `.env`
+2. configure `.env` file according to you needs
 
-## 1.1 Configuration
-
-### Create .env file
--copy .env.defaults to .env
+# Run service
+1. ```yarn start``` - run service on production mode

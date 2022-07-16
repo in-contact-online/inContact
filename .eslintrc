@@ -26,7 +26,8 @@
         "map": [
           ["@rtls-platform/repository", "./shared/repository"],
           ["@rtls-platform/logger", "./shared/logger"],
-          ["@rtls-platform/notificator", "./shared/notificator"]
+          ["@rtls-platform/notificator", "./shared/notificator"],
+          ["@rtls-platform/db-migration", "./shared/db-migration"]
         ],
         "extensions": [
           ".ts",

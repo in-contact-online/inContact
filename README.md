@@ -24,18 +24,32 @@
 
 # 2. Run project
 ## Pre-requirements
-
 1. Node - 14.x.x or later
 2. yarn - 1.22.4 or later
 3. PostgreSQL - 14 or later
 
+## Database configuration
+### Create User and Database
+- `sudo -u postgres psql` -`create database in_contact;` -`create user in_contact;` -`ALTER USER in_contact with password 'in_contact';` -`grant all privileges on database in_contact to in_contact;`
+
+### Login to database from console
+- `psql --host=localhost --username=in_contact in_contact -W`
+
+### Migrations
+- Follow instructions in ```./shared/db-migration/README.md```
+
 ## Configure Modules
 1. Follow instructions in ```./apps/ui/README.md```
 2. Follow instructions in ```./apps/data-scanner/README.md```
+3. Follow instructions in ```./apps/data-analyzer/README.md```
+4. Follow instructions in ```./apps/monitor-client/README.md```
+5. Follow instructions in ```./apps/monitor-server/README.md```
+
 ## Run in console
 Run commands:
 1. ```yarn install``` - install node modules
-2. ```cd ./apps/ui & npm run migration:run``` - run database migrations to add tables
-3. ```yarn start``` - run ui
-4. ```cd ./apps/data-scanner & npm run migration:run``` - run database migrations to add tables
-5. ```yarn start``` - run scanner module on port XXXX
+2. ```yarn start:ui``` - run Telegram bot
+3. ```yarn start:scanner``` - run data scanner service on port `3000`
+4. ```yarn start:analyzer``` - run data analyzer service on port `3003` 
+5. ```yarn start:monitor:sr``` - run monitor server on port `3002`
+6. ```yarn start:monitor:cl``` - run monitor client in hot regime on port `8086`

@@ -4,6 +4,7 @@
     "shared/logger",
     "shared/repository",
     "shared/notificator",
+    "shared/db-migration",
     "apps/data-analyzer",
     "apps/data-scanner",
     "apps/monitor-server",
