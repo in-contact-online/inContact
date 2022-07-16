@@ -16,7 +16,7 @@ export class UserMessages {
     }
 
     static noTrackingMessage() {
-        return '<b>У вас нет отслеживаемых номеров.</b>';
+        return '<b>У вас нет отслеживаемых номеров. Пожалуйста добавьте.</b>';
     }
 
     static phoneStopTrackingMessage(phone) {
@@ -47,10 +47,10 @@ export class UserMessages {
     static invalidPhoneNumber() {
         return `Неправильный номер телефона`;
     }
-    static notifyYouWhenTrackedOnline() {
+    static notifyYouWhenTrackedOnline(phones) {
         return `
-        Мы оповестим вас когда отслеживаемые контакты будут онлайн.
-Сообщение будет отправленно один раз.
+        Мы оповестим вас когда контакты (${phones.join(',')}) будут онлайн.
+Сообщение будет отправленно один раз для каждого номера телефона.
 Для повторного отслеживание введите команду заново.
         `;
     }
