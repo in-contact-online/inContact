@@ -16,17 +16,16 @@ interface StepCardType {
 }
 
 export function StepCard({ primary, content, children }: StepCardType) {
-    const StyledGrid = styled(Grid)(({ theme }) => ({
-        height: 460,
+    const StyledGrid = styled(Grid, { name: 'step-card' })(({ theme }) => ({
+        minHeight: 420,
         background: primary
             ? 'linear-gradient(177deg, rgba(210,215,217,1) 0%, rgba(246,249,250,1) 100%)'
             : 'linear-gradient(177deg, rgba(16,193,252,1) 0%, rgba(151,229,255,1) 100%)',
         margin: '0px auto 130px',
         borderRadius: 20,
         border: '1px solid #8D9193',
-        ['p']: { fontSize: '2rem', marginLeft: 60, marginTop: 40, color: primary ? '#000' : '#FFF' },
-        ['p.small']: { fontSize: '1.5rem', marginLeft: 60, marginTop: 20, fontStyle: 'italic' },
-        ['.MuiDivider-root']: { marginLeft: 60 },
+        ['p']: { fontSize: '2rem', color: primary ? '#000' : '#FFF' },
+        ['p.small']: { fontSize: '1.5rem', fontStyle: 'italic' },
     }));
 
     const Badge = styled('div')(({ theme }) => ({
@@ -34,8 +33,6 @@ export function StepCard({ primary, content, children }: StepCardType) {
         width: '100px',
         boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.25)',
         padding: 5,
-        marginTop: 80,
-        marginLeft: 60,
         textAlign: 'center',
         backgroundColor: primary ? '#8D9193' : '#FFF',
         color: primary ? '#FFF' : '#000',
@@ -43,9 +40,7 @@ export function StepCard({ primary, content, children }: StepCardType) {
     }));
 
     const StyledImg = styled('img')(({ theme }) => ({
-        width: 400,
-        marginTop: 80,
-        marginLeft: 80,
+        width: '100%',
         borderRadius: 24,
         boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.25)',
         border: '1px solid #8D9193',
@@ -62,17 +57,26 @@ export function StepCard({ primary, content, children }: StepCardType) {
         zIndex: 1,
     }));
 
+    const Desciption = styled('div')(({ theme }) => ({
+        width: '75%',
+        marginTop: 60,
+    }));
+
     return (
         <Grid container>
-            <StyledGrid container item xs={10} sx={{ position: 'relative' }}>
-                <Grid item xs={6}>
-                    <Badge>{content.title}</Badge>
-                    <p>{content.desc}</p>
-                    <Divider sx={{ marginTop: 5, border: '0.5px solid ' + (primary ? '#000' : '#FFF') }} />
-                    <p className="small">{'* ' + content.details}</p>
+            <StyledGrid container item xs={10} sx={{ position: 'relative', paddingBottom: 10 }}>
+                <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Desciption>
+                        <Badge>{content.title}</Badge>
+                        <p>{content.desc}</p>
+                        <Divider sx={{ marginTop: 5, border: '0.5px solid ' + (primary ? '#000' : '#FFF') }} />
+                        <p className="small">{'* ' + content.details}</p>
+                    </Desciption>
                 </Grid>
-                <Grid item xs={6}>
-                    <StyledImg src="/images/bot_chat.gif" />
+                <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Desciption>
+                        <StyledImg src="/images/bot_chat.gif" />
+                    </Desciption>
                 </Grid>
                 <StyledDiv>{children}</StyledDiv>
             </StyledGrid>

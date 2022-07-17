@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FirstSection, SecondSection } from './components';
+import { Main, Steps, Features } from './components';
 
 import './styles.css';
 
 export function LandingPage() {
     return (
         <>
-            <FirstSection />
-            <SecondSection />
+            <Main />
+            <Steps />
         </>
     );
 }
@@ -21,5 +21,3 @@ LandingPage.propTypes = {
 LandingPage.defaultProps = {
     '': () => {},
 };
-
-/* </html> */
