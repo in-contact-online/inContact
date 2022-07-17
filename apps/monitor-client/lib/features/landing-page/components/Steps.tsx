@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { useMediaQuery } from '@mui/material';
-
-import { styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { StepCard } from './StepCard';
-import { Grid } from '@mui/material';
 import { BotBadge } from './BotBadge';
 
-export function SecondSection({}) {
+export function Steps({}) {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -24,7 +20,7 @@ export function SecondSection({}) {
                     details: 'Доступные страны: Россия, Украина, Казахстан, Беларусь. В произвольном формате.',
                 }}
             >
-                <BotBadge />
+                {matches && <BotBadge />}
             </StepCard>
 
             <StepCard
@@ -36,7 +32,7 @@ export function SecondSection({}) {
                         'Как только Ваши контакты будут онлайн, Вы получете разовое уведомление от бота. Для того чтобы снова получить уведомление, повторите команду /notify_online.',
                 }}
             >
-                <BotBadge />
+                {matches && <BotBadge />}
             </StepCard>
 
             <StepCard
@@ -52,10 +48,10 @@ export function SecondSection({}) {
     );
 }
 
-SecondSection.propTypes = {
+Steps.propTypes = {
     '': PropTypes.func,
 };
 
-SecondSection.defaultProps = {
+Steps.defaultProps = {
     '': () => {},
 };

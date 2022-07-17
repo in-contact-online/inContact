@@ -13,7 +13,7 @@ const Logo = styled('img')(({ theme }) => ({
     },
 }));
 
-export function FirstSection({}) {
+export function Main({}) {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -37,10 +37,10 @@ export function FirstSection({}) {
     );
 }
 
-FirstSection.propTypes = {
+Main.propTypes = {
     '': PropTypes.func,
 };
 
-FirstSection.defaultProps = {
+Main.defaultProps = {
     '': () => {},
 };

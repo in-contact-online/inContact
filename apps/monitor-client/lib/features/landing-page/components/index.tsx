@@ -1,2 +1,3 @@
-export * from './FirstSection';
-export * from './SecondSection';
+export * from './Main';
+export * from './Steps';
+export * from './Features';
