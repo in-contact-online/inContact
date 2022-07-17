@@ -82,7 +82,6 @@ describe('WebSocket API', function () {
             wsApi.send(req);
         });
         it('should return error on absence of "id" property in request', function (done) {
-            const id = generateUid();
             const req = { jsonrpc: '2.0', method: 'get', params: { entity: 'channels' } };
             const res = { httpCode: 422, errorCode: 'VALIDATION_ERROR', isOperational: true };
             wsApi.setOnMessage(function (rawMessage) {
@@ -176,7 +175,6 @@ describe('WebSocket API', function () {
         });
         it('should fail add subscriptions in case of absence project uid', function (done) {
             const id = generateUid();
-            const projectUid = 'wABnaPYiSLyHncJVmTWHE2'; // DbSeeds.json
             const req = {
                 jsonrpc: '2.0',
                 method: 'add',
@@ -352,7 +350,6 @@ describe('WebSocket API', function () {
         });
         it('should fail delete subscriptions in case of absence project uid', function (done) {
             const id = generateUid();
-            const projectUid = 'wABnaPYiSLyHncJVmTWHE2'; // DbSeeds.json
             const req = {
                 jsonrpc: '2.0',
                 method: 'delete',

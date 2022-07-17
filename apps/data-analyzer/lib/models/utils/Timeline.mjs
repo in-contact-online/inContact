@@ -1,5 +1,5 @@
 import moment from 'moment';
-import momentTz from 'moment-timezone';
+import 'moment-timezone';
 
 export class TimeLine {
     /**
@@ -34,6 +34,7 @@ export class TimeLine {
             ? moment(prevStatus.check_date).tz(this.#timezone)
             : curCheckDate.clone().add(-5, 'minutes');
         const startOfHour = curCheckDate.tz(this.#timezone).clone().startOf('hour').format('YYYY-MM-DD HH:mm');
+        // eslint-disable-next-line no-prototype-builtins
         if (!this.#data.hasOwnProperty(startOfHour)) this.#data[startOfHour] = 0;
 
         if (!wasOnline) {

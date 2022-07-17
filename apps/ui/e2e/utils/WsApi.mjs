@@ -65,6 +65,7 @@ export class WsApi {
      * @param {string} message - websocket message
      * @return {undefined}
      */
+    // eslint-disable-next-line no-unused-vars
     onMessage = (message) => {};
 
     /**

@@ -12,8 +12,6 @@
         "test:unit:coverage": "cross-env NODE_ENV=test c8 yarn test:unit",
         "test:coverage": "cross-env NODE_ENV=test c8 mocha --exit --es-module-specifier-resolution=node --timeout 10000 e2e/integration/*.test.mjs lib/**/*.test.mjs",
         "test:ci": "yarn test:unit && yarn test:integration:ci",
-        "lint": "eslint .",
-        "lint:fix": "eslint --fix --ext .mjs .",
         "reset": "yarn clean && yarn",
         "clean": "rimraf node_modules",
         "prep-build": "",
