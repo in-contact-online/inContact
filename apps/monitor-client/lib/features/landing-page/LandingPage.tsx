@@ -11,16 +11,16 @@ export function LandingPage() {
             <div className="first-section dark-background">
                 <div className="container">
                     <div className="header">
-                        <div className="logo"></div>
+                        <div className="logo" />
                         <ul className="menu">
                             <li onClick={() => navigate('/admin')}>Админка</li>
                             <li>Возможноти</li>
                             <li>Тарифы</li>
                             <li>Кабинет</li>
                         </ul>
-                        <div className="girl"></div>
-                        <div className="messages-bg"></div>
-                        <div className="light-blur-bg"></div>
+                        <div className="girl" />
+                        <div className="messages-bg" />
+                        <div className="light-blur-bg" />
                     </div>
 
                     <div className="offer">
@@ -40,7 +40,7 @@ export function LandingPage() {
                         <input type="text" placeholder="Введите номер телефона" />
                         <div className="btn">Проверить</div>
                     </div>
-                    <div className="bot"></div>
+                    <div className="bot" />
                 </div>
                 <div className="container">
                     <h1>Возможности бота</h1>

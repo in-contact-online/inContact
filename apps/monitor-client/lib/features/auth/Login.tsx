@@ -7,15 +7,11 @@ export function Login() {
     const [showloginButton, setShowloginButton] = useState<boolean>(true);
     const [showlogoutButton, setShowlogoutButton] = useState<boolean>(false);
     const onLoginSuccess = (res: any): void => {
-        console.log('Login Success:', res.profileObj);
-
         setShowloginButton(false);
         setShowlogoutButton(true);
     };
 
-    const onLoginFailure = (res: any) => {
-        console.log('Login Failed:', res);
-    };
+    const onLoginFailure = (res: any) => {};
 
     const onSignoutSuccess = () => {
         setShowloginButton(true);
@@ -36,11 +32,7 @@ export function Login() {
             ) : null}
 
             {showlogoutButton ? (
-                <GoogleLogout
-                    clientId={clientId}
-                    buttonText="Sign Out"
-                    onLogoutSuccess={onSignoutSuccess}
-                ></GoogleLogout>
+                <GoogleLogout clientId={clientId} buttonText="Sign Out" onLogoutSuccess={onSignoutSuccess} />
             ) : null}
         </div>
     );

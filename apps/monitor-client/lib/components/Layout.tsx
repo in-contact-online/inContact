@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, Box, Toolbar, Container, Grid } from '@mui/material';
 
@@ -17,11 +16,11 @@ const mdTheme = createTheme({
 });
 
 export function Layout({ renderHeader, renderSidebar, renderContent, renderFooter }: any) {
-    const [open, setOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(true);
 
     const drawerWidth: number = 240;
     const toggleDrawer = () => {
-        setOpen(!open);
+        setIsOpen(!open);
     };
 
     return (
@@ -29,8 +28,8 @@ export function Layout({ renderHeader, renderSidebar, renderContent, renderFoote
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
 
-                {renderHeader({ drawerWidth, toggleDrawer, open })}
-                {renderSidebar({ drawerWidth, toggleDrawer, open })}
+                {renderHeader({ drawerWidth, toggleDrawer, isOpen })}
+                {renderSidebar({ drawerWidth, toggleDrawer, isOpen })}
 
                 <Box
                     component="main"
@@ -44,7 +43,7 @@ export function Layout({ renderHeader, renderSidebar, renderContent, renderFoote
                 >
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <Grid container spacing={3}>
+                        <Grid container={true} spacing={3}>
                             {renderContent()}
                         </Grid>
                         {renderFooter()}
