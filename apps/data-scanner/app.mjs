@@ -45,7 +45,7 @@ const notificator = createNotificator({
     },
     telegram: {
         token: ConfigContainer.config.telegram.token,
-    }
+    },
 });
 
 // Init Domain Model Layer

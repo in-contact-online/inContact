@@ -5,7 +5,7 @@ module.exports = {
         if (typeof value === 'boolean') return true;
         return false;
     },
-    
+
     isNoValue(value) {
         return value === undefined || value === null || value === '';
     },

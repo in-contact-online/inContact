@@ -91,7 +91,7 @@ export function createOta(mac, uid) {
             git: '5F013059',
             crc: 'EFA6DB81',
             page_sz: 512,
-            page_n: 84
+            page_n: 84,
         },
         id: randomInt(),
     };
@@ -120,7 +120,7 @@ export function createZoneEvent(uid, projectUid) {
         sublocation_uid: generateUid(),
         zone_uid: generateUid(),
         zone_type_name: 'keep_in',
-        uid // need as identificator for test
+        uid, // need as identificator for test
     };
 }
 
@@ -128,17 +128,17 @@ let initialized;
 export const Server = () => {
     const serverStart = () => {
         return main();
-    }
-    
+    };
+
     return {
         init: () => {
             if (!initialized) {
                 initialized = serverStart();
             }
             return initialized;
-        }
-    }
-}
+        },
+    };
+};
 
 export async function initRepoData() {
     const repository = new Repository();

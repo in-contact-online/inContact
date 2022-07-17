@@ -12,7 +12,7 @@ const options = {
             version: `${major_version}.${minor_version}.${patch_version}`,
         },
     },
-    apis: ['./lib/api/rest-api/routes/*.mjs', './lib/models/**/*.mjs']
+    apis: ['./lib/api/rest-api/routes/*.mjs', './lib/models/**/*.mjs'],
 };
 const openapiSpecification = await swaggerJsDoc(options);
 

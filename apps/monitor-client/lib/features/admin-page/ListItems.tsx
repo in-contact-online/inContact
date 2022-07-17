@@ -13,7 +13,7 @@ import WebhookIcon from '@mui/icons-material/Webhook';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export function MainListItems() {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     return (
         <>
@@ -48,7 +48,7 @@ MainListItems.defaultProps = {};
 export function SecondaryListItems() {
     return (
         <React.Fragment>
-            <ListSubheader component="div" inset>
+            <ListSubheader component="div" inset={true}>
                 Saved reports
             </ListSubheader>
             <ListItemButton>

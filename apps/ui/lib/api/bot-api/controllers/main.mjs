@@ -112,5 +112,5 @@ export const main = {
             const chatId = req.chat.id;
             res.sendMessage(chatId, result, { parse_mode: 'HTML' });
         }
-    )
+    ),
 };

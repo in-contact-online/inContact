@@ -8,7 +8,9 @@ let analyzer = null;
 export function start(config) {
     analyzer = new Analyzer(config);
     http = express()
-        .use('/', (req, res) => { res.send('Hello'); })
+        .use('/', (req, res) => {
+            res.send('Hello');
+        })
         .listen(config.port, async () => {
             logger.info(`Listening on ${config.port}`);
             await analyzer.init();

@@ -1,6 +1,5 @@
 import ModelBase from '../ModelBase.mjs';
 
-
 /**
  * @swagger
  * components:

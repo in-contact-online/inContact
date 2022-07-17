@@ -8,7 +8,8 @@
     "npm": ">=6.14.10"
   },
   "scripts": {
-    "lint": "eslint --ext .mjs,.cjs lib",
+    "lint": "eslint --ext .mjs,.cjs .",
+    "lint:fix": "eslint --fix --ext .mjs,.cjs .",
     "clean": "yarn run clean:node-modules",
     "clean:node-modules": "rimraf node_modules",
     "migration:add": "node ../../node_modules/db-migrate/bin/db-migrate -m lib/migrations --config lib/database.json create $NAME --sql-file",

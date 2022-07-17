@@ -10,7 +10,7 @@ export class InitWorkersQueue {
         const size = 10;
         const total = await new User().getTotal();
 
-        while( page * size <= total) {
+        while (page * size <= total) {
             const users = await new User().readList({ page, size });
 
             for (const user of users) {

@@ -12,12 +12,12 @@ import { styled } from '@mui/material/styles';
 
 interface HeaderProps {
     drawerWidth: number;
-    open: boolean;
+    isOpen: boolean;
     toggleDrawer: any;
     text: string;
 }
 
-export function Header({ drawerWidth, open, toggleDrawer, text }: HeaderProps) {
+export function Header({ drawerWidth, isOpen, toggleDrawer, text }: HeaderProps) {
     interface AppBarProps extends MuiAppBarProps {
         open?: boolean;
     }
@@ -41,7 +41,7 @@ export function Header({ drawerWidth, open, toggleDrawer, text }: HeaderProps) {
     }));
 
     return (
-        <AppBar position="absolute" open={open} style={{ backgroundColor: '#10C1FC' }}>
+        <AppBar position="absolute" open={isOpen} style={{ backgroundColor: '#10C1FC' }}>
             <Toolbar
                 sx={{
                     pr: '24px', // keep right padding when drawer closed
@@ -54,13 +54,13 @@ export function Header({ drawerWidth, open, toggleDrawer, text }: HeaderProps) {
                     onClick={toggleDrawer}
                     sx={{
                         marginRight: '36px',
-                        ...(open && { display: 'none' }),
+                        ...(isOpen && { display: 'none' }),
                     }}
                 >
                     <MenuIcon />
                 </IconButton>
                 <img src="/images/logo.png" style={{ height: '40px' }} />
-                <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}></Typography>
+                <Typography component="h1" variant="h6" color="inherit" noWrap={true} sx={{ flexGrow: 1 }} />
                 <IconButton color="inherit">
                     <Badge badgeContent={4} color="secondary">
                         <NotificationsIcon />
@@ -73,14 +73,14 @@ export function Header({ drawerWidth, open, toggleDrawer, text }: HeaderProps) {
 
 Header.propTypes = {
     drawerWidth: PropTypes.number,
-    open: PropTypes.bool,
+    isOpen: PropTypes.bool,
     toggleDrawer: PropTypes.func,
     text: PropTypes.string,
 };
 
 Header.defaultProps = {
     drawerWidth: 240,
-    open: true,
+    isOpen: true,
     toggleDrawer: () => {},
     text: '',
 };

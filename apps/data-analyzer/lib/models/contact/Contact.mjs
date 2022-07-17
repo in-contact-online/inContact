@@ -32,7 +32,7 @@ export class Contact extends ModelBase {
         if (user.email) {
             await this.notificator.email.send({
                 to: user.email,
-                text: "Привет! Мы сделали ежедневный отчет для тебя ;)",
+                text: 'Привет! Мы сделали ежедневный отчет для тебя ;)',
                 subject: 'InContact. Отчет дневной активности.',
                 html: report.html,
                 attachments: report.attachments,

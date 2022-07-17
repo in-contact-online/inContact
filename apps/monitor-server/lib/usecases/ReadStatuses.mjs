@@ -1,7 +1,6 @@
 import { Statuses } from '../models/index.mjs';
 import UseCaseBase from './UseCaseBase.mjs';
 
-
 export class ReadStatuses extends UseCaseBase {
     static validationRules = {
         page: ['required', 'integer'],
@@ -9,7 +8,7 @@ export class ReadStatuses extends UseCaseBase {
         phoneNumber: ['string'],
         checkFrom: ['iso_date'],
         checkTo: ['iso_date'],
-    }
+    };
 
     async execute(params) {
         const data = await new Statuses().readList(params);

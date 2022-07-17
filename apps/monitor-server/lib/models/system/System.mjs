@@ -2,7 +2,6 @@ import os from 'os';
 import moment from 'moment';
 import ModelBase from '../ModelBase.mjs';
 
-
 /**
  * @swagger
  * components:
@@ -50,11 +49,14 @@ export class System extends ModelBase {
      */
     async readResourceUsage() {
         const cpus = os.cpus();
-        const cpuTicks = cpus.reduce((memo, cpu) => {
-            memo.total += cpu.times.user + cpu.times.sys;
-            memo.idle += cpu.times.idle;
-            return memo;
-        }, { idle: 0, total: 0 });
+        const cpuTicks = cpus.reduce(
+            (memo, cpu) => {
+                memo.total += cpu.times.user + cpu.times.sys;
+                memo.idle += cpu.times.idle;
+                return memo;
+            },
+            { idle: 0, total: 0 }
+        );
 
         const freemem = os.freemem();
         const totalmem = os.totalmem();

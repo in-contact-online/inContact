@@ -9,19 +9,15 @@ function isDateValid(value) {
     if (matched) {
         const epoch = Date.parse(value);
         if (!epoch && epoch !== 0) return false;
-        
+
         const d = new Date(epoch);
         d.setTime(d.getTime() + d.getTimezoneOffset() * 60 * 1000);
 
-        if (
-            d.getFullYear() == matched[1]
-            && d.getMonth() + 1 == +matched[2]
-            && d.getDate() == +matched[3]
-        ) {
+        if (d.getFullYear() == matched[1] && d.getMonth() + 1 == +matched[2] && d.getDate() == +matched[3]) {
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -29,8 +25,8 @@ function iso_date() {
     return (value) => {
         if (util.isNoValue(value)) return;
         if (!util.isPrimitiveValue(value)) return 'FORMAT_ERROR';
-        
-        const matched = (`${value}`).match(isoDateRe);
+
+        const matched = `${value}`.match(isoDateRe);
 
         if (!matched || !isDateValid(matched[1])) return 'WRONG_DATE';
     };

@@ -9,13 +9,13 @@ import { LandingPage } from '../features/landing-page';
 export function AppContainer() {
     return (
         <Routes>
-            <Route index element={<LandingPage />} />
+            <Route index={true} element={<LandingPage />} />
             <Route path="login" element={<Login />} />
             <Route path="admin" element={<AdminPage />}>
                 <Route path="server" element={<ServerView />} />
                 <Route path="users" element={<UsersView />} />
                 <Route path="sessions" element={<SessionsView />} />
-                <Route index element={<Navigate to="users" />} />
+                <Route index={true} element={<Navigate to="users" />} />
                 <Route path="*" element={<Navigate to="users" />} />
             </Route>
         </Routes>

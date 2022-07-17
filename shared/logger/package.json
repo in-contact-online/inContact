@@ -5,7 +5,8 @@
   "main": "index.mjs",
   "devDependencies": {},
   "scripts": {
-    "lint": "eslint --ext .mjs,.cjs lib",
+    "lint": "eslint --ext .mjs,.cjs .",
+    "lint:fix": "eslint --fix --ext .mjs,.cjs .",
     "clean": "yarn run clean:node-modules",
     "clean:node-modules": "rimraf node_modules"
   },

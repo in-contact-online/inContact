@@ -15,16 +15,16 @@ export function useFetchContacts() {
 
     const { data, isFetching, isError }: any = useQuery(['contacts', { page, size: pageSize }], fetchContacts, {
         keepPreviousData: true,
-        select: (data: any) => {
+        select: (_data: any) => {
             return {
-                contacts: data.data.map((contact: any) => {
+                contacts: _data.data.map((contact: any) => {
                     return {
                         ...contact,
                         createdAt: dateConvertor(contact.createdAt),
                         updatedAt: dateConvertor(contact.updatedAt),
                     };
                 }),
-                total: data.total,
+                total: _data.total,
             };
         },
     });

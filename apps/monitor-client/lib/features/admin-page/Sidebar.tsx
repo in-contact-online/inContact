@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MuiDrawer from '@mui/material/Drawer';
@@ -12,11 +11,11 @@ import { styled } from '@mui/material/styles';
 
 interface SidebarProps {
     drawerWidth: number;
-    open: boolean;
+    isOpen: boolean;
     toggleDrawer: any;
 }
 
-export function Sidebar({ drawerWidth, open, toggleDrawer }: SidebarProps) {
+export function Sidebar({ drawerWidth, isOpen, toggleDrawer }: SidebarProps) {
     const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
         '& .MuiDrawer-paper': {
             position: 'relative',
@@ -42,7 +41,7 @@ export function Sidebar({ drawerWidth, open, toggleDrawer }: SidebarProps) {
     }));
 
     return (
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={isOpen}>
             <Toolbar
                 sx={{
                     display: 'flex',
@@ -67,12 +66,12 @@ export function Sidebar({ drawerWidth, open, toggleDrawer }: SidebarProps) {
 
 Sidebar.propTypes = {
     drawerWidth: PropTypes.number,
-    open: PropTypes.bool,
+    isOpen: PropTypes.bool,
     toggleDrawer: PropTypes.func,
 };
 
 Sidebar.defaultProps = {
     drawerWidth: 240,
-    open: true,
+    isOpen: true,
     toggleDrawer: () => {},
 };

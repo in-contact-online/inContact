@@ -24,7 +24,7 @@ export function UsersTable() {
                     rows={data.users}
                     rowCount={data.total}
                     rowsPerPageOptions={[5, 10]}
-                    pagination
+                    pagination={true}
                     paginationMode="server"
                     page={page}
                     pageSize={pageSize}
