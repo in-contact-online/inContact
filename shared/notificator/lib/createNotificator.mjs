@@ -1,6 +1,5 @@
 import { Notificator } from './api/Notificator.mjs';
 
-
 const cache = {
     instance: null,
 };

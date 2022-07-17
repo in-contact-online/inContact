@@ -65,7 +65,7 @@ export class Session extends ModelBase {
     /**
      * @method
      * @returns {Promise<Object>}
-    */
+     */
     async getTotal() {
         return this.repository.session.total();
     }

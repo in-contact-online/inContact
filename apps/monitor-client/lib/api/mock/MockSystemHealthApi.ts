@@ -1,18 +1,17 @@
-type ReadParams = { page: number, size: number };
+type ReadParams = { page: number; size: number };
 
 export interface IMockSystemHealthApi {
-     read: () => Promise<null | {}>;
+    read: () => Promise<null | {}>;
 }
 
 export class MockSystemHealthApi implements MockSystemHealthApi {
+    private mock: any;
 
-     private mock: any;
+    constructor(mock: any) {
+        this.mock = mock;
+    }
 
-     constructor(mock: any) {
-          this.mock = mock;
-     }
-
-     async read() {
-          return this.mock;
-     }
+    async read() {
+        return this.mock;
+    }
 }

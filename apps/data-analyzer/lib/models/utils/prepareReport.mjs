@@ -13,7 +13,7 @@ export async function prepareReport(report) {
         // const base64PolarImg = await new DailyPolarChart(user, report[user]).data();
         attachments.push({
             path: base64BarImg,
-            cid: `bar_report_cid_${user}` //same cid value as in the html img src
+            cid: `bar_report_cid_${user}`, //same cid value as in the html img src
         });
         // attachments.push({
         //     path: base64PolarImg,
@@ -26,7 +26,7 @@ export async function prepareReport(report) {
     return {
         html: `<span>${htmls.join('')}</span>`,
         attachments,
-    }
+    };
 }
 
 export function trimPhone(phone = '') {

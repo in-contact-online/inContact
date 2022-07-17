@@ -10,9 +10,32 @@ export class DailyBarChart {
      */
 
     #labels = [
-        '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00',
-        '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00',
-    ]
+        '00:00',
+        '01:00',
+        '02:00',
+        '03:00',
+        '04:00',
+        '05:00',
+        '06:00',
+        '07:00',
+        '08:00',
+        '09:00',
+        '10:00',
+        '11:00',
+        '12:00',
+        '13:00',
+        '14:00',
+        '15:00',
+        '16:00',
+        '17:00',
+        '18:00',
+        '19:00',
+        '20:00',
+        '21:00',
+        '22:00',
+        '23:00',
+        '24:00',
+    ];
 
     #data = [];
 
@@ -37,7 +60,7 @@ export class DailyBarChart {
             type: 'bar',
             data: {
                 labels: this.#labels,
-                datasets: dataset
+                datasets: dataset,
             },
             options: {
                 responsive: true,
@@ -45,31 +68,35 @@ export class DailyBarChart {
                     display: false,
                 },
                 scales: {
-                    xAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: `${moment().format('YYYY-MM-DD')} мск`,
-                        }
-                    }],
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Время активности, мин'
+                    xAxes: [
+                        {
+                            scaleLabel: {
+                                display: true,
+                                labelString: `${moment().format('YYYY-MM-DD')} мск`,
+                            },
                         },
-                        ticks: {
-                            beginAtZero: true,
-                            steps: 10,
-                            stepValue: 5,
-                            max: 60
-                        }
-                    }]
+                    ],
+                    yAxes: [
+                        {
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Время активности, мин',
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                steps: 10,
+                                stepValue: 5,
+                                max: 60,
+                            },
+                        },
+                    ],
                 },
                 title: {
                     display: true,
-                    text: `Статистика активности пользователя ${this.#user}`
-                }
-            }
-        }
+                    text: `Статистика активности пользователя ${this.#user}`,
+                },
+            },
+        };
     }
 
     /**
@@ -77,9 +104,9 @@ export class DailyBarChart {
      * @returns {Array<Object>}
      */
     #prepareReportData() {
-        const labels = Object.keys(this.#data).map(date => moment(date).format('HH:mm'));
+        const labels = Object.keys(this.#data).map((date) => moment(date).format('HH:mm'));
         const values = Object.values(this.#data);
-        return this.#labels.map(hour => {
+        return this.#labels.map((hour) => {
             const index = labels.indexOf(hour);
             if (index !== -1) {
                 return secsToMin(values[index]);
@@ -94,12 +121,14 @@ export class DailyBarChart {
      */
     async data() {
         const myChart = new ChartJsImage();
-        const config = this.#config([{
-            data: this.#prepareReportData(),
-            backgroundColor: randomColor()
-        }]);
+        const config = this.#config([
+            {
+                data: this.#prepareReportData(),
+                backgroundColor: randomColor(),
+            },
+        ]);
 
-        myChart.setConfig(config)
+        myChart.setConfig(config);
         myChart.setWidth(500).setHeight(300).setBackgroundColor('transparent');
         return myChart.toDataUrl();
     }

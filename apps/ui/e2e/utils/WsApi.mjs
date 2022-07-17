@@ -47,7 +47,7 @@ export class WsApi {
         } else {
             setTimeout(() => {
                 this.send(message);
-            }, 10)
+            }, 10);
         }
     };
 
@@ -65,7 +65,7 @@ export class WsApi {
      * @param {string} message - websocket message
      * @return {undefined}
      */
-    onMessage = (message) => { }
+    onMessage = (message) => {};
 
     /**
      * @method
@@ -80,5 +80,5 @@ export class WsApi {
      * @method
      * @return {undefined}
      */
-    onClose = () => { }
+    onClose = () => {};
 }

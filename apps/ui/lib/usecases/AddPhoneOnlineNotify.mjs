@@ -13,7 +13,7 @@ export class AddPhoneOnlineNotify extends UseCaseBase {
 
         if (trackedContacts.length > 0) {
             await new UserTrackPhones().markAsNotified(params);
-            const phoneNumbers = trackedContacts.map(contact => contact.tracked_phone);
+            const phoneNumbers = trackedContacts.map((contact) => contact.tracked_phone);
             return UserMessages.notifyYouWhenTrackedOnline(phoneNumbers);
         }
         return UserMessages.noTrackingMessage();

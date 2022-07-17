@@ -33,7 +33,7 @@ export class EmailTransport {
         this.#config = options;
     }
 
-     /**
+    /**
      * @method
      * @param {Object} params - filter parameters
      * @param {String} params.text - email text
@@ -44,7 +44,7 @@ export class EmailTransport {
      * @param {String} params.attachments - email attachments
      * @returns {Promise<void>}
      */
-      async send(params) {
+    async send(params) {
         try {
             await this.#transport.sendMail({
                 from: params.from || this.#config.from, // sender address

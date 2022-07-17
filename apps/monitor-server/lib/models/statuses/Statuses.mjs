@@ -1,6 +1,5 @@
 import ModelBase from '../ModelBase.mjs';
 
-
 /**
  * @swagger
  * components:
@@ -60,7 +59,7 @@ export class Statuses extends ModelBase {
      * @param {String?} checkFrom - check time
      * @param {String?} checkTo - check time
      * @returns {Promise<Object>}
-    */
+     */
     async getTotal(params) {
         return this.repository.status.total(params);
     }

@@ -22,7 +22,7 @@ export class ReportRepository extends RepoBase {
      * @param {String} type - report type
      * @return {Promise<Object>} returns data saved in DB
      */
-    async readList({ phone, type}) {
+    async readList({ phone, type }) {
         const sql = `SELECT * FROM reports WHERE phone_number = ${phone} AND type = ${type};`;
         const result = await this.db.queryAsync(sql).catch((err) => {
             throw new RepoError(err);
@@ -39,10 +39,12 @@ export class ReportRepository extends RepoBase {
      */
     async save({ phone, data, type }) {
         const result = await this.db
-            .queryAsync(
-                'INSERT INTO reports (phone_number, data, type, created_at) VALUES ($1, $2, $3, $4)',
-                [phone, data, type, new Date().toISOString()]
-            )
+            .queryAsync('INSERT INTO reports (phone_number, data, type, created_at) VALUES ($1, $2, $3, $4)', [
+                phone,
+                data,
+                type,
+                new Date().toISOString(),
+            ])
             .catch((err) => {
                 throw new RepoError(err);
             });

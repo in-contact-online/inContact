@@ -66,7 +66,6 @@ process.on('uncaughtException', (error) => {
     logger.error('uncaughtException', error.stack);
 });
 
-
 // todo: add swagger documentation
 // todo: implement basic routes: GET /users - returns list of syste users with detailed information
 // todo: implement basic routes: GET /contacts - returns list of tracked contacts with detailed information

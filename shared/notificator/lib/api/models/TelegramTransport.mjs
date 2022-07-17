@@ -15,20 +15,20 @@ export class TelegramTransport {
     constructor(options) {
         if (options && options.token) {
             // polling should be false to be able to run second instance of the bot
-            this.#transport = new TelegramBot(options.token, {polling: false});
+            this.#transport = new TelegramBot(options.token, { polling: false });
         }
     }
 
-     /**
+    /**
      * @method
      * @param {Object} params - filter parameters
      * @param {Number} params.chatId - user-bot chat id
      * @param {Number} params.message - message text
      * @returns {Promise<void>}
      */
-      async send(params) {
+    async send(params) {
         try {
-            await this.#transport.sendMessage(params.chatId, params.message, { parse_mode: 'HTML' })
+            await this.#transport.sendMessage(params.chatId, params.message, { parse_mode: 'HTML' });
         } catch (err) {
             console.error(err);
         }

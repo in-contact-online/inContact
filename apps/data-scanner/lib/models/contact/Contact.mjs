@@ -69,12 +69,16 @@ export class Contact extends ModelBase {
         const contacts = await this.repository.contact.read({ trackedPhone, notify: true });
         for (const contact of contacts) {
             if (contact.notify) {
-                await this.repository.contact.updateTrackedList({ userId: contact.user_id, trackedPhone, notify: false });
+                await this.repository.contact.updateTrackedList({
+                    userId: contact.user_id,
+                    trackedPhone,
+                    notify: false,
+                });
                 const user = await this.repository.user.read({ userId: contact.user_id });
                 if (user.chat_id) {
                     await this.notificator.bot.send({
                         chatId: user.chat_id,
-                        message: `Tracked contact ${trackedPhone} is online`
+                        message: `Tracked contact ${trackedPhone} is online`,
                     });
                 } else {
                     logger.warn('User has no chat_id');
