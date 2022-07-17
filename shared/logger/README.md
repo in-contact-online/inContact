@@ -1,4 +1,4 @@
-# @rtls-platform/logger
+# IN-CONTACT LOGGER UTIL
 
 Logger based on winston library
 

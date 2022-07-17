@@ -1,5 +1,5 @@
 const fs = require('fs');
-const dotenv_defaults = require('dotenv-defaults');
+const dotenvDefaults = require('dotenv-defaults');
 const LIVR = require('livr');
 const livrExtraRules = require('livr-extra-rules');
 
@@ -31,7 +31,7 @@ function validateConfig(config, livrSchemaPath) {
 }
 
 function confme(configPath, livrSchemaPath, options) {
-    dotenv_defaults.config(options);
+    dotenvDefaults.config(options);
     const template = fs.readFileSync(configPath).toString();
     const configStr = replace(template, process.env);
 

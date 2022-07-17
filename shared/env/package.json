@@ -1,0 +1,19 @@
+{
+  "name": "@rtls-platform/env",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": ">=14.15.4",
+    "npm": ">=6.14.10"
+  },
+  "scripts": {
+    "lint": "eslint --ext .mjs,.cjs lib",
+    "clean": "yarn run clean:node-modules",
+    "clean:node-modules": "rimraf node_modules"
+  },
+  "dependencies": {
+    "dotenv-defaults": "^2.0.1"
+  },
+  "license": "UNLICENSED"
+}
