@@ -161,3 +161,31 @@ h2 {
 .second-section {
     height: 800px;
 }
+
+.feature {
+    display: flex;
+    width: 85%;
+    margin: auto;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.feature__ava {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: var(--color-light);
+    border: 1px solid var(--color-primary);
+}
+
+.feature img {
+    width: 70%;
+}
+
+.feature__description {
+    text-align: center;
+}

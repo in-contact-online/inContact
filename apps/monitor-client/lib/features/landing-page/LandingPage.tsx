@@ -10,6 +10,7 @@ export function LandingPage() {
         <>
             <Main />
             <Steps />
+            <Features />
         </>
     );
 }
