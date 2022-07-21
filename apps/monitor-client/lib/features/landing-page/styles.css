@@ -133,6 +133,7 @@ h2 {
 
 .offer.mobile {
     margin: 100px auto;
+    transform: scale(0.8, 0.8);
 }
 
 .offer span {

@@ -4,10 +4,12 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { StepCard } from './StepCard';
 import { BotBadge } from './BotBadge';
+import { Arrow } from './Arrow';
 
 export function Steps({}) {
     const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.up('md'));
+    const matchesMd = useMediaQuery(theme.breakpoints.up('md'));
+    const matchesXs = useMediaQuery(theme.breakpoints.up('xs'));
 
     return (
         <div className="light-background2">
@@ -20,7 +22,8 @@ export function Steps({}) {
                     details: 'Доступные страны: Россия, Украина, Казахстан, Беларусь. В произвольном формате.',
                 }}
             >
-                {matches && <BotBadge />}
+                {matchesMd && <BotBadge />}
+                {!matchesMd && matchesXs && <Arrow timeout={{ appear: 1000, enter: 1000, exit: 1000 }} />}
             </StepCard>
 
             <StepCard
@@ -32,7 +35,8 @@ export function Steps({}) {
                         'Как только Ваши контакты будут онлайн, Вы получете разовое уведомление от бота. Для того чтобы снова получить уведомление, повторите команду /notify_online.',
                 }}
             >
-                {matches && <BotBadge />}
+                {matchesMd && <BotBadge />}
+                {!matchesMd && matchesXs && <Arrow timeout={{ appear: 1000, enter: 1000, exit: 1000 }} />}
             </StepCard>
 
             <StepCard
