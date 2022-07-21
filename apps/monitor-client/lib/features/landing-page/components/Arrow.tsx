@@ -10,11 +10,7 @@ const StyledSvg = styled('svg')({
     top: -74,
 });
 
-interface ArrowType {
-    timeout: { appear?: number; enter?: number; exit?: number };
-}
-
-export function Arrow({ timeout }: ArrowType) {
+export function Arrow() {
     const featureRef = useRef(null);
     const visible = useIntersection(featureRef, '0px');
 
