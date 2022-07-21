@@ -23,13 +23,13 @@ const Badge = styled('div')({
 });
 
 const StyledImg = styled('img')({
-    width: '100%',
+    width: '60%',
 });
 
 export function BotBadge({}) {
     return (
         <Badge>
-            <StyledImg src="/images/work-process.png" />
+            <StyledImg src="/images/logo3.png" />
         </Badge>
     );
 }

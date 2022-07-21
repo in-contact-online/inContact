@@ -23,7 +23,7 @@ export function Steps({}) {
                 }}
             >
                 {matchesMd && <BotBadge />}
-                {!matchesMd && matchesXs && <Arrow timeout={{ appear: 1000, enter: 1000, exit: 1000 }} />}
+                {!matchesMd && matchesXs && <Arrow />}
             </StepCard>
 
             <StepCard
@@ -36,7 +36,7 @@ export function Steps({}) {
                 }}
             >
                 {matchesMd && <BotBadge />}
-                {!matchesMd && matchesXs && <Arrow timeout={{ appear: 1000, enter: 1000, exit: 1000 }} />}
+                {!matchesMd && matchesXs && <Arrow />}
             </StepCard>
 
             <StepCard
