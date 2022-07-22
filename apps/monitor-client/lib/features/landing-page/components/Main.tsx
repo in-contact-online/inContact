@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles';
 const Logo = styled('img')(({ theme }) => ({
     width: 380,
     [theme.breakpoints.down('lg')]: {
-        width: 320,
+        width: 220,
     },
 }));
 

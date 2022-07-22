@@ -18,7 +18,7 @@ const StyledUl = styled('ul')(({ theme }) => ({
 }));
 
 const menu = [
-    { id: 1, anchor: 'Шаги', link: '/steps' },
+    { id: 1, anchor: 'Как пользоваться?', link: '/steps' },
     { id: 2, anchor: 'Возможности', link: '/features' },
     { id: 3, anchor: 'Контакты', link: '/contacts' },
     { id: 4, anchor: 'Кабинет', link: '/admin' },

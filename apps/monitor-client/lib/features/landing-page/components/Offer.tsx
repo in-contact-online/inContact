@@ -15,7 +15,9 @@ export function Offer({}) {
                 С помощью нашего <strong>telegram-бота</strong> вы сможете отслеживать онлайн статус ваших знакомых и
                 понимать с кем они общаются
             </p>
-            <span>@get_statuses_bot</span>
+            <span>
+                <a href="https://t.me/get_statuses_bot">@get_statuses_bot</a>
+            </span>
         </div>
     );
 }
