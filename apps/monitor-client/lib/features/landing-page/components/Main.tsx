@@ -5,6 +5,7 @@ import { useMediaQuery } from '@mui/material';
 import { Offer } from './Offer';
 import { styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
+import { Grow, Slide } from '@mui/material';
 
 const Logo = styled('img')(({ theme }) => ({
     width: 380,
@@ -25,7 +26,10 @@ export function Main({}) {
                     <Menu />
                     {matches && (
                         <>
-                            <div className="girl" />
+                            <Slide direction="up" in mountOnEnter unmountOnExit timeout={1500}>
+                                <div className="girl" />
+                            </Slide>
+
                             <div className="messages-bg" />
                             <div className="light-blur-bg" />
                         </>
