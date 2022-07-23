@@ -6,8 +6,8 @@ const __dirname = new URL('.', import.meta.url).pathname;
 
 export const WORKER_TYPES = {
     DAILY_ACTIVITIES: 'DAILY_ACTIVITIES',
-    IN_CONTACT_ACTIVITIES: 'IN_CONTACT_ACTIVITIES'
-}
+    IN_CONTACT_ACTIVITIES: 'IN_CONTACT_ACTIVITIES',
+};
 
 export class Worker {
     #worker = null;

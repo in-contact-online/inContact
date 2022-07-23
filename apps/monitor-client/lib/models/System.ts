@@ -1,34 +1,33 @@
 export interface ISystem {
-     cpuUsage: number;
-     freeMemory: string;
-     totalMemory: string;
-     serverUptime: string;
+    cpuUsage: number;
+    freeMemory: string;
+    totalMemory: string;
+    serverUptime: string;
 }
 
 export interface ISystemRaw {
-     serviceStatuses: {};
-     resourceUsage: {
-          cpuUsage: number;
-          freeMemory: string;
-          totalMemory: string;
-          serverUptime: string;
-     };
+    serviceStatuses: {};
+    resourceUsage: {
+        cpuUsage: number;
+        freeMemory: string;
+        totalMemory: string;
+        serverUptime: string;
+    };
 }
 
 export class System implements ISystem {
+    cpuUsage: number;
 
-     cpuUsage: number;
+    freeMemory: string;
 
-     freeMemory: string;
+    totalMemory: string;
 
-     totalMemory: string;
+    serverUptime: string;
 
-     serverUptime: string;
-
-     constructor(props: ISystemRaw) {
-          this.cpuUsage = props.resourceUsage.cpuUsage;
-          this.freeMemory = props.resourceUsage.freeMemory;
-          this.totalMemory = props.resourceUsage.totalMemory;
-          this.serverUptime = props.resourceUsage.serverUptime;
-     }
+    constructor(props: ISystemRaw) {
+        this.cpuUsage = props.resourceUsage.cpuUsage;
+        this.freeMemory = props.resourceUsage.freeMemory;
+        this.totalMemory = props.resourceUsage.totalMemory;
+        this.serverUptime = props.resourceUsage.serverUptime;
+    }
 }

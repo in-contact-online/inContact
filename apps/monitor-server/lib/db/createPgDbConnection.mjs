@@ -1,5 +1,5 @@
 import pkg from 'pg';
-import { DbError } from '../models/index.mjs'
+import { DbError } from '../models/index.mjs';
 
 const { Pool } = pkg;
 
@@ -19,13 +19,12 @@ function QueryAsync(pool) {
             conn.release();
 
             return result;
-        } catch(err) {
+        } catch (err) {
             if (conn) conn.release(); //release to pool
             throw new DbError(err);
         }
-    }
+    };
 }
-
 
 /**
  * @function
@@ -43,5 +42,5 @@ export function createPgDbConnection(options) {
     return {
         pool,
         queryAsync: QueryAsync(pool),
-    }
+    };
 }

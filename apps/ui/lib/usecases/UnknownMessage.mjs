@@ -5,6 +5,6 @@ export class UnknownMessage extends UseCaseBase {
     static validationRules = {};
 
     async execute() {
-        return UserMessages.unknownCommandMessage()
+        return UserMessages.unknownCommandMessage();
     }
 }

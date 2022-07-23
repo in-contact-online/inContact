@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 export class TimeLine {
     /**
@@ -8,7 +8,13 @@ export class TimeLine {
 
     #data = null;
 
-    constructor() {
+    #timezone = 'Etc/Gmt';
+
+    /**
+     * @param {String} timezone - timezone
+     */
+    constructor(timezone) {
+        this.#timezone = timezone;
         this.#data = {};
     }
 
@@ -21,13 +27,16 @@ export class TimeLine {
      * @returns {Promise<void>}
      */
     handleStatus(status, prevStatus) {
-        const wasOnline = status.was_online ? moment(status.was_online) : null;
-        const curCheckDate = moment(status.check_date);
-        const prevCheckDate = prevStatus ? moment(prevStatus.check_date) : curCheckDate.clone().add(-5, 'minutes');
-        const startOfHour = curCheckDate.clone().startOf('hour').format('YYYY-MM-DD HH:mm');
+        const wasOnline = status.was_online ? moment(status.was_online).tz(this.#timezone) : null;
+        const curCheckDate = moment(status.check_date).tz(this.#timezone);
+        const prevCheckDate = prevStatus
+            ? moment(prevStatus.check_date).tz(this.#timezone)
+            : curCheckDate.clone().add(-5, 'minutes');
+        const startOfHour = curCheckDate.tz(this.#timezone).clone().startOf('hour').format('YYYY-MM-DD HH:mm');
+        // eslint-disable-next-line no-prototype-builtins
         if (!this.#data.hasOwnProperty(startOfHour)) this.#data[startOfHour] = 0;
 
-        if(!wasOnline) {
+        if (!wasOnline) {
             this.#data[startOfHour] += curCheckDate.diff(prevCheckDate, 'seconds');
         } else if (wasOnline.isBetween(prevCheckDate, curCheckDate, '(]')) {
             this.#data[startOfHour] += wasOnline.diff(prevCheckDate, 'seconds');

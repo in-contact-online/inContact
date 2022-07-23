@@ -15,9 +15,9 @@ export function useFetchUsers() {
 
     const { data, isFetching, isError }: any = useQuery(['users', { page, size: pageSize }], fetchUsers, {
         keepPreviousData: true,
-        select: (data: any) => {
+        select: (_data: any) => {
             return {
-                users: data.data.map((user: any) => {
+                users: _data.data.map((user: any) => {
                     return {
                         ...user,
                         username: getUserName(user),
@@ -25,7 +25,7 @@ export function useFetchUsers() {
                         updatedAt: dateConvertor(user.updatedAt),
                     };
                 }),
-                total: data.total,
+                total: _data.total,
             };
         },
     });

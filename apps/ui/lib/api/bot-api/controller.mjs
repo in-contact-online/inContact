@@ -60,7 +60,7 @@ export default async function (request, client) {
             break;
         }
         default: {
-            await router(Controllers.main.unknown)
+            await router(Controllers.main.unknown);
             break;
         }
     }

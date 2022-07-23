@@ -1,0 +1,19 @@
+{
+     "production": {
+          "driver": "pg",
+          "user": { "ENV": "IN_CONTACT_DB_USER" },
+          "password": { "ENV": "IN_CONTACT_DB_PASSWORD" },
+          "host": { "ENV": "IN_CONTACT_DB_HOST" },
+          "database": { "ENV": "IN_CONTACT_DB_SCHEMA" },
+          "port": { "ENV": "IN_CONTACT_DB_PORT" }
+     },
+     "dev": {
+          "driver": "pg",
+          "user": { "ENV": "IN_CONTACT_DB_USER" },
+          "password": { "ENV": "IN_CONTACT_DB_PASSWORD" },
+          "host": { "ENV": "IN_CONTACT_DB_HOST" },
+          "database": { "ENV": "IN_CONTACT_DB_SCHEMA" },
+          "port": { "ENV": "IN_CONTACT_DB_PORT" }
+     }
+
+}

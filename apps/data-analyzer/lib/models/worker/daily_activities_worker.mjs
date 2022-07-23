@@ -1,5 +1,6 @@
 import { createRepository } from '@rtls-platform/repository';
 import { createNotificator } from '@rtls-platform/notificator/index.mjs';
+import moment from 'moment';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';
 import { Status } from '../status/index.mjs';
@@ -11,24 +12,24 @@ import ModelBase from '../ModelBase.mjs';
 
 // Init Repository Layer
 const repository = createRepository({
-     db: createPgDbConnection({
-          port: ConfigContainer.config.db.port,
-          host: ConfigContainer.config.db.host,
-          user: ConfigContainer.config.db.user,
-          database: ConfigContainer.config.db.database,
-          password: ConfigContainer.config.db.password,
-          connectionsLimit: ConfigContainer.config.db.connectionsLimit,
-     }),
+    db: createPgDbConnection({
+        port: ConfigContainer.config.db.port,
+        host: ConfigContainer.config.db.host,
+        user: ConfigContainer.config.db.user,
+        database: ConfigContainer.config.db.database,
+        password: ConfigContainer.config.db.password,
+        connectionsLimit: ConfigContainer.config.db.connectionsLimit,
+    }),
 });
 const notificator = createNotificator({
-     smtp: {
-          port: ConfigContainer.config.smtp.port,
-          host: ConfigContainer.config.smtp.host,
-          user: ConfigContainer.config.smtp.user,
-          password: ConfigContainer.config.smtp.password,
-          from: ConfigContainer.config.smtp.from,
-          secure: ConfigContainer.config.smtp.secure,
-     }
+    smtp: {
+        port: ConfigContainer.config.smtp.port,
+        host: ConfigContainer.config.smtp.host,
+        user: ConfigContainer.config.smtp.user,
+        password: ConfigContainer.config.smtp.password,
+        from: ConfigContainer.config.smtp.from,
+        secure: ConfigContainer.config.smtp.secure,
+    },
 });
 // Init Domain Model Layer
 ModelBase.setRepository(repository);
@@ -49,23 +50,24 @@ ModelBase.setNotificator(notificator);
  * @return {Promise<void>}
  */
 async function main(options) {
-     const contacts = await new Contact().getTrackedByUser({ userId: options.id, tracked: true });
-     const reportCheckDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString();
-     const report = {};
-     for (const contact of contacts) {
-          const timeline = new TimeLine();
-          const phoneNumber = trimPhone(contact.tracked_phone);
+    const contacts = await new Contact().getTrackedByUser({ userId: options.id, tracked: true });
+    const reportCheckDate = moment().add(-24, 'hours').toISOString();
+    const timezone = ConfigContainer.config.service.timezone;
+    const report = {};
+    for (const contact of contacts) {
+        const timeline = new TimeLine(timezone);
+        const phoneNumber = trimPhone(contact.tracked_phone);
 
-          const statuses = await new Status().readByPhone({ phoneNumber, checkDate: reportCheckDate });
-          statuses.forEach((status, index) => timeline.handleStatus(status, index > 0 ? statuses[index - 1] : null));
+        const statuses = await new Status().readByPhone({ phoneNumber, checkDate: reportCheckDate });
+        statuses.forEach((status, index) => timeline.handleStatus(status, index > 0 ? statuses[index - 1] : null));
 
-          report[phoneNumber] = timeline.data;
-          await new Report().save({ data: JSON.stringify(timeline.data), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
-     }
+        report[phoneNumber] = timeline.data;
+        await new Report().save({ data: JSON.stringify(timeline.data), phone: phoneNumber, type: 'DAILY_ACTIVITY' });
+    }
 
-     await new Contact().sendReport({ userId: options.id, report: await prepareReport(report) });
+    await new Contact().sendReport({ userId: options.id, report: await prepareReport(report) });
 
-     return undefined;
+    return undefined;
 }
 
 /**
@@ -84,29 +86,29 @@ async function main(options) {
  * @return {Promise<void>}
  */
 async function handleMessage(report) {
-     try {
-          await main(report);
-          logger.info('[Daily Activities Worker] Done');
-          process.exit(0);
-     } catch (err) {
-          logger.error('[Daily Activities Worker] Error');
-          logger.error(err);
-          process.exit(1);
-     }
+    try {
+        await main(report);
+        logger.info('[Daily Activities Worker] Done');
+        process.exit(0);
+    } catch (err) {
+        logger.error('[Daily Activities Worker] Error');
+        logger.error(err);
+        process.exit(1);
+    }
 }
 
 process.on('message', handleMessage);
 
 process.on('uncaughtException', (reason) => {
-     logger.error('[Daily Activities Worker] uncaughtException');
-     logger.error('[Daily Activities Worker] reason ', JSON.stringify(reason));
-     process.exit(1);
+    logger.error('[Daily Activities Worker] uncaughtException');
+    logger.error('[Daily Activities Worker] reason ', JSON.stringify(reason));
+    process.exit(1);
 });
 
 process.on('unhandledRejection', (reason) => {
-     logger.error('[Daily Activities Worker] unhandledRejection');
-     logger.error('[Daily Activities Worker] reason ', JSON.stringify(reason));
-     process.exit(1);
+    logger.error('[Daily Activities Worker] unhandledRejection');
+    logger.error('[Daily Activities Worker] reason ', JSON.stringify(reason));
+    process.exit(1);
 });
 
 process.send('ready');

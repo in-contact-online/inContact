@@ -7,10 +7,10 @@ import { ContactsTable } from './ContactsTable';
 export function UsersView({}) {
     return (
         <>
-            <Grid item xs={12} lg={6}>
+            <Grid item={true} xs={12} lg={6}>
                 <UsersTable />
             </Grid>
-            <Grid item xs={12} lg={6}>
+            <Grid item={true} xs={12} lg={6}>
                 <ContactsTable />
             </Grid>
         </>

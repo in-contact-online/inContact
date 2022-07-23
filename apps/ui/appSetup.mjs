@@ -1,11 +1,12 @@
-import { createRepository } from '@rtls-platform/repository/index.mjs';
-import { createLogger, LoggerTypes } from '@rtls-platform/logger/index.mjs';
+import '@rtls-platform/env/index.js'; // should be first import to read all env variables before config init
+import { createRepository } from '@rtls-platform/repository';
+import { createLogger, LoggerTypes } from '@rtls-platform/logger';
+import { runDBMigrations } from '@rtls-platform/db-migration';
 import * as App from './lib/api/index.mjs';
 import * as BotApi from './lib/api/bot-api/app.mjs';
 import * as ConfigContainer from './lib/config.cjs';
-import { createPgDbConnection, runDBMigrations } from './lib/db/index.mjs';
+import { createPgDbConnection } from './lib/db/index.mjs';
 import ModelBase from './lib/models/ModelBase.mjs';
-
 
 export async function main() {
     // Init Logger
@@ -29,8 +30,8 @@ export async function main() {
             user: ConfigContainer.config.db.user,
             database: ConfigContainer.config.db.database,
             password: ConfigContainer.config.db.password,
-            connectionsLimit: ConfigContainer.config.db.connectionsLimit
-        })
+            connectionsLimit: ConfigContainer.config.db.connectionsLimit,
+        }),
     });
 
     // Init Domain Model Layer
@@ -45,24 +46,24 @@ export async function main() {
     async function exit() {
         await BotApi.stopServer();
         logger.info('Exit');
-        
+
         process.exit(0);
     }
-    
+
     process.on('SIGTERM', async () => {
         logger.error('SIGTERM signal caught');
         await exit();
     });
-    
+
     process.on('SIGINT', async () => {
         logger.error('SIGINT signal caught');
         await exit();
     });
-    
+
     process.on('unhandledRejection', (error) => {
         logger.error('unhandledRejection', error.stack);
     });
-    
+
     process.on('uncaughtException', (error) => {
         logger.error('uncaughtException', error.stack);
     });

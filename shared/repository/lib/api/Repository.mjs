@@ -1,4 +1,10 @@
-import { UserRepository, ContactRepository, StatusRepository, SessionRepository, ReportRepository } from './documents/index.mjs';
+import {
+    UserRepository,
+    ContactRepository,
+    StatusRepository,
+    SessionRepository,
+    ReportRepository,
+} from './documents/index.mjs';
 
 export class Repository {
     /**

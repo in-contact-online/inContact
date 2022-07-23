@@ -38,7 +38,7 @@ export function makeRequestHandler(UseCase, mapToParams, mapToResponse) {
                 chatId,
                 useCase: UseCase.name,
                 error: JSON.stringify(err),
-                params: req
+                params: req,
             });
             res.sendMessage(chatId, errorToMessage(err));
         }

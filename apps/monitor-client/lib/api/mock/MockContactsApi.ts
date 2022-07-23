@@ -1,20 +1,19 @@
-type ReadParams = { page: number, size: number };
+type ReadParams = { page: number; size: number };
 
 export interface IMockContactApi {
-     readList: (params: ReadParams) => Promise<null | {}>;
+    readList: (params: ReadParams) => Promise<null | {}>;
 }
 
 export class MockContactsApi implements IMockContactApi {
+    private mock: any;
 
-     private mock: any;
+    constructor(mock: any) {
+        this.mock = mock;
+    }
 
-     constructor(mock: any) {
-          this.mock = mock;
-     }
-
-     async readList(params: ReadParams) {
-          const start = params.page * params.size;
-          const end = start + params.size;
-          return this.mock.slice(start, end);
-     }
+    async readList(params: ReadParams) {
+        const start = params.page * params.size;
+        const end = start + params.size;
+        return this.mock.slice(start, end);
+    }
 }

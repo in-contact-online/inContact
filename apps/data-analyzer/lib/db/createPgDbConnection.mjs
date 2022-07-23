@@ -18,13 +18,12 @@ function QueryAsync(pool) {
             conn.release();
 
             return result;
-        } catch(err) {
+        } catch (err) {
             if (conn) conn.release(); //release to pool
             throw new Error(err);
         }
-    }
+    };
 }
-
 
 /**
  * @function
@@ -42,5 +41,5 @@ export function createPgDbConnection(options) {
     return {
         pool,
         queryAsync: QueryAsync(pool),
-    }
+    };
 }

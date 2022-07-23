@@ -1,2 +1,3 @@
-INCONTACT DATA SCANNER
-===================
+# IN-CONTACT NOTIFICATION UTIL
+
+Email sending utility

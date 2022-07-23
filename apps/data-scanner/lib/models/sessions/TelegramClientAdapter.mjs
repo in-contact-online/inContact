@@ -5,7 +5,7 @@ import { AuthKey } from 'telegram/crypto/AuthKey.js';
 export class TelegramClientAdapter extends TelegramClient {
     /**
      * @typedef {Class} TelegramClientAdapter
-    */
+     */
 
     /**
      * @param {Object} sessionConfig - Telegram command to be invoked
@@ -16,15 +16,15 @@ export class TelegramClientAdapter extends TelegramClient {
      * @param {Object} appConfig - application configuration
      * @param {Number} appConfig.apiId - Telegram Api id
      * @param {String} appConfig.apiHash - Telegram Api hash
-     */    
-     constructor(sessionConfig, appConfig) {
-         const session = new StringSession();
-         const authKey = new AuthKey();
- 
-         authKey.setKey(sessionConfig.auth_key);
-         session.setDC(sessionConfig.dc_id, sessionConfig.server_address, sessionConfig.port);
-         session.setAuthKey(authKey);
- 
-         super(session, appConfig.apiId, appConfig.apiHash, {});
-     }
- }
+     */
+    constructor(sessionConfig, appConfig) {
+        const session = new StringSession();
+        const authKey = new AuthKey();
+
+        authKey.setKey(sessionConfig.auth_key);
+        session.setDC(sessionConfig.dc_id, sessionConfig.server_address, sessionConfig.port);
+        session.setAuthKey(authKey);
+
+        super(session, appConfig.apiId, appConfig.apiHash, {});
+    }
+}

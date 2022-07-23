@@ -1,5 +1,14 @@
 import assert from 'assert';
-import { Server, initRepoData, clearRepoData, createPosition, createNotify, createAlarm, createZoneEvent, createOta } from './helpers';
+import {
+    Server,
+    initRepoData,
+    clearRepoData,
+    createPosition,
+    createNotify,
+    createAlarm,
+    createZoneEvent,
+    createOta,
+} from './helpers';
 import { WsApi, ZmqPublisher } from '../utils';
 import { generateUid, generateToken } from '../../lib/utils';
 import { WS_CHANNELS } from '../../lib/system';
@@ -21,25 +30,30 @@ describe('WebSocket API', function () {
         beforeEach(async function () {
             wsApi = new WsApi();
             await wsApi.init();
-        })
+        });
 
         afterEach(async function () {
             wsApi.close();
-        })
+        });
 
         it('should handle get channels request', function (done) {
             const id = generateUid();
             const req = { jsonrpc: '2.0', method: 'get', params: { entity: 'channels' }, id };
             const CHANNELS = [
-                WS_CHANNELS.POS, WS_CHANNELS.NOTIFY, WS_CHANNELS.ALARM, WS_CHANNELS.ZONE_EVENT,
-                WS_CHANNELS.PARAM_P, WS_CHANNELS.SENSOR, WS_CHANNELS.OTA
+                WS_CHANNELS.POS,
+                WS_CHANNELS.NOTIFY,
+                WS_CHANNELS.ALARM,
+                WS_CHANNELS.ZONE_EVENT,
+                WS_CHANNELS.PARAM_P,
+                WS_CHANNELS.SENSOR,
+                WS_CHANNELS.OTA,
             ];
 
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
                 if (message.id === id) {
                     assert.deepStrictEqual(message.result, CHANNELS);
-                    assert.deepStrictEqual(Object.keys(message), ["jsonrpc", "id", 'result']);
+                    assert.deepStrictEqual(Object.keys(message), ['jsonrpc', 'id', 'result']);
                     done();
                 }
             });
@@ -68,7 +82,6 @@ describe('WebSocket API', function () {
             wsApi.send(req);
         });
         it('should return error on absence of "id" property in request', function (done) {
-            const id = generateUid();
             const req = { jsonrpc: '2.0', method: 'get', params: { entity: 'channels' } };
             const res = { httpCode: 422, errorCode: 'VALIDATION_ERROR', isOperational: true };
             wsApi.setOnMessage(function (rawMessage) {
@@ -78,17 +91,17 @@ describe('WebSocket API', function () {
             });
             wsApi.send(req);
         });
-    })
+    });
 
     describe('add method', function () {
         beforeEach(async function () {
             wsApi = new WsApi();
             await wsApi.init();
-        })
+        });
 
         afterEach(async function () {
             wsApi.close();
-        })
+        });
 
         it('should handle add subscriptions request', function (done) {
             const id = generateUid();
@@ -101,9 +114,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -125,9 +138,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 422, errorCode: 'VALIDATION_ERROR', isOperational: true };
             wsApi.setOnMessage(function (rawMessage) {
@@ -148,9 +161,9 @@ describe('WebSocket API', function () {
                     entity: 'invalidentity',
                     userEmail: 'test@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 422, errorCode: 'VALIDATION_ERROR', isOperational: true };
             wsApi.setOnMessage(function (rawMessage) {
@@ -162,7 +175,6 @@ describe('WebSocket API', function () {
         });
         it('should fail add subscriptions in case of absence project uid', function (done) {
             const id = generateUid();
-            const projectUid = 'wABnaPYiSLyHncJVmTWHE2'; // DbSeeds.json
             const req = {
                 jsonrpc: '2.0',
                 method: 'add',
@@ -172,7 +184,7 @@ describe('WebSocket API', function () {
                     userEmail: 'test@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
                 },
-                id
+                id,
             };
             const res = { httpCode: 422, errorCode: 'VALIDATION_ERROR', isOperational: true };
             wsApi.setOnMessage(function (rawMessage) {
@@ -193,9 +205,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'test2@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 401, errorCode: 'AUTHENTICATION_ERROR', isOperational: true };
 
@@ -217,9 +229,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'test2@redpointpositioning.com',
                     authToken: generateUid(),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 401, errorCode: 'AUTHENTICATION_ERROR', isOperational: true };
 
@@ -241,9 +253,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'nonexist@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'nonexist@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 401, errorCode: 'AUTHENTICATION_ERROR', isOperational: true };
 
@@ -254,17 +266,17 @@ describe('WebSocket API', function () {
             });
             wsApi.send(req);
         });
-    })
+    });
 
     describe('delete method', function () {
         beforeEach(async function () {
             wsApi = new WsApi();
             await wsApi.init();
-        })
+        });
 
         afterEach(async function () {
             wsApi.close();
-        })
+        });
 
         it('should handle delete subscriptions request', function (done) {
             const id = generateUid();
@@ -277,9 +289,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -301,9 +313,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 422, errorCode: 'VALIDATION_ERROR', isOperational: true };
             wsApi.setOnMessage(function (rawMessage) {
@@ -324,9 +336,9 @@ describe('WebSocket API', function () {
                     entity: 'invalidentity',
                     userEmail: 'test@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 422, errorCode: 'VALIDATION_ERROR', isOperational: true };
             wsApi.setOnMessage(function (rawMessage) {
@@ -338,7 +350,6 @@ describe('WebSocket API', function () {
         });
         it('should fail delete subscriptions in case of absence project uid', function (done) {
             const id = generateUid();
-            const projectUid = 'wABnaPYiSLyHncJVmTWHE2'; // DbSeeds.json
             const req = {
                 jsonrpc: '2.0',
                 method: 'delete',
@@ -348,7 +359,7 @@ describe('WebSocket API', function () {
                     userEmail: 'test@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
                 },
-                id
+                id,
             };
             const res = { httpCode: 422, errorCode: 'VALIDATION_ERROR', isOperational: true };
             wsApi.setOnMessage(function (rawMessage) {
@@ -369,9 +380,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'test2@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 401, errorCode: 'AUTHENTICATION_ERROR', isOperational: true };
 
@@ -393,9 +404,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'test2@redpointpositioning.com',
                     authToken: generateUid(),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 401, errorCode: 'AUTHENTICATION_ERROR', isOperational: true };
 
@@ -417,9 +428,9 @@ describe('WebSocket API', function () {
                     entity: 'subscriptions',
                     userEmail: 'nonexist@redpointpositioning.com',
                     authToken: generateToken({ user: { email: 'nonexist@redpointpositioning.com' } }),
-                    project_uid: projectUid
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             const res = { httpCode: 401, errorCode: 'AUTHENTICATION_ERROR', isOperational: true };
 
@@ -431,16 +442,16 @@ describe('WebSocket API', function () {
             wsApi.send(req);
         });
     });
-    
+
     describe('notify method', function () {
         beforeEach(async function () {
             wsApi = new WsApi();
             await wsApi.init();
-        })
+        });
 
         afterEach(async function () {
             wsApi.close();
-        })
+        });
 
         it('should receive pos messages', function (done) {
             const id = generateUid();
@@ -454,10 +465,10 @@ describe('WebSocket API', function () {
                     data: [WS_CHANNELS.POS],
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
-                    authToken: generateToken({user: {email: 'test@redpointpositioning.com'}}),
-                    project_uid: projectUid
+                    authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -467,7 +478,7 @@ describe('WebSocket API', function () {
                 if (message.method === 'notify') {
                     const { subscription, data } = message.params;
                     assert(subscription === 'pos', 'Subscription is not equal to pos');
-                    assert((data.ts * 1000 + data.ms) === new Date(pos.ts).getTime(), 'Timestamps not equal');
+                    assert(data.ts * 1000 + data.ms === new Date(pos.ts).getTime(), 'Timestamps not equal');
                     assert(data.mac === pos.data.mac.toUpperCase(), 'MACs not equal');
                     assert(data.x === pos.data.x, 'X coordinate not equal');
                     assert(data.y === pos.data.y, 'Y coordinate not equal');
@@ -489,10 +500,10 @@ describe('WebSocket API', function () {
                     data: [WS_CHANNELS.NOTIFY],
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
-                    authToken: generateToken({user: {email: 'test@redpointpositioning.com'}}),
-                    project_uid: projectUid
+                    authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -523,10 +534,10 @@ describe('WebSocket API', function () {
                     data: [WS_CHANNELS.ALARM],
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
-                    authToken: generateToken({user: {email: 'test@redpointpositioning.com'}}),
-                    project_uid: projectUid
+                    authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -560,10 +571,10 @@ describe('WebSocket API', function () {
                     data: [WS_CHANNELS.SENSOR],
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
-                    authToken: generateToken({user: {email: 'test@redpointpositioning.com'}}),
-                    project_uid: projectUid
+                    authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -595,10 +606,10 @@ describe('WebSocket API', function () {
                     data: [WS_CHANNELS.OTA],
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
-                    authToken: generateToken({user: {email: 'test@redpointpositioning.com'}}),
-                    project_uid: projectUid
+                    authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -628,10 +639,10 @@ describe('WebSocket API', function () {
                     data: [WS_CHANNELS.ZONE_EVENT],
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
-                    authToken: generateToken({user: {email: 'test@redpointpositioning.com'}}),
-                    project_uid: projectUid
+                    authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -652,7 +663,11 @@ describe('WebSocket API', function () {
         it('should close WS connection on user delete', function (done) {
             const id = generateUid();
             const projectUid = 'wABnaPYiSLyHncJVmTWHE2'; // DbSeeds.json
-            const userDelete = { object: "USER", action: "deleted", plist: { deletedUserEmail: "test@redpointpositioning.com" }};
+            const userDelete = {
+                object: 'USER',
+                action: 'deleted',
+                plist: { deletedUserEmail: 'test@redpointpositioning.com' },
+            };
             const req = {
                 jsonrpc: '2.0',
                 method: 'add',
@@ -660,10 +675,10 @@ describe('WebSocket API', function () {
                     data: [WS_CHANNELS.ZONE_EVENT],
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
-                    authToken: generateToken({user: {email: 'test@redpointpositioning.com'}}),
-                    project_uid: projectUid
+                    authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -680,7 +695,7 @@ describe('WebSocket API', function () {
         it('should close WS connection on user update', function (done) {
             const id = generateUid();
             const projectUid = 'wABnaPYiSLyHncJVmTWHE2'; // DbSeeds.json
-            const userDelete = { object: "USER", action: "updated", plist: { email: "test@redpointpositioning.com" }};
+            const userDelete = { object: 'USER', action: 'updated', plist: { email: 'test@redpointpositioning.com' } };
             const req = {
                 jsonrpc: '2.0',
                 method: 'add',
@@ -688,10 +703,10 @@ describe('WebSocket API', function () {
                     data: [WS_CHANNELS.ZONE_EVENT],
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
-                    authToken: generateToken({user: {email: 'test@redpointpositioning.com'}}),
-                    project_uid: projectUid
+                    authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -708,7 +723,11 @@ describe('WebSocket API', function () {
         it('should close WS connection on project user access update', function (done) {
             const id = generateUid();
             const projectUid = 'wABnaPYiSLyHncJVmTWHE2'; // DbSeeds.json
-            const userDelete = { object: "PROJECT_USER_ACCESS", action: "updated", plist: { email: "test@redpointpositioning.com" }};
+            const userDelete = {
+                object: 'PROJECT_USER_ACCESS',
+                action: 'updated',
+                plist: { email: 'test@redpointpositioning.com' },
+            };
             const req = {
                 jsonrpc: '2.0',
                 method: 'add',
@@ -716,10 +735,10 @@ describe('WebSocket API', function () {
                     data: [WS_CHANNELS.ZONE_EVENT],
                     entity: 'subscriptions',
                     userEmail: 'test@redpointpositioning.com',
-                    authToken: generateToken({user: {email: 'test@redpointpositioning.com'}}),
-                    project_uid: projectUid
+                    authToken: generateToken({ user: { email: 'test@redpointpositioning.com' } }),
+                    project_uid: projectUid,
                 },
-                id
+                id,
             };
             wsApi.setOnMessage(function (rawMessage) {
                 const message = JSON.parse(rawMessage);
@@ -733,5 +752,4 @@ describe('WebSocket API', function () {
             wsApi.send(req);
         });
     });
-
 });

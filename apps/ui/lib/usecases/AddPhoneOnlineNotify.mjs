@@ -9,8 +9,13 @@ export class AddPhoneOnlineNotify extends UseCaseBase {
 
     async execute(params) {
         await new User().update(params);
-        await new UserTrackPhones().markAsNotified(params);
+        const trackedContacts = await new UserTrackPhones().listTracked(params);
 
-        return UserMessages.notifyYouWhenTrackedOnline();
+        if (trackedContacts.length > 0) {
+            await new UserTrackPhones().markAsNotified(params);
+            const phoneNumbers = trackedContacts.map((contact) => contact.tracked_phone);
+            return UserMessages.notifyYouWhenTrackedOnline(phoneNumbers);
+        }
+        return UserMessages.noTrackingMessage();
     }
 }
