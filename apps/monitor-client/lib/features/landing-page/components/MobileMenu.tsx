@@ -17,9 +17,9 @@ export function MobileMenu({ items }: MobileMenuProps) {
         <Box sx={{ width: 250 }} role="presentation">
             <List>
                 {items.map((item: any, index: any) => (
-                    <ListItem key={item.id} disablePadding>
+                    <ListItem key={item.id} disablePadding={true}>
                         <ListItemButton>
-                            <ListItemIcon></ListItemIcon>
+                            <ListItemIcon />
                             <StyledListItemText primary={item.anchor} />
                         </ListItemButton>
                     </ListItem>

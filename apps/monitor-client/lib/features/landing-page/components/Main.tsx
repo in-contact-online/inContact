@@ -26,7 +26,7 @@ export function Main({}) {
                     <Menu />
                     {matches && (
                         <>
-                            <Slide direction="up" in mountOnEnter unmountOnExit timeout={1500}>
+                            <Slide direction="up" in={true} mountOnEnter={true} unmountOnExit={true} timeout={1500}>
                                 <div className="girl" />
                             </Slide>
 

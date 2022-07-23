@@ -63,9 +63,9 @@ export function StepCard({ primary, content, children }: StepCardType) {
     }));
 
     return (
-        <Grid container>
-            <StyledGrid container item xs={10} sx={{ position: 'relative', paddingBottom: 10 }}>
-                <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Grid container={true}>
+            <StyledGrid container={true} item={true} xs={10} sx={{ position: 'relative', paddingBottom: 10 }}>
+                <Grid item={true} xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Desciption>
                         <Badge>{content.title}</Badge>
                         <p>{content.desc}</p>
@@ -73,7 +73,7 @@ export function StepCard({ primary, content, children }: StepCardType) {
                         <p className="small">{'* ' + content.details}</p>
                     </Desciption>
                 </Grid>
-                <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid item={true} xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Desciption>
                         <StyledImg src="/images/bot_chat.gif" />
                     </Desciption>
