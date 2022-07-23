@@ -92,7 +92,8 @@ module.exports = {
     ],
     plugins: [
         new Dotenv({
-            defaults: true,
+            systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
+            silent: true,
         }),
         new MiniCssExtractPlugin(),
         new CleanWebpackPlugin(),
