@@ -5,7 +5,7 @@ Provide generic access to the PostgreSQL
 ## Basic Usage
 
 ```
-import { createRepository } from '@rtls-platform/repository';
+import { createRepository } from '@in-contact/repository';
 
 const repository = createRepository({
         pg,

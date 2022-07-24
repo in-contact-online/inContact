@@ -27,7 +27,7 @@
         "@mui/icons-material": "^5.8.2",
         "@mui/material": "^5.8.2",
         "@mui/x-data-grid": "^5.12.1",
-        "@rtls-platform/env": "1.0.0",
+        "@in-contact/env": "1.0.0",
         "@types/jest": "^27.5.0",
         "@types/node": "^17.0.31",
         "@types/react": "^18.0.9",

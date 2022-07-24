@@ -20,7 +20,7 @@
     "start:scanner": "cd apps/data-scanner && yarn start",
     "start:analyzer": "cd apps/data-analyzer && yarn start",
     "start:monitor:sr": "cd apps/monitor-server && yarn start",
-    "start:monitor:cl": "cd apps/monitor-client && yarn start"
+    "build:monitor:cl": "cd apps/monitor-client && yarn build"
   },
   "repository": {
     "type": "git",

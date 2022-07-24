@@ -24,11 +24,11 @@
     "import/resolver": {
       "alias": {
         "map": [
-          ["@rtls-platform/repository", "./shared/repository"],
-          ["@rtls-platform/logger", "./shared/logger"],
-          ["@rtls-platform/notificator", "./shared/notificator"],
-          ["@rtls-platform/db-migration", "./shared/db-migration"],
-          ["@rtls-platform/env", "./shared/env"]
+          ["@in-contact/repository", "./shared/repository"],
+          ["@in-contact/logger", "./shared/logger"],
+          ["@in-contact/notificator", "./shared/notificator"],
+          ["@in-contact/db-migration", "./shared/db-migration"],
+          ["@in-contact/env", "./shared/env"]
         ],
         "extensions": [
           ".ts",

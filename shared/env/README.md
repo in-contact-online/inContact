@@ -5,12 +5,12 @@
 ## Basic Usage
 ### ES6
 ```
-import '@rtls-platform/env';
+import '@in-contact/env';
 
 ```
 
 ### ES5
 ```
-require('@rtls-platform/env');
+require('@in-contact/env');
 
 ```

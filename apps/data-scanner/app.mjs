@@ -1,8 +1,8 @@
-import '@rtls-platform/env/index.js'; // should be first import to read all env variables before config init
-import { createRepository } from '@rtls-platform/repository';
-import { createNotificator } from '@rtls-platform/notificator';
-import { runDBMigrations } from '@rtls-platform/db-migration';
-import { createLogger, LoggerTypes } from '@rtls-platform/logger';
+import '@in-contact/env/index.js'; // should be first import to read all env variables before config init
+import { createRepository } from '@in-contact/repository';
+import { createNotificator } from '@in-contact/notificator';
+import { runDBMigrations } from '@in-contact/db-migration';
+import { createLogger, LoggerTypes } from '@in-contact/logger';
 import * as App from './lib/api/index.mjs';
 import * as DataScanner from './lib/api/app.mjs';
 import * as ConfigContainer from './lib/config.cjs';

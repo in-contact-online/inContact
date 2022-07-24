@@ -14,7 +14,7 @@ export class WinstonLogger extends CoreLogger {
 
     #transports = null;
 
-    constructor({ logLevel = 'info', serviceName = 'rtls-platform' }) {
+    constructor({ logLevel = 'info', serviceName = 'in-contact' }) {
         super();
 
         const options = {

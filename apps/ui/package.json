@@ -24,10 +24,10 @@
     "start": "cross-env NODE_ENV=production node --experimental-modules --es-module-specifier-resolution=node app"
   },
   "dependencies": {
-    "@rtls-platform/logger": "1.0.0",
-    "@rtls-platform/repository": "1.0.0",
-    "@rtls-platform/db-migration": "1.0.0",
-    "@rtls-platform/env": "1.0.0",
+    "@in-contact/logger": "1.0.0",
+    "@in-contact/repository": "1.0.0",
+    "@in-contact/db-migration": "1.0.0",
+    "@in-contact/env": "1.0.0",
     "cross-env": "^7.0.3",
     "dotenv-defaults": "^2.0.1",
     "livr": "^2.3.3",

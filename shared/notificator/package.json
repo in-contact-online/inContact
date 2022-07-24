@@ -1,5 +1,5 @@
 {
-  "name": "@rtls-platform/notificator",
+  "name": "@in-contact/notificator",
   "type": "module",
   "version": "1.0.0",
   "main": "index.mjs",
