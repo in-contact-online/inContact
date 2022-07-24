@@ -1,5 +1,5 @@
-import { createRepository } from '@rtls-platform/repository';
-import { createNotificator } from '@rtls-platform/notificator/index.mjs';
+import { createRepository } from '@in-contact/repository';
+import { createNotificator } from '@in-contact/notificator/index.mjs';
 import moment from 'moment';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';

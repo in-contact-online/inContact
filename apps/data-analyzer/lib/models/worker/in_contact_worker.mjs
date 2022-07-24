@@ -1,4 +1,4 @@
-import { createRepository } from '@rtls-platform/repository';
+import { createRepository } from '@in-contact/repository';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';
 import { Status } from '../status/index.mjs';

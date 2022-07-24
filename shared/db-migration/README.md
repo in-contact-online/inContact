@@ -14,7 +14,7 @@
 
 ## Basic Usage
 ```
-import { runDBMigrations } from '@rtls-platform/db-migration';
+import { runDBMigrations } from '@in-contact/db-migration';
 
 await runDBMigrations();
 ```

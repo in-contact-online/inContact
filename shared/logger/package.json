@@ -1,5 +1,5 @@
 {
-  "name": "@rtls-platform/logger",
+  "name": "@in-contact/logger",
   "type": "module",
   "version": "1.0.0",
   "main": "index.mjs",

@@ -1,18 +1,17 @@
 FROM node:14.15.4
+ARG IN_CONTACT_BOT_TOKEN
+
+RUN apt-get update && apt-get install -y cmake
 
 ENV NODE_ENV=production
 ENV IN_CONTACT_DB_HOST=host.docker.internal
-#todo: add env variables from github repositry
+ENV IN_CONTACT_BOT_TOKEN=$IN_CONTACT_BOT_TOKEN
+
+RUN echo "$IN_CONTACT_BOT_TOKEN"
 
 WORKDIR /inContact
 
-COPY package.json yarn.lock ./
-
-RUN yarn install --frozen-lockfile
-
 COPY . .
-
-RUN yarn build:monitor:cl
 
 RUN yarn install --frozen-lockfile
 

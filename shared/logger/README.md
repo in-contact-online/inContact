@@ -5,7 +5,7 @@ Logger based on winston library
 ## Basic Usage
 
 ```
-import { createLogger, LoggerTypes } from '@rtls-platform/logger';
+import { createLogger, LoggerTypes } from '@in-contact/logger';
 
 const logger = createLogger({
         type: LoggerTypes.Winston,

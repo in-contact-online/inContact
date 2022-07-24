@@ -20,4 +20,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
+          build-args: |
+            IN_CONTACT_BOT_TOKEN=${{ secrets.IN_CONTACT_BOT_TOKEN }}
           tags: yzhbankov/in-contact:latest

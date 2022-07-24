@@ -1,3 +1,4 @@
+require('@in-contact/env');
 const debug = process.env.NODE_ENV !== 'production';
 const path = require('path');
 const Dotenv = require('dotenv-webpack');

@@ -1,5 +1,5 @@
 {
-  "name": "@rtls-platform/repository",
+  "name": "@in-contact/repository",
   "type": "module",
   "version": "1.0.0",
   "main": "index.mjs",
