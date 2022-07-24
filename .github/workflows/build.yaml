@@ -22,4 +22,9 @@ jobs:
           push: true
           build-args: |
             IN_CONTACT_BOT_TOKEN=${{ secrets.IN_CONTACT_BOT_TOKEN }}
+            IN_CONTACT_SMTP_USER=${{ secrets.IN_CONTACT_SMTP_USER }}
+            IN_CONTACT_SMTP_PWD=${{ secrets.IN_CONTACT_SMTP_PWD }}
+            IN_CONTACT_SMTP_HOST=${{ secrets.IN_CONTACT_SMTP_HOST }}
+            IN_CONTACT_SMTP_FROM=${{ secrets.IN_CONTACT_SMTP_FROM }}
+            IN_CONTACT_MONITOR_API_BASE_URL=${{ secrets.IN_CONTACT_MONITOR_API_BASE_URL }}
           tags: yzhbankov/in-contact:latest
