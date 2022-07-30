@@ -23,4 +23,4 @@ jobs:
             # Pull the Docker Image 
             sudo docker pull yzhbankov/in-contact:latest
             # Run a new container from a new image
-#            docker run -d -p 3000:3000 -p 3002:3002 -p 3003:3003 -p 587:587 -t yzhbankov/in-contact:1.0.4
+            docker run -d -p 3000:3000 -p 3002:3002 -p 3003:3003 -p 587 --add-host=host.docker.internal:host-gateway yzhbankov/in-contact:latest
