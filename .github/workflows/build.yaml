@@ -43,4 +43,6 @@ jobs:
             IN_CONTACT_SMTP_HOST=${{ secrets.IN_CONTACT_SMTP_HOST }}
             IN_CONTACT_SMTP_FROM=${{ secrets.IN_CONTACT_SMTP_FROM }}
             IN_CONTACT_MONITOR_API_BASE_URL=${{ secrets.IN_CONTACT_MONITOR_API_BASE_URL }}
-          tags: yzhbankov/in-contact:${{ steps.set_version.outputs.no-dash }}
+          tags: |
+            yzhbankov/in-contact:${{ steps.set_version.outputs.no-dash }}
+            yzhbankov/in-contact:latest
