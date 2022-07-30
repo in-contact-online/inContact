@@ -11,8 +11,18 @@ jobs:
       - name: Check Out Repo
         uses: actions/checkout@v2
 
-      - name: Set env
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Set Versions
+        uses: actions/github-script@v4
+        id: set_version
+        with:
+          script: |
+            const tag = context.ref.substring(10)
+            const no_v = tag.replace('v', '')
+            const dash_index = no_v.lastIndexOf('-')
+            const no_dash = (dash_index > -1) ?  no_v.substring(0, dash_index) : no_v
+            core.setOutput('tag', tag)
+            core.setOutput('no-v', no_v)
+            core.setOutput('no-dash', no_dash)
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -31,4 +41,4 @@ jobs:
             IN_CONTACT_SMTP_HOST=${{ secrets.IN_CONTACT_SMTP_HOST }}
             IN_CONTACT_SMTP_FROM=${{ secrets.IN_CONTACT_SMTP_FROM }}
             IN_CONTACT_MONITOR_API_BASE_URL=${{ secrets.IN_CONTACT_MONITOR_API_BASE_URL }}
-          tags: yzhbankov/in-contact:${{ env.RELEASE_VERSION }}
+          tags: yzhbankov/in-contact:${{ steps.set_version.outputs.no-dash }}
