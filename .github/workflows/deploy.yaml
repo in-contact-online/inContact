@@ -1,16 +1,10 @@
 name: Deploy Docker Images
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Deploy to AWS'
-        required: false
 
 jobs:
   deploy:
-    name: Deploy to AWS
     runs-on: ubuntu-latest
-    needs: push_to_github_container_registry
     steps:
       - name: Deploy to AWS via SSH action
         uses: appleboy/ssh-action@master
@@ -21,12 +15,12 @@ jobs:
           port: 22
           script: |
             # Stop all running Docker Containers
-            docker kill $(docker ps -q)
+            sudo docker kill $(docker ps -q)
             # Free up space
-            docker system prune -a
+            sudo docker system prune -a
             # Login to Github Container Registry
-            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+            sudo docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
             # Pull the Docker Image 
-            docker pull yzhbankov/in-contact:latest
+            sudo docker pull yzhbankov/in-contact:latest
             # Run a new container from a new image
 #            docker run -d -p 3000:3000 -p 3002:3002 -p 3003:3003 -p 587:587 -t yzhbankov/in-contact:1.0.4
