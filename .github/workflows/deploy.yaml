@@ -15,7 +15,7 @@ jobs:
           port: 22
           script: |
             # Stop all running Docker Containers
-            sudo docker kill $(docker ps -q)
+            sudo docker kill $(sudo docker ps -q)
             # Free up space
             sudo docker system prune -a -f
             # Login to Github Container Registry
