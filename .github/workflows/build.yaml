@@ -1,8 +1,8 @@
 name: Publish Docker Images
 on:
   push:
-    branches:
-      - build
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build:
@@ -11,11 +11,15 @@ jobs:
       - name: Check Out Repo
         uses: actions/checkout@v2
 
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -27,4 +31,4 @@ jobs:
             IN_CONTACT_SMTP_HOST=${{ secrets.IN_CONTACT_SMTP_HOST }}
             IN_CONTACT_SMTP_FROM=${{ secrets.IN_CONTACT_SMTP_FROM }}
             IN_CONTACT_MONITOR_API_BASE_URL=${{ secrets.IN_CONTACT_MONITOR_API_BASE_URL }}
-          tags: yzhbankov/in-contact:latest
+          tags: yzhbankov/in-contact:${{ env.RELEASE_VERSION }}
