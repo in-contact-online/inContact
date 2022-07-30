@@ -33,7 +33,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
+          context: .
           push: true
+          file: ./dev-ops/Dockerfile
           build-args: |
             IN_CONTACT_BOT_TOKEN=${{ secrets.IN_CONTACT_BOT_TOKEN }}
             IN_CONTACT_SMTP_USER=${{ secrets.IN_CONTACT_SMTP_USER }}
