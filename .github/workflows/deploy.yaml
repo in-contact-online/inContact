@@ -17,7 +17,7 @@ jobs:
             # Stop all running Docker Containers
             sudo docker kill $(docker ps -q)
             # Free up space
-            sudo docker system prune -a
+            sudo docker system prune -a -f
             # Login to Github Container Registry
             sudo docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
             # Pull the Docker Image 
