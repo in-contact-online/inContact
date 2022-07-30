@@ -21,6 +21,6 @@ jobs:
             # Login to Github Container Registry
             sudo docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
             # Pull the Docker Image 
-            sudo docker pull yzhbankov/in-contact:1.0.4
+            sudo docker pull yzhbankov/in-contact:latest
             # Run a new container from a new image
 #            docker run -d -p 3000:3000 -p 3002:3002 -p 3003:3003 -p 587:587 -t yzhbankov/in-contact:1.0.4
