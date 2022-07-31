@@ -1,4 +1,21 @@
-FROM node:14.15.4
+FROM node:14.15.4 as build
+ARG IN_CONTACT_MONITOR_API_BASE_URL
+
+ENV IN_CONTACT_MONITOR_API_BASE_URL=$IN_CONTACT_MONITOR_API_BASE_URL
+
+RUN apt-get update && apt-get install -y cmake
+
+WORKDIR /inContact
+
+COPY ./dev-ops/entrypoint.sh ./entrypoint.sh
+COPY .. .
+
+RUN yarn install --frozen-lockfile
+
+RUN yarn build:monitor:cl
+
+
+FROM node:14-alpine
 # ARG from docker action build-args
 ARG IN_CONTACT_BOT_TOKEN
 ARG IN_CONTACT_SMTP_USER
@@ -7,10 +24,9 @@ ARG IN_CONTACT_SMTP_HOST
 ARG IN_CONTACT_SMTP_FROM
 ARG IN_CONTACT_MONITOR_API_BASE_URL
 
-RUN apt-get update && apt-get install -y cmake
-
 # host.docker.internal indicates docker contaniner ip
 ENV IN_CONTACT_DB_HOST=host.docker.internal
+
 #env from arguments
 ENV IN_CONTACT_BOT_TOKEN=$IN_CONTACT_BOT_TOKEN
 ENV IN_CONTACT_SMTP_USER=$IN_CONTACT_SMTP_USER
@@ -21,12 +37,9 @@ ENV IN_CONTACT_MONITOR_API_BASE_URL=$IN_CONTACT_MONITOR_API_BASE_URL
 
 WORKDIR /inContact
 
-COPY ./dev-ops/entrypoint.sh ./entrypoint.sh
-COPY .. .
+RUN apk update && apk add bash
 
-RUN yarn install --frozen-lockfile
-
-RUN yarn build:monitor:cl
+COPY --from=build /inContact/ ./
 
 EXPOSE 587
 EXPOSE 3003
