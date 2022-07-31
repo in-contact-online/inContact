@@ -9,8 +9,6 @@ ARG IN_CONTACT_MONITOR_API_BASE_URL
 
 RUN apt-get update && apt-get install -y cmake
 
-ENV NODE_ENV=production
-
 # host.docker.internal indicates docker contaniner ip
 ENV IN_CONTACT_DB_HOST=host.docker.internal
 #env from arguments
@@ -26,6 +24,8 @@ WORKDIR /inContact
 COPY .. .
 
 RUN yarn install --frozen-lockfile
+
+RUN yarn build:monitor:cl
 
 EXPOSE 587
 EXPOSE 3003
