@@ -21,6 +21,7 @@ ENV IN_CONTACT_MONITOR_API_BASE_URL=$IN_CONTACT_MONITOR_API_BASE_URL
 
 WORKDIR /inContact
 
+COPY ./dev-ops/entrypoint.sh ./entrypoint.sh
 COPY .. .
 
 RUN yarn install --frozen-lockfile
