@@ -15,6 +15,15 @@ RUN yarn install --frozen-lockfile
 RUN yarn build:monitor:cl
 
 
+FROM node:14-alpine as build-alpine
+
+WORKDIR /inContact
+
+RUN apk update && apk add bash python3 g++ make
+RUN npm install sqlite3
+
+COPY --from=build /inContact/ ./
+
 FROM node:14-alpine
 # ARG from docker action build-args
 ARG IN_CONTACT_BOT_TOKEN
@@ -39,7 +48,7 @@ WORKDIR /inContact
 
 RUN apk update && apk add bash
 
-COPY --from=build /inContact/ ./
+COPY --from=build-alpine /inContact/ ./
 
 EXPOSE 587
 EXPOSE 3003
