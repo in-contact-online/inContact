@@ -10,7 +10,7 @@ export function Offer({}) {
 
     return (
         <div className={offerClasses}>
-            <h1>Контроль статусов Telegram</h1>
+            <h1>Контроль статусов Telegram.</h1>
             <p>
                 С помощью нашего <strong>telegram-бота</strong> вы сможете отслеживать онлайн статус ваших знакомых и
                 понимать с кем они общаются
