@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { useIntersection } from '../hooks';
 import { Zoom } from '@mui/material';
@@ -32,11 +31,3 @@ export function Arrow() {
         </Zoom>
     );
 }
-
-Arrow.propTypes = {
-    '': PropTypes.func,
-};
-
-Arrow.defaultProps = {
-    '': () => {},
-};

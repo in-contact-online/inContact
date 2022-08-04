@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Feature } from './Feature';
 import { Grid } from '@mui/material';
+import { Feature } from './Feature';
 
-export function Features({}) {
+export function Features() {
     return (
         <Grid container={true} sx={{ backgroundColor: '#e5f9ff' }}>
             <h2>Планы по развитию бота</h2>

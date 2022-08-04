@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, RefObject } from 'react';
 
-export const useIntersection = (element: any, rootMargin: any) => {
+export const useIntersection = (element: RefObject<any>, rootMargin: string) => {
     const [isVisible, setState] = useState(false);
 
     useEffect(() => {

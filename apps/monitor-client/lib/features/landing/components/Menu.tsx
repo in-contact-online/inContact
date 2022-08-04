@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Drawer, IconButton } from '@mui/material';
+import { Drawer } from '@mui/material';
 import { MobileMenu } from './MobileMenu';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
@@ -24,7 +24,7 @@ const menu = [
     { id: 4, anchor: 'Кабинет', link: '/admin' },
 ];
 
-export function Menu({}) {
+export function Menu() {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     const theme = useTheme();

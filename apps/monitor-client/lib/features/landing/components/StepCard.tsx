@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
-import { Typography } from '@mui/material';
 
 interface StepCardType {
     primary: boolean;

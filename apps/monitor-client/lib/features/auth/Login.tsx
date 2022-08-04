@@ -4,23 +4,23 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 const clientId = '260664953450-okrfqounqgbav184fs65e790ojkftubq.apps.googleusercontent.com';
 
 export function Login() {
-    const [showloginButton, setShowloginButton] = useState<boolean>(true);
-    const [showlogoutButton, setShowlogoutButton] = useState<boolean>(false);
+    const [showLoginButton, setShowLoginButton] = useState<boolean>(true);
+    const [showLogoutButton, setShowLogoutButton] = useState<boolean>(false);
     const onLoginSuccess = (res: any): void => {
-        setShowloginButton(false);
-        setShowlogoutButton(true);
+        setShowLoginButton(false);
+        setShowLogoutButton(true);
     };
 
     const onLoginFailure = (res: any) => {};
 
-    const onSignoutSuccess = () => {
-        setShowloginButton(true);
-        setShowlogoutButton(false);
+    const onSignOutSuccess = () => {
+        setShowLoginButton(true);
+        setShowLogoutButton(false);
     };
 
     return (
         <div>
-            {showloginButton ? (
+            {showLoginButton ? (
                 <GoogleLogin
                     clientId={clientId}
                     buttonText="Sign In"
@@ -31,8 +31,8 @@ export function Login() {
                 />
             ) : null}
 
-            {showlogoutButton ? (
-                <GoogleLogout clientId={clientId} buttonText="Sign Out" onLogoutSuccess={onSignoutSuccess} />
+            {showLogoutButton ? (
+                <GoogleLogout clientId={clientId} buttonText="Sign Out" onLogoutSuccess={onSignOutSuccess} />
             ) : null}
         </div>
     );
