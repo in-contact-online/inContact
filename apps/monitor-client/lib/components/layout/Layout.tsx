@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, Box, Toolbar, Container, Grid } from '@mui/material';
@@ -15,21 +15,23 @@ const mdTheme = createTheme({
     },
 });
 
-export function Layout({ renderHeader, renderSidebar, renderContent, renderFooter }: any) {
-    const [isOpen, setIsOpen] = useState(true);
+interface ILayout {
+    renderHeader: () => ReactElement;
+    renderSidebar: () => ReactElement;
+    renderContent: () => ReactElement;
+    renderFooter: () => ReactElement;
+}
 
-    const drawerWidth: number = 240;
-    const toggleDrawer = () => {
-        setIsOpen(!open);
-    };
+export function Layout(props: ILayout) {
+    const { renderHeader, renderSidebar, renderContent, renderFooter } = props;
 
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
 
-                {renderHeader({ drawerWidth, toggleDrawer, isOpen })}
-                {renderSidebar({ drawerWidth, toggleDrawer, isOpen })}
+                {renderHeader()}
+                {renderSidebar()}
 
                 <Box
                     component="main"

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { UsersTable } from './UsersTable';
 import { ContactsTable } from './ContactsTable';
 
-export function UsersView({}) {
+export function Users({}) {
     return (
         <>
             <Grid item={true} xs={12} lg={6}>
@@ -17,10 +17,10 @@ export function UsersView({}) {
     );
 }
 
-UsersView.propTypes = {
+Users.propTypes = {
     '': PropTypes.func,
 };
 
-UsersView.defaultProps = {
+Users.defaultProps = {
     '': () => {},
 };

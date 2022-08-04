@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function SessionsView({}) {
+export function Sessions({}) {
     return <div>Sessions View</div>;
 }
 
-SessionsView.propTypes = {
+Sessions.propTypes = {
     '': PropTypes.func,
 };
 
-SessionsView.defaultProps = {
+Sessions.defaultProps = {
     '': () => {},
 };

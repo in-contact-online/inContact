@@ -6,7 +6,7 @@ import { StepCard } from './StepCard';
 import { BotBadge } from './BotBadge';
 import { Arrow } from './Arrow';
 
-export function Steps({}) {
+export function Steps() {
     const theme = useTheme();
     const matchesMd = useMediaQuery(theme.breakpoints.up('md'));
     const matchesXs = useMediaQuery(theme.breakpoints.up('xs'));
