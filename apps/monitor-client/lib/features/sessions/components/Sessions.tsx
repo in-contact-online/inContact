@@ -1,5 +1,6 @@
 import React from 'react';
 import { GridColDef } from '@mui/x-data-grid';
+import { Grid } from '@mui/material';
 import { StyledDataGrid } from '../../../components';
 import { useFetchSessions, ISessionsFetch } from '../hooks';
 
@@ -19,21 +20,23 @@ export function Sessions() {
     if (isError) return null;
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
-            <StyledDataGrid
-                rows={data ? data.data : []}
-                rowCount={data ? data.total : 0}
-                rowsPerPageOptions={[5, 10]}
-                pagination={true}
-                paginationMode="server"
-                page={page}
-                pageSize={pageSize}
-                columns={columns}
-                onPageChange={(newPage) => setPage(newPage)}
-                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowHeight={25}
-                loading={isFetching}
-            />
-        </div>
+        <Grid item={true} xs={12} lg={12}>
+            <div style={{ height: 400, width: '100%' }}>
+                <StyledDataGrid
+                    rows={data ? data.data : []}
+                    rowCount={data ? data.total : 0}
+                    rowsPerPageOptions={[5, 10]}
+                    pagination={true}
+                    paginationMode="server"
+                    page={page}
+                    pageSize={pageSize}
+                    columns={columns}
+                    onPageChange={(newPage) => setPage(newPage)}
+                    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                    rowHeight={25}
+                    loading={isFetching}
+                />
+            </div>
+        </Grid>
     );
 }
