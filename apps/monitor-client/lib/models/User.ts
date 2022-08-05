@@ -1,6 +1,6 @@
 export interface IUser {
     id: number;
-    userName: string | null;
+    username: string;
     firstName: string | null;
     secondName: string | null;
     phone: string;
@@ -28,7 +28,7 @@ export interface IUserRaw {
 export class User implements IUser {
     id: number;
 
-    userName: string | null;
+    username: string;
 
     firstName: string | null;
 
@@ -44,7 +44,7 @@ export class User implements IUser {
 
     constructor(props: IUserRaw) {
         this.id = props.id;
-        this.userName = props.username;
+        this.username = `${props.first_name} ${props.second_name}`;
         this.firstName = props.first_name;
         this.secondName = props.second_name;
         this.phone = props.phone;

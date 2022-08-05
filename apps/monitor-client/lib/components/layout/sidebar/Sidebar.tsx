@@ -25,6 +25,7 @@ export function Sidebar(props: ISidebarProps) {
             top: 64,
             overflowX: 'hidden',
             width: open ? 240 : theme.spacing(7),
+            height: 'calc(100% - 64px)',
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
