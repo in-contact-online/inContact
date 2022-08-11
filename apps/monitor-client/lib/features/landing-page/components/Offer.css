@@ -1,0 +1,74 @@
+.offer {
+    border: 0.1rem solid var(--color-text-light);
+    border-radius: 2em;
+    font-size: 2.2rem;
+    font-weight: 300;
+    width: 19em;
+    padding: 1.5em;
+    margin-top: 6em;
+    margin-left: 6em;
+}
+
+.offer__header {
+    font-size: 2.8rem;
+    font-weight: 400;
+    margin-bottom: 1em;
+}
+
+.offer__desc {
+    margin-bottom: 1em;
+}
+
+.offer__address {
+    font-size: 2.4rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.offer__address::before {
+    content: '';
+    display: inline-block;
+    background-image: url('../../../../public/images/plane.png');
+    background-size: cover;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    filter: drop-shadow(0.05rem 0.1rem 0.05rem var(--color-text-dark));
+    width: 3.8rem;
+    height: 3.8rem;
+}
+
+@media screen and (max-width: 1200px) {
+    .offer {
+        font-size: 2rem;
+    }
+
+    .offer__header {
+        font-size: 2.4rem;
+    }
+
+    .offer__address {
+        font-size: 2.2rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .offer {
+        font-size: 1.8rem;
+    }
+
+    .offer__header {
+        font-size: 2.2rem;
+    }
+
+    .offer__address {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .offer {
+        margin: 4em auto;
+    }
+}

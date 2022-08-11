@@ -1,0 +1,34 @@
+.btn {
+    display: inline-flex;
+    gap: 0.5em;
+    align-items: center;
+    background-color: var(--color-text-light);
+    color: var(--color-text-dark);
+    padding: 0.2em 0.6em 0.2em 0.2em;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    border-radius: 20rem;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 2.6rem;
+}
+
+.btn:hover {
+    cursor: pointer;
+    transform: scale(105%);
+    transition: transform 0.2s;
+}
+
+.btn__img {
+}
+
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 992px) {
+}
+
+@media screen and (max-width: 768px) {
+    .btn {
+        font-size: 2rem;
+    }
+}
