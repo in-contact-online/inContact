@@ -18,7 +18,7 @@ export interface IContactRaw {
     updated_at: string;
 }
 
-export interface IContacsReposnse {
+export interface IContactsResponse {
     data: IContact[];
     total: number;
 }

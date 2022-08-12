@@ -1,10 +1,10 @@
 import { Axios } from 'axios';
-import { IContacsReposnse, Contact, IContactRaw } from '../../models';
+import { IContactsResponse, Contact, IContactRaw } from '../../models';
 
 type ReadParams = { page: number; size: number };
 
 export interface IAxiosContactApi {
-    readList: (params: ReadParams) => Promise<null | IContacsReposnse>;
+    readList: (params: ReadParams) => Promise<null | IContactsResponse>;
 }
 
 export class AxiosContactsApi implements IAxiosContactApi {
