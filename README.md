@@ -23,12 +23,12 @@
 - run tests with the command `yarn test:integration` in application directory (`apps/data-analyzer`, `apps/notificator`, `apps/data-scanner`, `apps/ui`)
 
 # 2. Run project
-## Pre-requirements
+## 2.1 Pre-requirements
 1. Node - 14.x.x or later
 2. yarn - 1.22.4 or later
 3. PostgreSQL - 14 or later
 
-## Database configuration
+## 2.2 Database configuration
 ### Create User and Database
 - `sudo -u postgres psql` -`create database in_contact;` -`create user in_contact;` -`ALTER USER in_contact with password 'in_contact';` -`grant all privileges on database in_contact to in_contact;`
 
@@ -38,7 +38,7 @@
 ### Migrations
 1. Follow instructions in ```./shared/db-migration/README.md```
 
-## Configure Modules
+## 2.3 Configure Modules
 1. Follow instructions in ```./apps/ui/README.md```
 2. Follow instructions in ```./apps/data-scanner/README.md```
 3. Follow instructions in ```./apps/data-analyzer/README.md```
@@ -46,7 +46,7 @@
 5. Follow instructions in ```./apps/monitor-server/README.md```
 6. Follow instructions in ```./shared/env/README.md```
 
-## Run in console
+## 2.4 Run in console
 Run commands:
 1. ```yarn install``` - install node modules
 2. ```yarn start:ui``` - run Telegram bot
@@ -54,3 +54,12 @@ Run commands:
 4. ```yarn start:analyzer``` - run data analyzer service on port `3003` 
 5. ```yarn start:monitor:sr``` - run monitor server on port `3002`
 6. ```yarn start:monitor:cl``` - run monitor client in hot regime on port `8086`
+
+# 3. Build and deploy
+## 3.1 Build
+To build project it is necessary run command `yarn version:patch` in work directory `./inContact`.
+This will generate new project tag and triggers docker image build on a GitHub.
+Built docker image will be published on the Docker Hub.
+
+## 3.2 Deploy
+Deploy could be triggered by calling manually `Deploy Docker Images` workflow in `Actions` section of the GitHub.
