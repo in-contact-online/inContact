@@ -10,5 +10,6 @@ router.get('/system_health', systemHealth.read);
 router.get('/statuses', statuses.readList);
 router.get('/sessions', sessions.readList);
 router.post('/sessions', sessions.add);
+router.delete('/sessions/:sessionId', sessions.del);
 
 export default router;

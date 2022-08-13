@@ -1,5 +1,5 @@
 import { makeRequestHandler } from '../../utils/index.mjs';
-import { ReadSessions, SaveSession } from '../../../usecases/index.mjs';
+import { ReadSessions, SaveSession, RemoveSession } from '../../../usecases/index.mjs';
 
 export const sessions = {
     /**
@@ -110,6 +110,50 @@ export const sessions = {
             dcId: req.body.dc_id,
             serverAddress: req.body.server_address,
             port: req.body.port,
+        }),
+        (result, res) => {
+            res.send(result);
+        }
+    ),
+    /**
+     * @swagger
+     * /sessions/{sessionId}:
+     *   delete:
+     *     description: Remove session by sessionId
+     *     tags:
+     *       - Sessions API
+     *     parameters:
+     *      - in: path
+     *        name: sessionId
+     *        schema:
+     *          type: number
+     *          required: true
+     *          example: 79030165751
+     *     responses:
+     *       '200':
+     *         content:
+     *          application/json:
+     *              schema:
+     *                  type: object
+     *                  properties:
+     *                      sessionId:
+     *                          type: number
+     *              example:
+     *                  sessionId: 79030165751
+     *       '404':
+     *         description: Session with the specified ID was not found.
+     *         content:
+     *          application/json:
+     *              schema:
+     *                  $ref: '#/components/schemas/NotFoundError'
+     *              example:
+     *                  message: Session with id ... not found
+     *                  code: NOT_FOUND_ERROR
+     */
+    del: makeRequestHandler(
+        RemoveSession,
+        (req) => ({
+            sessionId: req.params.sessionId,
         }),
         (result, res) => {
             res.send(result);

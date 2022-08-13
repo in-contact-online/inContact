@@ -107,7 +107,7 @@ export class Session extends ModelBase {
     /**
      * @method
      * @param {Object} params - session
-     * @property {String} sessionId - session idetifier that equel phone number that activates the session
+     * @property {String} sessionId - session identifier that equal phone number that activates the session
      * @property {String} authKey - Telegram session authentication key
      * @property {String} dcId - Telegram DC ID
      * @property {String} serverAddress - Telegram session server address
@@ -117,5 +117,15 @@ export class Session extends ModelBase {
      */
     async save(params) {
         return this.repository.session.save(params);
+    }
+
+    /**
+     * @method
+     * @param {Object} params - session
+     * @property {String} sessionId - session identifier that equal phone number that activates the session
+     * @returns {Promise<Object>}
+     */
+    async remove(params) {
+        return this.repository.session.remove(params);
     }
 }
