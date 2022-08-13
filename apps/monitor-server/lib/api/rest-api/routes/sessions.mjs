@@ -1,5 +1,5 @@
 import { makeRequestHandler } from '../../utils/index.mjs';
-import { ReadSessions } from '../../../usecases/index.mjs';
+import { ReadSessions, SaveSession } from '../../../usecases/index.mjs';
 
 export const sessions = {
     /**
@@ -60,6 +60,56 @@ export const sessions = {
         (req) => ({
             page: req.query.page,
             size: req.query.size,
+        }),
+        (result, res) => {
+            res.send(result);
+        }
+    ),
+    /**
+     * @swagger
+     * /sessions:
+     *   post:
+     *     description: Add telegram session
+     *     tags:
+     *       - Sessions API
+     *     requestBody:
+     *      content:
+     *          application/json:
+     *              schema:
+     *                  $ref: '#/components/schemas/SessionCreateBody'
+     *              example:
+     *                  id: 79030165751
+     *                  auth_key:
+     *                      type: Buffer
+     *                      data: [120,54,50,53]
+     *                  dc_id: 2
+     *                  server_address: 149.154.167.51
+     *                  port: 443
+     *     responses:
+     *       '200':
+     *         content:
+     *          application/json:
+     *              schema:
+     *                  $ref: '#/components/schemas/Session'
+     *              example:
+     *                 id: 79030165751
+     *                 auth_key:
+     *                      type: Buffer
+     *                      data: [120,54,50,53]
+     *                 dc_id: 2
+     *                 server_address: 149.154.167.51
+     *                 port: 443
+     *                 active: true
+     *                 valid: true
+     */
+    add: makeRequestHandler(
+        SaveSession,
+        (req) => ({
+            sessionId: req.body.id,
+            authKey: req.body.auth_key,
+            dcId: req.body.dc_id,
+            serverAddress: req.body.server_address,
+            port: req.body.port,
         }),
         (result, res) => {
             res.send(result);

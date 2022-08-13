@@ -20,8 +20,9 @@ export class Session extends ModelBase {
 
     /**
      * @method
-     * @param {String} sessionId - session idetifier that equel phone number that activates the session
-     * @param {Boolean} valid - if session is valid
+     * @param {Object} params
+     * @property {String} sessionId - session idetifier that equel phone number that activates the session
+     * @property {Boolean} valid - if session is valid
      * @returns {Promise<Object>}
      */
     async update(params) {
@@ -30,7 +31,8 @@ export class Session extends ModelBase {
 
     /**
      * @method
-     * @param {Boolean} valid - if session is valid
+     * @param {Object} params
+     * @property {Boolean} valid - if session is valid
      * @returns {Promise<Object>}
      */
     async readAll(params) {
@@ -39,12 +41,13 @@ export class Session extends ModelBase {
 
     /**
      * @method
-     * @param {String} sessionId - session idetifier that equel phone number that activates the session
-     * @param {String} authKey - Telegram session authentication key
-     * @param {String} dcId - Telegram DC ID
-     * @param {String} serverAddress - Telegram session server address
-     * @param {String} port - Telegram session port
-     * @param {Boolean} valid - if session is valid
+     * @param {Object} params - session
+     * @property {String} sessionId - session idetifier that equel phone number that activates the session
+     * @property {String} authKey - Telegram session authentication key
+     * @property {String} dcId - Telegram DC ID
+     * @property {String} serverAddress - Telegram session server address
+     * @property {String} port - Telegram session port
+     * @property {Boolean} valid - if session is valid
      * @returns {Promise<Object>}
      */
     async save(params) {
