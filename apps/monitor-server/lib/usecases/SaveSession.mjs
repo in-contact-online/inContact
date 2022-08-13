@@ -7,9 +7,7 @@ export class SaveSession extends UseCaseBase {
         authKey: [{
             nested_object: {
                 type: ['string', 'required'],
-                data: ['required', 'not_empty_list', {
-                    list_of_objects: ['strict_integer']
-                }],
+                data: ['required'],
             }
         }, 'required'],
         dcId: ['required', 'string'],
