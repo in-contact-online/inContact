@@ -1,24 +1,35 @@
-import { Session } from '../models/index.mjs';
+import { readSqlite, createTempFile } from '../utils/index.mjs';
+import { Session, ValidationError } from '../models/index.mjs';
 import UseCaseBase from './UseCaseBase.mjs';
 
 export class SaveSession extends UseCaseBase {
     static validationRules = {
-        sessionId: ['required', 'integer'],
-        authKey: [{
-            nested_object: {
-                type: ['string', 'required'],
-                data: ['required'],
+        file: ["required", {
+            "nested_object": {
+                "originalname" : ["required", "string"],
+                "buffer":  ["required"],
             }
-        }, 'required'],
-        dcId: ['required', 'string'],
-        serverAddress: ['required', 'string'],
-        port: ['required', 'integer'],
+        }]
     };
 
     async execute(params) {
-        const authKey = Buffer.from(params.authKey.data);
-        await new Session().save({ ...params, authKey });
+        const tmpFile = await createTempFile(params.file.buffer);
+        const result = await readSqlite(tmpFile);
+        const sessionId = params.file.originalname.match(/([^/]*)\.session/)[1];
+
+        const existedSession = new Session().readById({ sessionId: params.sessionId });
+        if (existedSession) {
+            throw new ValidationError('Session already exist');
+        }
+
+        await new Session().save({
+            sessionId,
+            dcId: result.dc_id,
+            serverAddress: result.server_address,
+            port: result.port,
+            authKey: result.auth_key
+        });
+
         return new Session().readById({ sessionId: params.sessionId });
     }
 }
-

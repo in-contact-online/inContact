@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import multer from 'multer';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
@@ -24,8 +25,7 @@ export default {
         },
     }),
     urlencoded: bodyParser.urlencoded({ extended: false }),
-
     cors: cors(),
-
     static: express.static(path.join(__dirname, '../../..', '/monitor-client/build')),
+    upload: multer(),
 };
