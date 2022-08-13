@@ -5,6 +5,7 @@ type ReadParams = { page: number; size: number };
 
 export interface IAxiosSessionsApi {
     readList: (params: ReadParams) => Promise<null | ISessionsReposnse>;
+    add: (file: FormData) => Promise<null>;
 }
 
 export class AxiosSessionsApi implements IAxiosSessionsApi {
@@ -18,6 +19,18 @@ export class AxiosSessionsApi implements IAxiosSessionsApi {
         const response = await this.http.get(`/sessions?page=${params.page}&size=${params.size}`);
         if (response) {
             response.data.data = response.data.data.map((item: ISessionRaw) => new Session(item));
+            return response.data;
+        }
+        return null;
+    }
+
+    async add(params: FormData) {
+        const response = await this.http.post(`/sessions`, params, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        if (response) {
             return response.data;
         }
         return null;

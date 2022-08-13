@@ -1,7 +1,8 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
-import { readdir } from 'fs';
+import { readdir, writeFileSync } from 'fs';
 import path from 'path';
+import tmp from "tmp";
 
 /**
  * @function
@@ -26,8 +27,20 @@ export async function readDir(dirname, fileExtension) {
     });
 }
 
-export async function readSqlite(filePath, tableName) {
+export async function readSqlite(filePath) {
     return open({ filename: filePath, driver: sqlite3.Database }).then(async (db) =>
-        db.get(`SELECT * FROM ${tableName}`)
+        db.get('SELECT * FROM sessions')
     );
+}
+
+/**
+ * @function
+ * @param {Buffer} file - file content
+ * @return {Promise<String>}
+ */
+export async function createTempFile(file) {
+    const tmpFile = tmp.fileSync({ postfix: '.session' });
+    writeFileSync(tmpFile.name, file)
+
+    return tmpFile.name;
 }
