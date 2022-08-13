@@ -1,0 +1,7 @@
+.next {
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translate(0, 100%);
+    z-index: 1;
+}

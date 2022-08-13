@@ -1,0 +1,122 @@
+.step {
+    position: relative;
+    background-color: var(--color-text-light);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 1em;
+    margin-bottom: 11.5rem;
+    font-size: 2.6rem;
+    display: flex;
+    gap: 2.5em;
+    padding: 2.5em;
+    justify-content: space-between;
+}
+
+.step__chat {
+    width: 50%;
+}
+
+.step__image {
+    border: 0.02em solid #cdc403;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 1em;
+    width: 100%;
+    min-width: 28rem;
+}
+
+.step__desc {
+    width: 50%;
+    color: #605b00;
+}
+
+.step hr {
+    border: 0.01em solid #605b00;
+    width: 95%;
+    margin-left: 0;
+}
+
+.step__badge {
+    display: inline-block;
+    font-size: 3.2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 0.3em 0.6em;
+    margin-bottom: 1em;
+    background-color: #fff;
+    border: 0.02em solid #cdc403;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0.5em;
+}
+
+.step__intro {
+    margin-bottom: 1em;
+}
+
+.step__outro {
+    font-size: 2rem;
+    font-style: italic;
+}
+
+.step.step-dark {
+    background-color: var(--color-bg-secondary);
+}
+
+.step.step-dark .step__badge {
+    background-color: var(--color-bg-primary);
+    border: 0;
+    color: #fff;
+}
+
+.step.step-dark .step__image {
+    border: none;
+}
+
+.step.step-dark .step__desc {
+    color: var(--color-text-dark);
+}
+
+.step.step-dark hr {
+    border: 0.01em solid var(--color-text-dark);
+}
+
+@media screen and (max-width: 1200px) {
+    .step {
+        font-size: 2rem;
+    }
+
+    .step__badge {
+        font-size: 2.8rem;
+    }
+
+    .step__outro {
+        font-size: 1.6rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .step {
+        font-size: 1.8rem;
+    }
+
+    .step__badge {
+        font-size: 2.4rem;
+    }
+
+    .step__outro {
+        font-size: 1.4rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .step {
+        flex-direction: column;
+    }
+
+    .step__chat {
+        width: 80%;
+        align-self: center;
+    }
+
+    .step__desc {
+        width: 100%;
+    }
+}

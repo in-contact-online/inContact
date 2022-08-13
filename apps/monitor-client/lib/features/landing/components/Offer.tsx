@@ -1,31 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import './Offer.css';
 
-export function Offer({}) {
-    const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.up('md'));
-    const offerClasses = 'offer' + (matches ? '' : ' mobile');
-
+export const Offer = () => {
     return (
-        <div className={offerClasses}>
-            <h1>Контроль статусов Telegram.</h1>
-            <p>
-                С помощью нашего <strong>telegram-бота</strong> вы сможете отслеживать онлайн статус ваших знакомых и
-                понимать с кем они общаются
+        <div className="offer">
+            <h1 className="offer__header">Контроль статусов Telegram</h1>
+            <p className="offer__desc">
+                С помощью нашего telegram-бота вы сможете отслеживать онлайн статус ваших знакомых и понимать с кем они
+                общаются
             </p>
-            <span>
-                <a href="https://t.me/get_statuses_bot">@get_statuses_bot</a>
-            </span>
+            <p className="offer__address">@get_statuses_bot</p>
         </div>
     );
-}
-
-Offer.propTypes = {
-    '': PropTypes.func,
-};
-
-Offer.defaultProps = {
-    '': () => {},
 };
