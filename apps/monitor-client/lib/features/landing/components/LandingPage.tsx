@@ -85,7 +85,10 @@ export function LandingPage() {
                             функционала. Активные участники комьюнити первыми получат доступ к расширенной версии бота!
                         </p>
                         <Button icon="/images/tg_button.png" caption="Обсудить в группе" />
-                        <p className="section-footer__copy">Designed by @whiteadam © inContact 2022</p>
+                        <p className="section-footer__copy">
+                            Designed by @whiteadam
+                            <br /> © inContact 2022
+                        </p>
                     </div>
                 </div>
             </section>

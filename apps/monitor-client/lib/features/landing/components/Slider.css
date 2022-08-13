@@ -89,19 +89,23 @@
 
 @media screen and (max-width: 768px) {
     .slider {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
     }
 
     .slider__header {
-        font-size: 2.2rem;
+        font-size: 1.6rem;
     }
 
     .slider__btn {
-        font-size: 2.6rem;
+        font-size: 2rem;
     }
 
     .slider__icon {
-        width: 10rem;
+        width: 5rem;
+    }
+
+    .slider__desc {
+        gap: 1.2em;
     }
 
     .arrow {
