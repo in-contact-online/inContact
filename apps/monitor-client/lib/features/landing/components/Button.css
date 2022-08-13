@@ -18,9 +18,6 @@
     transition: transform 0.2s;
 }
 
-.btn__img {
-}
-
 @media screen and (max-width: 1200px) {
 }
 
@@ -28,7 +25,11 @@
 }
 
 @media screen and (max-width: 768px) {
+    .btn__img {
+        width: 3rem;
+    }
+
     .btn {
-        font-size: 2rem;
+        font-size: 1.4rem;
     }
 }
