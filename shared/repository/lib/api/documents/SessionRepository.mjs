@@ -110,12 +110,10 @@ export class SessionRepository extends RepoBase {
      * @param {string} sessionId - identifier of session
      * @returns {Promise<Object>}
      */
-    async remove({ sessionId}) {
-        const result = await this.db
-            .queryAsync('DELETE FROM sessions WHERE id = $1', [sessionId])
-            .catch((err) => {
-                throw new RepoError(err);
-            });
+    async remove({ sessionId }) {
+        const result = await this.db.queryAsync('DELETE FROM sessions WHERE id = $1', [sessionId]).catch((err) => {
+            throw new RepoError(err);
+        });
         return result && result.rows[0];
     }
 }

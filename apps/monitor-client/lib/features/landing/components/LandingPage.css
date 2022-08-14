@@ -21,6 +21,21 @@ p {
     margin: 0;
 }
 
+a {
+    font-weight: 400;
+    color: var(--color-text-dark);
+}
+
+a:hover,
+a:active,
+a:visited {
+    color: var(--color-text-dark);
+}
+
+strong {
+    font-weight: 600;
+}
+
 body {
     font-family: Montserrat, Arial, Helvetica, sans-serif;
     color: var(--color-text-dark);
@@ -33,7 +48,6 @@ body {
     font-size: 3.6rem;
     font-weight: 400;
     text-align: center;
-    margin-top: 0.4em;
     margin-bottom: 3em;
 }
 
@@ -76,30 +90,35 @@ body {
 .section {
     position: relative;
     box-sizing: border-box;
-    min-height: 70rem;
-    height: 100vh;
-    padding-top: 6rem;
-    padding-bottom: 4rem;
+    height: auto;
+    padding-top: 8em;
+    padding-bottom: 10em;
 }
 
 .section-header {
+    min-height: 70rem;
+    height: 100vh;
     max-height: 120rem;
     background: var(--color-bg-primary);
     color: var(--color-text-light);
 }
 
 .section-slider {
-    max-height: 120rem;
     background: var(--color-bg-secondary) url('../../../../public/images/slider_bg.png') no-repeat bottom right;
+    padding-bottom: 14em;
 }
 
 .section-steps {
-    height: auto;
     background-color: var(--color-bg-primary);
 }
 
+.section-steps__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 11.5rem;
+}
+
 .section-features {
-    height: auto;
     background-color: var(--color-bg-secondary);
 }
 
@@ -143,7 +162,7 @@ body {
     font-size: 2rem;
     font-style: italic;
     text-align: center;
-    margin-top: 10em;
+    margin-top: 5em;
 }
 
 @media screen and (max-width: 1200px) {
@@ -207,6 +226,6 @@ body {
     }
 
     .section-footer__copy {
-        font-size: 1.4rem;
+        font-size: 1rem;
     }
 }
