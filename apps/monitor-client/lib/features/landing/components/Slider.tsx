@@ -1,10 +1,9 @@
 import React from 'react';
-
-import './Slider.css';
 import { ArrowLeft } from './ArrowLeft';
 import { ArrowRight } from './ArrowRight';
 import { Navigation, Pagination, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import './Slider.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -22,7 +21,8 @@ export function Slider() {
                         prevEl: '.arrow-left',
                         nextEl: '.arrow-right',
                     }}
-                    autoplay={{ delay: 5000 }}
+                    loop={true}
+                    autoplay={{ delay: 4000 }}
                     pagination={{ clickable: true }}
                 >
                     <SwiperSlide>

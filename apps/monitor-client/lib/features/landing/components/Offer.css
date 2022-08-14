@@ -20,11 +20,17 @@
 }
 
 .offer__address {
+    cursor: pointer;
     font-size: 2.4rem;
     font-weight: 500;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.offer__address:hover {
+    transform: scale(105%);
+    transition: transform 0.5s;
 }
 
 .offer__address::before {
