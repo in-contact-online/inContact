@@ -28,6 +28,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.5s;
 }
 
 .offer__address:hover {
@@ -77,8 +78,9 @@
 
 @media screen and (max-width: 768px) {
     .offer {
-        font-size: 1.4rem;
-        margin: 6em auto;
+        width: auto;
+        font-size: 1.8rem;
+        margin: 4em auto;
     }
 
     .offer__header {

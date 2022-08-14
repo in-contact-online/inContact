@@ -22,7 +22,7 @@ p {
 }
 
 a {
-    font-weight: 400;
+    font-weight: 500;
     color: var(--color-text-dark);
 }
 
@@ -33,7 +33,7 @@ a:visited {
 }
 
 strong {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 body {
@@ -91,7 +91,7 @@ body {
     position: relative;
     box-sizing: border-box;
     height: auto;
-    padding-top: 8em;
+    padding-top: 6em;
     padding-bottom: 10em;
 }
 
@@ -99,6 +99,7 @@ body {
     min-height: 70rem;
     height: 100vh;
     max-height: 120rem;
+    padding-top: 4em;
     background: var(--color-bg-primary);
     color: var(--color-text-light);
 }

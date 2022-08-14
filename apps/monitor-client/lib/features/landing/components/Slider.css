@@ -36,10 +36,6 @@
     gap: 1.8em;
 }
 
-.slider__desc p {
-    font-style: italic;
-}
-
 .slider__btn {
     font-size: 3rem;
     font-weight: 400;
