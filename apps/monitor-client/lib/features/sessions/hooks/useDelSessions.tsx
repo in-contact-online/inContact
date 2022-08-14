@@ -2,24 +2,24 @@ import { useContext } from 'react';
 import { useMutation, useQueryClient, QueryClient } from 'react-query';
 import { AppContext, IAppContext } from '../../../context';
 
-export interface ISessionsAdd {
-    isAdding: boolean;
+export interface ISessionsDel {
+    isRemoving: boolean;
     isError: boolean;
-    addSession: (file: FormData) => any;
+    delSession: (id: string) => any;
 }
 
-export function usePostSession(): ISessionsAdd {
+export function useDelSession(): ISessionsDel {
     const { api } = useContext<IAppContext>(AppContext);
     const queryClient: QueryClient = useQueryClient();
-    async function postSession(formData: any) {
-        return api?.sessions.add(formData);
+    async function removeSession(id: string) {
+        return api?.sessions.del(id);
     }
 
-    const { isLoading: isAdding, isError, mutate: addSession } = useMutation(postSession, {
+    const { isLoading: isRemoving, isError, mutate: delSession } = useMutation(removeSession, {
         onSuccess: () => {
             queryClient.invalidateQueries(['sessions']);
         },
     });
 
-    return { isAdding, isError, addSession };
+    return { isRemoving, isError, delSession };
 }
