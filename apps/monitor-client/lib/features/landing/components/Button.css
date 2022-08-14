@@ -14,7 +14,7 @@
 
 .btn:hover {
     cursor: pointer;
-    transform: scale(105%);
+    transform: scale(102%);
     transition: transform 0.2s;
 }
 

@@ -1,4 +1,5 @@
 .offer {
+    position: relative;
     border: 0.1rem solid var(--color-text-light);
     border-radius: 2em;
     font-size: 2.2rem;
@@ -7,6 +8,7 @@
     padding: 1.5em;
     margin-top: 6em;
     margin-left: 6em;
+    z-index: 1;
 }
 
 .offer__header {
