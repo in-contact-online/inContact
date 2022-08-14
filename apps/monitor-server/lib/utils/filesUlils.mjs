@@ -41,7 +41,7 @@ export async function readSqlite(filePath) {
         dcId: result.dc_id,
         serverAddress: result.server_address,
         port: result.port,
-        authKey: result.auth_key
+        authKey: result.auth_key,
     };
 }
 
