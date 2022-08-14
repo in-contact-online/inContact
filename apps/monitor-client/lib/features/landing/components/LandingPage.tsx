@@ -21,6 +21,7 @@ export function LandingPage() {
                     <div className="bg-clouds" />
                 </div>
             </header>
+
             <section className="section section-slider">
                 <div className="container">
                     <h2 className="heading">Что может бот?</h2>
@@ -31,23 +32,25 @@ export function LandingPage() {
             <section className="section section-steps">
                 <div className="container">
                     <h2 className="heading heading-light">Как работает бот?</h2>
-                    <Step
-                        badgeText="Шаг 1"
-                        stepIntro="Добавьте номера телефона для отслеживания"
-                        stepOutro="* Доступные страны: Россия, Украина, Казахстан, Беларусь. В произвольном формате."
-                    />
-                    <Step
-                        dark={true}
-                        badgeText="Шаг 2"
-                        stepIntro="Подключите уведомления"
-                        stepOutro="* Как только Ваши контакты будут онлайн, Вы получете разовое уведомление от бота. Для того чтобы снова получить уведомление, повторите команду /notify_online."
-                    />
-                    <Step
-                        next={false}
-                        badgeText="Шаг 3"
-                        stepIntro="Получайте ежедневный отчет"
-                        stepOutro="* Кроме уведомления от бота, каждый день Вы будете получать развернутый отчет об активности ваших контактов на почту."
-                    />
+                    <div className="section-steps__wrapper">
+                        <Step
+                            badgeText="Шаг 1"
+                            stepIntro="Добавьте номера телефона для отслеживания"
+                            stepOutro="* Доступные страны: Россия, Украина, Казахстан, Беларусь. В произвольном формате."
+                        />
+                        <Step
+                            dark={true}
+                            badgeText="Шаг 2"
+                            stepIntro="Подключите уведомления"
+                            stepOutro="* Как только Ваши контакты будут онлайн, Вы получете разовое уведомление от бота. Для того чтобы снова получить уведомление, повторите команду /notify_online."
+                        />
+                        <Step
+                            next={false}
+                            badgeText="Шаг 3"
+                            stepIntro="Получайте ежедневный отчет"
+                            stepOutro="* Кроме уведомления от бота, каждый день Вы будете получать развернутый отчет об активности ваших контактов на почту."
+                        />
+                    </div>
                 </div>
             </section>
 
@@ -76,7 +79,7 @@ export function LandingPage() {
                 </div>
             </section>
 
-            <section className="section section-footer">
+            <footer className="section section-footer">
                 <div className="container">
                     <h2 className="heading heading-light">Помогите разработке!</h2>
                     <div className="section-footer__wrapper">
@@ -85,13 +88,10 @@ export function LandingPage() {
                             функционала. Активные участники комьюнити первыми получат доступ к расширенной версии бота!
                         </p>
                         <Button icon="/images/tg_button.png" caption="Обсудить в группе" />
-                        <p className="section-footer__copy">
-                            Designed by @whiteadam
-                            <br /> © inContact 2022
-                        </p>
+                        <p className="section-footer__copy">Designed by @whiteadam © inContact 2022</p>
                     </div>
                 </div>
-            </section>
+            </footer>
         </>
     );
 }

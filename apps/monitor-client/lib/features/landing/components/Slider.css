@@ -30,6 +30,7 @@
 
 .slider__desc {
     display: flex;
+    margin-bottom: 2em;
     justify-content: space-between;
     align-items: center;
     gap: 1.8em;
@@ -108,7 +109,8 @@
         gap: 1.2em;
     }
 
-    .arrow {
+    .arrow-left,
+    .arrow-right {
         display: none;
     }
 

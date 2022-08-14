@@ -4,27 +4,27 @@ import './Arrows.css';
 export function ArrowRight() {
     return (
         <svg
-            className="arrow"
+            className="arrow-right"
             width="66"
-            height="66"
-            viewBox="0 0 66 66"
+            height="65"
+            viewBox="0 0 66 65"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <ellipse cx="33" cy="33" rx="32.0833" ry="33" fill="#10C1FC" />
+            <circle cx="33.4166" cy="32.5" r="32.5" fill="#10C1FC" />
             <line
                 y1="-1.5"
-                x2="16.9706"
+                x2="16.9539"
                 y2="-1.5"
-                transform="matrix(0.707107 0.707107 0.707107 -0.707107 29 21)"
+                transform="matrix(0.716995 0.697078 0.716995 -0.697078 29.8442 20)"
                 stroke="white"
                 stroke-width="3"
             />
             <line
                 y1="-1.5"
-                x2="16.9706"
+                x2="16.9539"
                 y2="-1.5"
-                transform="matrix(-0.707107 0.707107 0.707107 0.707107 41 34)"
+                transform="matrix(-0.716995 0.697078 0.716995 0.697078 42 32.8031)"
                 stroke="white"
                 stroke-width="3"
             />
