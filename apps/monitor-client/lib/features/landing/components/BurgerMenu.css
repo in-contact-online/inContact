@@ -41,7 +41,8 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu {
     background: var(--color-text-light);
     padding: 2.5em 1.5em 0;
-    font-size: 1.15em;
+    font-size: 2em;
+    font-weight: 500;
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -51,16 +52,25 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Wrapper for item list */
 .bm-item-list {
-    color: #b8b7ad;
+    color: var(--color-text-dark);
     padding: 0.8em;
 }
 
 /* Individual item */
 .bm-item {
     display: inline-block;
+    padding-bottom: 1.6em;
+}
+
+.bm-item:hover {
+    color: var(--color-accent);
 }
 
 /* Styling of overlay */
 .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
+}
+
+.burger-menu-text {
+    margin-left: 1rem;
 }

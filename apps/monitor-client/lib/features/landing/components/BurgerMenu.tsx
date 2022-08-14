@@ -1,5 +1,8 @@
 import React from 'react';
 import { stack as Menu } from 'react-burger-menu';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRobot, faShoePrints, faMapLocationDot, faUser } from '@fortawesome/free-solid-svg-icons';
+
 import './BurgerMenu.css';
 
 export function BurgerMenu() {
@@ -12,16 +15,20 @@ export function BurgerMenu() {
             outerContainerId={'burger-outer-container'}
         >
             <a id="home" className="menu-item" href="/">
-                Home
+                <FontAwesomeIcon icon={faRobot} width={30} />
+                <span className="burger-menu-text">Возможности</span>
             </a>
             <a id="about" className="menu-item" href="/about">
-                About
+                <FontAwesomeIcon icon={faShoePrints} width={30} />
+                <span className="burger-menu-text">Как работает?</span>
             </a>
             <a id="contact" className="menu-item" href="/contact">
-                Contact
+                <FontAwesomeIcon icon={faMapLocationDot} width={30} />
+                <span className="burger-menu-text">Road map</span>
             </a>
             <a className="menu-item--small" href="">
-                Settings
+                <FontAwesomeIcon icon={faUser} width={30} />
+                <span className="burger-menu-text">Кабинет</span>
             </a>
         </Menu>
     );
