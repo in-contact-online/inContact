@@ -4,12 +4,15 @@ import UseCaseBase from './UseCaseBase.mjs';
 
 export class SaveSession extends UseCaseBase {
     static validationRules = {
-        file: ["required", {
-            "nested_object": {
-                "originalname" : ["required", "string"],
-                "buffer":  ["required"],
-            }
-        }]
+        file: [
+            'required',
+            {
+                nested_object: {
+                    originalname: ['required', 'string'],
+                    buffer: ['required'],
+                },
+            },
+        ],
     };
 
     async execute(params) {
@@ -27,7 +30,7 @@ export class SaveSession extends UseCaseBase {
             dcId: result.dc_id,
             serverAddress: result.server_address,
             port: result.port,
-            authKey: result.auth_key
+            authKey: result.auth_key,
         });
 
         return new Session().readById({ sessionId: params.sessionId });
