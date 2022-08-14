@@ -79,7 +79,8 @@
 @media screen and (max-width: 768px) {
     .offer {
         width: auto;
-        font-size: 1.8rem;
+        max-width: 19em;
+        font-size: 1.6rem;
         margin: 4em auto;
     }
 
