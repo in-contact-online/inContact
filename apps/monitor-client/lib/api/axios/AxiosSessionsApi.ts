@@ -6,6 +6,7 @@ type ReadParams = { page: number; size: number };
 export interface IAxiosSessionsApi {
     readList: (params: ReadParams) => Promise<null | ISessionsReposnse>;
     add: (file: FormData) => Promise<null>;
+    del: (id: string) => Promise<null>;
 }
 
 export class AxiosSessionsApi implements IAxiosSessionsApi {
@@ -30,6 +31,14 @@ export class AxiosSessionsApi implements IAxiosSessionsApi {
                 'Content-Type': 'multipart/form-data',
             },
         });
+        if (response) {
+            return response.data;
+        }
+        return null;
+    }
+
+    async del(id: string) {
+        const response = await this.http.delete(`/sessions/${id}`);
         if (response) {
             return response.data;
         }

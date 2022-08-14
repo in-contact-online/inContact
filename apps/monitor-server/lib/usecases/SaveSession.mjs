@@ -20,17 +20,17 @@ export class SaveSession extends UseCaseBase {
         const result = await readSqlite(tmpFile);
         const sessionId = params.file.originalname.match(/([^/]*)\.session/)[1];
 
-        const existedSession = new Session().readById({ sessionId: params.sessionId });
+        const existedSession = await new Session().readById({ sessionId: params.sessionId });
         if (existedSession) {
             throw new ValidationError('Session already exist');
         }
 
         await new Session().save({
             sessionId,
-            dcId: result.dc_id,
-            serverAddress: result.server_address,
+            dcId: result.dcId,
+            serverAddress: result.serverAddress,
             port: result.port,
-            authKey: result.auth_key,
+            authKey: result.authKey,
         });
 
         return new Session().readById({ sessionId: params.sessionId });
