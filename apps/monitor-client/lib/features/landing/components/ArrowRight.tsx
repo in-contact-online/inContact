@@ -18,7 +18,7 @@ export function ArrowRight() {
                 y2="-1.5"
                 transform="matrix(0.716995 0.697078 0.716995 -0.697078 29.8442 20)"
                 stroke="white"
-                stroke-width="3"
+                strokeWidth="3"
             />
             <line
                 y1="-1.5"
@@ -26,7 +26,7 @@ export function ArrowRight() {
                 y2="-1.5"
                 transform="matrix(-0.716995 0.697078 0.716995 0.697078 42 32.8031)"
                 stroke="white"
-                stroke-width="3"
+                strokeWidth="3"
             />
         </svg>
     );
