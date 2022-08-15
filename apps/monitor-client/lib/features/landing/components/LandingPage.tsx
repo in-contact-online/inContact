@@ -11,6 +11,7 @@ import { BurgerMenu } from './BurgerMenu';
 import { useMediaQuery } from '@mui/material';
 
 import './LandingPage.css';
+import './fonts.css';
 
 export function LandingPage() {
     const isMobile = useMediaQuery('(max-width:768px)');
@@ -94,7 +95,7 @@ export function LandingPage() {
                                 расширенной версии бота!
                             </p>
                             <Button icon="/images/tg_button.png" caption="Обсудить в группе" />
-                            <p className="section-footer__copy">Designed by @whiteadam © inContact 2022</p>
+                            <p className="section-footer__copy">Designed by @whiteadam</p>
                         </div>
                     </div>
                 </footer>

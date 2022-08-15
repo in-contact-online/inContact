@@ -30,8 +30,11 @@ export function Slider() {
                         <div className="slider__desc">
                             <img className="slider__icon" src="/images/line-chart.png" alt="" />
                             <p>
-                                Каждый день на почту Вы будете получать отчет <a href="">График активности</a> о том,
-                                когда и сколько времени пользователь был онлайн в <strong>Telegram.</strong>
+                                Каждый день на почту Вы будете получать отчет{' '}
+                                <a className="slider__link" href="">
+                                    График активности
+                                </a>{' '}
+                                о том, когда и сколько времени пользователь был онлайн в <strong>Telegram.</strong>
                             </p>
                         </div>
                     </SwiperSlide>
