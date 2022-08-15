@@ -1,4 +1,5 @@
 .offer {
+    position: relative;
     border: 0.1rem solid var(--color-text-light);
     border-radius: 2em;
     font-size: 2.2rem;
@@ -7,6 +8,7 @@
     padding: 1.5em;
     margin-top: 6em;
     margin-left: 6em;
+    z-index: 1;
 }
 
 .offer__header {
@@ -26,6 +28,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.5s;
 }
 
 .offer__address:hover {
@@ -75,8 +78,10 @@
 
 @media screen and (max-width: 768px) {
     .offer {
-        font-size: 1.4rem;
-        margin: 6em auto;
+        width: auto;
+        max-width: 19em;
+        font-size: 1.6rem;
+        margin: 4em auto;
     }
 
     .offer__header {
