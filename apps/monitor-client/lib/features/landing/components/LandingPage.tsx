@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Navbar } from './Navbar';
 import { Offer } from './Offer';
@@ -13,28 +13,50 @@ import { useMediaQuery } from '@mui/material';
 import './LandingPage.css';
 
 export function LandingPage() {
+    const headerRef = React.createRef<HTMLElement>();
+    const featuresRef = React.createRef<HTMLElement>();
+    const stepsRef = React.createRef<HTMLElement>();
+    const roadMapRef = React.createRef<HTMLElement>();
+    const contactsRef = React.createRef<HTMLElement>();
+
     const isMobile = useMediaQuery('(max-width:768px)');
     return (
         <div id="burger-outer-container">
-            {isMobile ? <BurgerMenu /> : ''}
+            {isMobile ? (
+                <BurgerMenu
+                    headerRef={headerRef}
+                    featuresRef={featuresRef}
+                    stepsRef={stepsRef}
+                    roadMapRef={roadMapRef}
+                    contactsRef={contactsRef}
+                />
+            ) : (
+                ''
+            )}
             <div id="burger-page-wrap">
-                <header className="section section-header">
+                <header className="section section-header" ref={headerRef}>
                     <div className="container container-header">
-                        <Navbar />
+                        <Navbar
+                            headerRef={headerRef}
+                            featuresRef={featuresRef}
+                            stepsRef={stepsRef}
+                            roadMapRef={roadMapRef}
+                            contactsRef={contactsRef}
+                        />
                         <Offer />
                         <div className="bg-girl" />
                         <div className="bg-clouds" />
                     </div>
                 </header>
 
-                <section className="section section-slider">
+                <section className="section section-slider" ref={featuresRef}>
                     <div className="container">
                         <h2 className="heading">Что может бот?</h2>
                         <Slider />
                     </div>
                 </section>
 
-                <section className="section section-steps">
+                <section className="section section-steps" ref={stepsRef}>
                     <div className="container">
                         <h2 className="heading heading-light">Как работает бот?</h2>
                         <div className="section-steps__wrapper">
@@ -59,7 +81,7 @@ export function LandingPage() {
                     </div>
                 </section>
 
-                <section className="section section-features">
+                <section className="section section-features" ref={roadMapRef}>
                     <div className="container">
                         <h2 className="heading">Планы по развитию бота</h2>
                         <div className="section-features__wrapper">
@@ -84,7 +106,7 @@ export function LandingPage() {
                     </div>
                 </section>
 
-                <footer className="section section-footer">
+                <footer className="section section-footer" ref={contactsRef}>
                     <div className="container">
                         <h2 className="heading heading-light">Помогите разработке!</h2>
                         <div className="section-footer__wrapper">
