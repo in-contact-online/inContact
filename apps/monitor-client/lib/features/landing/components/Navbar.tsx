@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { appPersistentStorage } from '../../../../utils/AppPersistentStorage';
 import './Navbar.css';
 
 interface MenuRefType {
@@ -14,6 +16,8 @@ export function Navbar({ headerRef, featuresRef, stepsRef, roadMapRef, contactsR
         el?.scrollIntoView({ behavior: 'smooth' });
     }
 
+    const navigate = useNavigate();
+    const token = appPersistentStorage.apiToken;
     return (
         <div className="nav">
             <img className="logo" src="/images/in-contact-logo.webp" />
@@ -30,7 +34,13 @@ export function Navbar({ headerRef, featuresRef, stepsRef, roadMapRef, contactsR
                 <li className="menu__item" onClick={() => scrollToElement(contactsRef.current)}>
                     Контакты
                 </li>
-                <li className="menu__item menu__item-admin">Server</li>
+                {token ? (
+                    <li className="menu__item menu__item-admin" onClick={() => navigate('/admin')}>
+                        Server
+                    </li>
+                ) : (
+                    ''
+                )}
             </ol>
         </div>
     );
