@@ -12,8 +12,8 @@ export function useIntersection(
 
     const frozen = entry?.isIntersecting && freezeOnceVisible;
 
-    const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
-        setEntry(entry);
+    const updateEntry = ([intersectionEntry]: IntersectionObserverEntry[]): void => {
+        setEntry(intersectionEntry);
     };
 
     useEffect(() => {
