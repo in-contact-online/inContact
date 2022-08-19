@@ -13,6 +13,7 @@ import { useMediaQuery } from '@mui/material';
 import { DynamicElement } from './DynamicElement';
 
 import './LandingPage.css';
+import './fonts.css';
 
 export function LandingPage() {
     const headerRef = React.createRef<HTMLElement>();
@@ -121,7 +122,7 @@ export function LandingPage() {
                                 расширенной версии бота!
                             </p>
                             <Button icon="/images/tg_button.png" caption="Обсудить в группе" />
-                            <p className="section-footer__copy">Designed by @whiteadam © inContact 2022</p>
+                            <p className="section-footer__copy">Designed by @whiteadam</p>
                         </div>
                     </div>
                 </footer>

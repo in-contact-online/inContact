@@ -3,7 +3,6 @@
     border: 0.1rem solid var(--color-text-light);
     border-radius: 2em;
     font-size: 2.2rem;
-    font-weight: 300;
     width: 19em;
     padding: 1.5em;
     margin-top: 6em;
@@ -13,7 +12,7 @@
 
 .offer__header {
     font-size: 2.8rem;
-    font-weight: 400;
+    font-weight: 500;
     margin-bottom: 1em;
 }
 

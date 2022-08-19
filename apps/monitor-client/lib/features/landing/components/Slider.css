@@ -56,6 +56,10 @@
     font-size: 3.1rem;
 }
 
+.slider__link {
+    font-weight: 500;
+}
+
 @media screen and (max-width: 1200px) {
     .slider {
         font-size: 2.4rem;
