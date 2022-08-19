@@ -1,18 +1,36 @@
-import React, { useState, useEffect, RefObject } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
-export const useIntersection = (element: RefObject<any>, rootMargin: string) => {
-    const [isVisible, setState] = useState(false);
+interface Args extends IntersectionObserverInit {
+    freezeOnceVisible?: boolean;
+}
+
+export function useIntersection(
+    elementRef: RefObject<Element>,
+    { threshold = 0, root = null, rootMargin = '0%', freezeOnceVisible = false }: Args
+): IntersectionObserverEntry | undefined {
+    const [entry, setEntry] = useState<IntersectionObserverEntry>();
+
+    const frozen = entry?.isIntersecting && freezeOnceVisible;
+
+    const updateEntry = ([intersectionEntry]: IntersectionObserverEntry[]): void => {
+        setEntry(intersectionEntry);
+    };
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setState(entry.isIntersecting);
-            },
-            { rootMargin }
-        );
+        const node = elementRef?.current; // DOM Ref
+        const hasIOSupport = !!window.IntersectionObserver;
 
-        observer.observe(element.current);
-    }, []);
+        if (!hasIOSupport || frozen || !node) return;
 
-    return isVisible;
-};
+        const observerParams = { threshold, root, rootMargin };
+        const observer = new IntersectionObserver(updateEntry, observerParams);
+
+        observer.observe(node);
+
+        return () => observer.disconnect();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [elementRef, JSON.stringify(threshold), root, rootMargin, frozen]);
+
+    return entry;
+}

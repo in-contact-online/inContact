@@ -10,6 +10,8 @@ import { Button } from './Button';
 import { BurgerMenu } from './BurgerMenu';
 import { useMediaQuery } from '@mui/material';
 
+import { DynamicElement } from './DynamicElement';
+
 import './LandingPage.css';
 
 export function LandingPage() {
@@ -20,6 +22,7 @@ export function LandingPage() {
     const contactsRef = React.createRef<HTMLElement>();
 
     const isMobile = useMediaQuery('(max-width:768px)');
+
     return (
         <div id="burger-outer-container">
             {isMobile ? (
@@ -81,30 +84,32 @@ export function LandingPage() {
                     </div>
                 </section>
 
-                <section className="section section-features" ref={roadMapRef}>
-                    <div className="container">
-                        <h2 className="heading">Планы по развитию бота</h2>
-                        <div className="section-features__wrapper">
-                            <Feature
-                                done={true}
-                                icon="/images/bar-chart.png"
-                                desc="Полная, поминутная, статистика выхода в сеть отслеживаемых контактов"
-                            />
-                            <FeatureArrow className="section-features__arrow" />
-                            <Feature
-                                done={true}
-                                icon="/images/notifications.png"
-                                desc="Оповещения при смене статуса контакта, например, при  появлении онлайн"
-                            />
-                            <FeatureArrow className="section-features__arrow" />
-                            <Feature
-                                done={false}
-                                icon="/images/networking.png"
-                                desc="Аналитика взаимодействия контактов, на основе накопленных данных об их онлайн статусах"
-                            />
+                <DynamicElement timeout={2000} sectionRef={roadMapRef}>
+                    <section className="section section-features" ref={roadMapRef}>
+                        <div className="container">
+                            <h2 className="heading">Планы по развитию бота</h2>
+                            <div className="section-features__wrapper">
+                                <Feature
+                                    done={true}
+                                    icon="/images/bar-chart.png"
+                                    desc="Полная, поминутная, статистика выхода в сеть отслеживаемых контактов"
+                                />
+                                <FeatureArrow className="section-features__arrow" />
+                                <Feature
+                                    done={true}
+                                    icon="/images/notifications.png"
+                                    desc="Оповещения при смене статуса контакта, например, при  появлении онлайн"
+                                />
+                                <FeatureArrow className="section-features__arrow" />
+                                <Feature
+                                    done={false}
+                                    icon="/images/networking.png"
+                                    desc="Аналитика взаимодействия контактов, на основе накопленных данных об их онлайн статусах"
+                                />
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                </DynamicElement>
 
                 <footer className="section section-footer" ref={contactsRef}>
                     <div className="container">
