@@ -22,7 +22,7 @@ export function BurgerMenu({ headerRef, featuresRef, stepsRef, roadMapRef, conta
 
     const navigate = useNavigate();
 
-    const token = appPersistentStorage.apiToken;
+    const adminFlag = appPersistentStorage.adminFlag;
 
     return (
         <Menu
@@ -48,7 +48,7 @@ export function BurgerMenu({ headerRef, featuresRef, stepsRef, roadMapRef, conta
                 <FontAwesomeIcon icon={faContactBook} width={30} />
                 <span className="burger-menu-text">Контакты</span>
             </a>
-            {token ? (
+            {adminFlag ? (
                 <a
                     className="menu-item--small"
                     href=""

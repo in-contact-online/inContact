@@ -17,7 +17,7 @@ export function Navbar({ headerRef, featuresRef, stepsRef, roadMapRef, contactsR
     }
 
     const navigate = useNavigate();
-    const token = appPersistentStorage.apiToken;
+    const adminFlag = appPersistentStorage.adminFlag;
     return (
         <div className="nav">
             <img className="logo" src="/images/in-contact-logo.webp" />
@@ -34,7 +34,7 @@ export function Navbar({ headerRef, featuresRef, stepsRef, roadMapRef, contactsR
                 <li className="menu__item" onClick={() => scrollToElement(contactsRef.current)}>
                     Контакты
                 </li>
-                {token ? (
+                {adminFlag ? (
                     <li className="menu__item menu__item-admin" onClick={() => navigate('/admin')}>
                         Server
                     </li>

@@ -1,5 +1,5 @@
 const BrowserKeys = {
-    UserToken: 'IN_CONTACT_APP_TOKEN',
+    showAdminFlag: 'IN_CONTACT_ADMIN_FLAG',
 };
 
 class AppPersistentStorage {
@@ -16,8 +16,8 @@ class AppPersistentStorage {
      * @method Read token in a local storage
      * @return {string|null}
      */
-    get apiToken() {
-        return this.local.getItem(BrowserKeys.UserToken);
+    get adminFlag() {
+        return this.local.getItem(BrowserKeys.showAdminFlag);
     }
 }
 
