@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { appPersistentStorage } from '../../../../utils/AppPersistentStorage';
+import { AppContext, IAppContext } from '../../../context';
 import './Navbar.css';
 
 interface MenuRefType {
-    headerRef: React.RefObject<HTMLElement>;
     featuresRef: React.RefObject<HTMLElement>;
     stepsRef: React.RefObject<HTMLElement>;
     roadMapRef: React.RefObject<HTMLElement>;
     contactsRef: React.RefObject<HTMLElement>;
 }
 
-export function Navbar({ headerRef, featuresRef, stepsRef, roadMapRef, contactsRef }: MenuRefType) {
+export function Navbar({ featuresRef, stepsRef, roadMapRef, contactsRef }: MenuRefType) {
     function scrollToElement(el: HTMLElement | null) {
         el?.scrollIntoView({ behavior: 'smooth' });
     }
-
+    const { appPersistentStorage } = useContext<IAppContext>(AppContext);
     const navigate = useNavigate();
-    const adminFlag = appPersistentStorage.adminFlag;
+    const showAdminMenu = appPersistentStorage?.securityToken;
     return (
         <div className="nav">
             <img className="logo" src="/images/in-contact-logo.webp" />
@@ -34,7 +33,7 @@ export function Navbar({ headerRef, featuresRef, stepsRef, roadMapRef, contactsR
                 <li className="menu__item" onClick={() => scrollToElement(contactsRef.current)}>
                     Контакты
                 </li>
-                {adminFlag ? (
+                {showAdminMenu ? (
                     <li className="menu__item menu__item-admin" onClick={() => navigate('/admin')}>
                         Server
                     </li>

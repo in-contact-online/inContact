@@ -5,7 +5,7 @@ import { AxiosUsersApi, IAxiosUsersApi } from './AxiosUsersApi';
 import { AxiosSystemHealthApi, IAxiosSystemHealthApi } from './AxiosSystemHealthApi';
 import { AxiosStatusesApi, IAxiosStatusesApi } from './AxiosStatusesApi';
 
-type ClientOptions = { baseURL: string };
+type ClientOptions = { baseURL: string; securityToken: string };
 
 export interface IAxiosClientApi {
     readonly users: IAxiosUsersApi;
@@ -30,6 +30,9 @@ export class AxiosClientApi implements IAxiosClientApi {
         const instance = axios.create({
             baseURL: options.baseURL,
             timeout: 1000,
+            headers: {
+                'X-User-Security-Token': options.securityToken,
+            },
         });
         this._users = new AxiosUsersApi(instance);
         this._contacts = new AxiosContactsApi(instance);
