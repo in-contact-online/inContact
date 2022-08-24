@@ -1,6 +1,7 @@
 {
   "logLevel": ["required",  "string"],
   "serviceName": ["required",  "string"],
+  "securityToken": ["required",  "string"],
   "db": ["required", {
     "nested_object": {
       "host" : ["required", "string"],
