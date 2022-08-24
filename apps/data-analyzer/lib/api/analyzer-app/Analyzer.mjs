@@ -31,7 +31,7 @@ export default class Analyzer {
      */
     async init() {
         this.#cronJob = new CronJob(
-            this.#config.cron,
+            this.#config.dailyCron,
             async () => {
                 await new InitWorkersQueue().execute(WORKER_TYPES.IN_CONTACT_ACTIVITIES);
             },
