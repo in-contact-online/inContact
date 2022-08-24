@@ -5,10 +5,9 @@ import { Status } from '../status/index.mjs';
 import { Api } from 'telegram';
 import { generateRandomBigInt } from 'telegram/Helpers';
 import { Contact } from '../index.mjs';
-import ModelBase from '../ModelBase.mjs';
 import logger from '../../api/logger.mjs';
 
-export class ClientsPool extends ModelBase {
+export class ClientsPool {
     /**
      * @typedef {Class} ClientsPool
      * @method init
