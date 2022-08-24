@@ -21,7 +21,7 @@ export class Session extends ModelBase {
 
     /**
      * @method
-     * @param {Object} sessionId
+     * @param {String} sessionId
      * @returns {Promise<Object>}
      */
     async invalidate(sessionId) {
