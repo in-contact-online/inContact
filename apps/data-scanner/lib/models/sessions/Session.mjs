@@ -1,4 +1,5 @@
 import ModelBase from '../ModelBase.mjs';
+import * as ConfigContainer from '../../config.cjs';
 
 export class Session extends ModelBase {
     /**
@@ -20,13 +21,18 @@ export class Session extends ModelBase {
 
     /**
      * @method
-     * @param {Object} params
-     * @property {String} sessionId - session idetifier that equel phone number that activates the session
-     * @property {Boolean} valid - if session is valid
+     * @param {String} sessionId
      * @returns {Promise<Object>}
      */
-    async update(params) {
-        return this.repository.session.update(params);
+    async invalidate(sessionId) {
+        const systemUser = ConfigContainer.config.smtp.user;
+        this.notificator.email.send({
+            to: `${systemUser}, Jurchenko.A@gmail.com`,
+            text: 'Session failed',
+            subject: 'InContact. Failed session notification.',
+            html: `<div>Session: ${sessionId} is failed. Time: ${new Date().toISOString()}</div>`,
+        });
+        return this.repository.session.update({ sessionId, valid: false });
     }
 
     /**
