@@ -7,7 +7,7 @@ export const access = {
         const promise = runUseCase(AccessCheck, {
             params: {
                 securityToken: req.get('X-User-Security-Token'),
-            }
+            },
         });
         try {
             await promise;
@@ -17,4 +17,4 @@ export const access = {
             res.status(401).send({ message: 'Access denied' });
         }
     },
-}
+};
