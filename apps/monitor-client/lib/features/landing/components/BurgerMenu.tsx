@@ -2,7 +2,8 @@ import React from 'react';
 import { stack as Menu } from 'react-burger-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRobot, faShoePrints, faMapLocationDot, faUser, faContactBook } from '@fortawesome/free-solid-svg-icons';
-
+import { useNavigate } from 'react-router-dom';
+import { appPersistentStorage } from '../../../../utils/AppPersistentStorage';
 import './BurgerMenu.css';
 
 interface MenuRefType {
@@ -18,6 +19,10 @@ export function BurgerMenu({ headerRef, featuresRef, stepsRef, roadMapRef, conta
         event.preventDefault();
         ref.current?.scrollIntoView({ behavior: 'smooth' });
     };
+
+    const navigate = useNavigate();
+
+    const adminFlag = appPersistentStorage.adminFlag;
 
     return (
         <Menu
@@ -43,10 +48,21 @@ export function BurgerMenu({ headerRef, featuresRef, stepsRef, roadMapRef, conta
                 <FontAwesomeIcon icon={faContactBook} width={30} />
                 <span className="burger-menu-text">Контакты</span>
             </a>
-            <a className="menu-item--small" href="">
-                <FontAwesomeIcon icon={faUser} width={30} />
-                <span className="burger-menu-text">Кабинет</span>
-            </a>
+            {adminFlag ? (
+                <a
+                    className="menu-item--small"
+                    href=""
+                    onClick={(event) => {
+                        event.preventDefault();
+                        navigate('/admin');
+                    }}
+                >
+                    <FontAwesomeIcon icon={faUser} width={30} />
+                    <span className="burger-menu-text">Кабинет</span>
+                </a>
+            ) : (
+                ''
+            )}
         </Menu>
     );
 }
