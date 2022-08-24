@@ -5,9 +5,10 @@ import { Status } from '../status/index.mjs';
 import { Api } from 'telegram';
 import { generateRandomBigInt } from 'telegram/Helpers';
 import { Contact } from '../index.mjs';
+import ModelBase from '../ModelBase.mjs';
 import logger from '../../api/logger.mjs';
 
-export class ClientsPool {
+export class ClientsPool extends ModelBase {
     /**
      * @typedef {Class} ClientsPool
      * @method init
@@ -40,7 +41,7 @@ export class ClientsPool {
                 ClientsPool.pool.push(client);
             } catch (e) {
                 logger.error(e);
-                await new Session().update({ sessionId: client.sessionId, valid: false });
+                await new Session().invalidate(client.sessionId);
             }
         }
 
@@ -71,7 +72,7 @@ export class ClientsPool {
             )
             .then(async (data) => {
                 if (data.users[0])
-                    logger.info(`Contact ${data.users[0].phone} added to the Pool to tne session ${client.sessionId}`);
+                    logger.info(`Contact ${data.users[0].phone} added to the Pool to the session ${client.sessionId}`);
                 return data.users[0] ? '+' + data.users[0].phone : null;
             });
     }
@@ -118,18 +119,6 @@ export class ClientsPool {
         }
     }
 
-    static async clearContacts() {
-        for (const client of ClientsPool.pool) {
-            const result = await client.invoke(new Api.contacts.GetContacts({}));
-            const ids = result.users.map((user) => user.id.value);
-            await client.invoke(
-                new Api.contacts.DeleteContacts({
-                    id: ids,
-                })
-            );
-        }
-    }
-
     static async removeContacts(contactsList) {
         for (const contact of contactsList) {
             await new Contact().updateSession({
@@ -162,10 +151,10 @@ export class ClientsPool {
      * @returns {Promise<void>}
      */
     static async checkStatuses() {
-        const command = new Api.contacts.GetContacts({});
+        const getContactsCommand = new Api.contacts.GetContacts({});
         for (const client of ClientsPool.pool) {
             try {
-                const result = await client.invoke(command);
+                const result = await client.invoke(getContactsCommand);
                 for (const user of result.users) {
                     if (user.status) {
                         const wasOnline =
@@ -191,7 +180,7 @@ export class ClientsPool {
                 ClientsPool.removeClient(client);
                 await new Contact().removeSessionId({ sessionId: client.sessionId });
                 logger.info(`Session ${client.sessionId} failed`);
-                await new Session().update({ sessionId: client.sessionId, valid: false });
+                await new Session().invalidate(client.sessionId);
             }
         }
     }

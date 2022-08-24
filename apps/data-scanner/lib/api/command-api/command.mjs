@@ -10,7 +10,7 @@ class Command {
     /**
      * @method
      * @param {String} command - command string
-     * @param {Object} congif - configuration object
+     * @param {Object} config - configuration object
      */
     invoke(command, config) {
         switch (command) {
