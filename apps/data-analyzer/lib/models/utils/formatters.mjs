@@ -64,7 +64,7 @@ export function defineInContact(usersMap) {
                 result.push({
                     userOne: users[i - 1],
                     userTwo: users[j],
-                    communicated
+                    communicated,
                 });
             }
         }

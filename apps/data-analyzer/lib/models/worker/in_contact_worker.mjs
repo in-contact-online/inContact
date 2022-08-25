@@ -36,7 +36,8 @@ async function main(options) {
                 // start talk
                 if (prev.was_online && !cur.was_online) usersMap[phoneNumber].push(cur.check_date);
                 // stop talk
-                if (!prev.was_online && cur.was_online && usersMap[phoneNumber].length) usersMap[phoneNumber].push(cur.was_online);
+                if (!prev.was_online && cur.was_online && usersMap[phoneNumber].length)
+                    usersMap[phoneNumber].push(cur.was_online);
             }
         });
     }
