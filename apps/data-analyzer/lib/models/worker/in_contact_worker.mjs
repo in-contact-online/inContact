@@ -1,4 +1,5 @@
 import { createRepository } from '@in-contact/repository';
+import { getActivityPeriodsMap, defineInContact } from '../utils/index.mjs';
 import logger from '../../api/logger.mjs';
 import { Contact } from '../contact/index.mjs';
 import { Status } from '../status/index.mjs';
@@ -27,18 +28,24 @@ async function main(options) {
         const phoneNumber = (contact.tracked_phone || '').replace('+', '');
         const checkDate = new Date(new Date().getTime() - 10 * 60 * 1000).toISOString();
         const statuses = await new Status().readByPhone({ phoneNumber, checkDate });
-        usersMap[phoneNumber] = {};
-        statuses.forEach((status) => {
-            if (status.was_online) {
-                const wasOnline = new Date(status.was_online).toISOString();
-                usersMap[phoneNumber][wasOnline] = wasOnline;
-            } else {
-                const checkDate = new Date(status.check_date).toISOString();
-                usersMap[phoneNumber][checkDate] = checkDate;
+        usersMap[phoneNumber] = [];
+        statuses.forEach((status, index) => {
+            if (index > 0) {
+                const prev = statuses[index - 1];
+                const cur = status;
+                // start talk
+                if (prev.was_online && !cur.was_online) usersMap[phoneNumber].push(cur.check_date);
+                // stop talk
+                if (!prev.was_online && cur.was_online && usersMap[phoneNumber].length)
+                    usersMap[phoneNumber].push(cur.was_online);
             }
         });
     }
-    console.log(JSON.stringify(usersMap));
+    for (const phone of usersMap) {
+        usersMap[phone] = getActivityPeriodsMap(usersMap[phone]);
+    }
+    const result = defineInContact(usersMap);
+    logger.info(JSON.stringify(result));
     return undefined;
 }
 
