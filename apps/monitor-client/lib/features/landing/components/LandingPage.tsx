@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-
+import React from 'react';
+import { useMediaQuery } from '@mui/material';
 import { Navbar } from './Navbar';
 import { Offer } from './Offer';
 import { Slider } from './Slider';
@@ -8,10 +8,7 @@ import { Feature } from './Feature';
 import { FeatureArrow } from './FeatureArrow';
 import { Button } from './Button';
 import { BurgerMenu } from './BurgerMenu';
-import { useMediaQuery } from '@mui/material';
-
 import { DynamicElement } from './DynamicElement';
-
 import './LandingPage.css';
 import './fonts.css';
 
@@ -28,7 +25,6 @@ export function LandingPage() {
         <div id="burger-outer-container">
             {isMobile ? (
                 <BurgerMenu
-                    headerRef={headerRef}
                     featuresRef={featuresRef}
                     stepsRef={stepsRef}
                     roadMapRef={roadMapRef}
@@ -41,7 +37,6 @@ export function LandingPage() {
                 <header className="section section-header" ref={headerRef}>
                     <div className="container container-header">
                         <Navbar
-                            headerRef={headerRef}
                             featuresRef={featuresRef}
                             stepsRef={stepsRef}
                             roadMapRef={roadMapRef}

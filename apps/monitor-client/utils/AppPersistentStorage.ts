@@ -1,8 +1,12 @@
 const BrowserKeys = {
-    showAdminFlag: 'IN_CONTACT_ADMIN_FLAG',
+    securityToken: 'IN_CONTACT_SECURITY_TOKEN',
 };
 
-class AppPersistentStorage {
+export interface IAppPersistentStorage {
+    securityToken: string | null;
+}
+
+class AppPersistentStorage implements IAppPersistentStorage {
     private local: Storage;
 
     /**
@@ -16,8 +20,8 @@ class AppPersistentStorage {
      * @method Read token in a local storage
      * @return {string|null}
      */
-    get adminFlag() {
-        return this.local.getItem(BrowserKeys.showAdminFlag);
+    get securityToken(): string | null {
+        return this.local.getItem(BrowserKeys.securityToken);
     }
 }
 
