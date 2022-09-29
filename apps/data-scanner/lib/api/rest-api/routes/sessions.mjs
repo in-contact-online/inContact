@@ -7,7 +7,7 @@ export const sessions = {
         () => {
         },
         (result, res) => {
-            res.send(result);
+            res.send(result.map(client => client.sessionId));
         }
     ),
 };

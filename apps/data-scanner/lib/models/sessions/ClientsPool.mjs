@@ -40,6 +40,7 @@ export class ClientsPool {
         }
 
         ClientsPool.pool.sort((a, b) => a.contactsCount - b.contactsCount);
+        return ClientsPool.pool;
     }
 
     static async init() {
