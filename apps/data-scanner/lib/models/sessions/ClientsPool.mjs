@@ -1,10 +1,10 @@
-import { Client } from './Client.mjs';
-import { Session } from './Session.mjs';
-import { humanReadableDate } from '../../utils/index.mjs';
-import { Status } from '../status/index.mjs';
-import { Api } from 'telegram';
-import { generateRandomBigInt } from 'telegram/Helpers';
-import { Contact } from '../index.mjs';
+import {Client} from './Client.mjs';
+import {Session} from './Session.mjs';
+import {humanReadableDate} from '../../utils/index.mjs';
+import {Status} from '../status/index.mjs';
+import {Api} from 'telegram';
+import {generateRandomBigInt} from 'telegram/Helpers';
+import {Contact} from '../index.mjs';
 import logger from '../../api/logger.mjs';
 
 export class ClientsPool {
@@ -20,20 +20,15 @@ export class ClientsPool {
     static pool = null;
 
     /**
-     * @param {Object} config - service configuration
-     * @param {String} config.sessionsFolder - folder path with telegram sessions
-     * @param {String} config.apiId - Telegram Api id
-     * @param {String} config.apiHash - Telegram Api hash
      * @returns {Promise<void>}
      */
-    static async init(config) {
-        if (ClientsPool.pool) return;
+    static async sync() {
         ClientsPool.pool = [];
 
-        const sessions = await new Session().readAll({ valid: true });
+        const sessions = await new Session().readAll({valid: true});
 
         for (const session of sessions) {
-            const client = new Client(session, config);
+            const client = new Client(session);
 
             try {
                 await client.init();
@@ -45,6 +40,11 @@ export class ClientsPool {
         }
 
         ClientsPool.pool.sort((a, b) => a.contactsCount - b.contactsCount);
+    }
+
+    static async init() {
+        if (ClientsPool.pool) return;
+        await ClientsPool.sync();
     }
 
     static addClient(client) {
@@ -82,7 +82,7 @@ export class ClientsPool {
      */
     static async addContacts(contactsList) {
         for (const contact of contactsList) {
-            const theSameContacts = await new Contact().getTrackedByPhone({ trackedPhone: contact.tracked_phone });
+            const theSameContacts = await new Contact().getTrackedByPhone({trackedPhone: contact.tracked_phone});
 
             if (theSameContacts.length > 0) {
                 await new Contact().updateSession({
@@ -129,7 +129,7 @@ export class ClientsPool {
             const client = ClientsPool.pool.find((client) => client.sessionId === contact.session_id);
 
             if (client) {
-                const theSameContacts = await new Contact().getTrackedByPhone({ trackedPhone: contact.tracked_phone });
+                const theSameContacts = await new Contact().getTrackedByPhone({trackedPhone: contact.tracked_phone});
 
                 if (theSameContacts.length === 0) {
                     const result = await client.invoke(new Api.contacts.GetContacts({}));
@@ -161,7 +161,7 @@ export class ClientsPool {
                                 ? null
                                 : humanReadableDate(user.status.wasOnline);
                         if (wasOnline === null) {
-                            await new Contact().notifyTrackedOnline({ trackedPhone: '+' + user.phone });
+                            await new Contact().notifyTrackedOnline({trackedPhone: '+' + user.phone});
                         }
                         if (wasOnline !== undefined) {
                             await new Status().save({
@@ -171,13 +171,13 @@ export class ClientsPool {
                                 checkDate: new Date().toISOString(),
                             });
                         } else
-                            await new Contact().updateTrackedStatus({ trackedPhone: '+' + user.phone, tracked: false });
+                            await new Contact().updateTrackedStatus({trackedPhone: '+' + user.phone, tracked: false});
                     }
                 }
             } catch (e) {
                 logger.error(e);
                 ClientsPool.removeClient(client);
-                await new Contact().removeSessionId({ sessionId: client.sessionId });
+                await new Contact().removeSessionId({sessionId: client.sessionId});
                 logger.info(`Session ${client.sessionId} failed`);
                 await new Session().invalidate(client.sessionId);
             }
