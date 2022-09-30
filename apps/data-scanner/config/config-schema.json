@@ -1,38 +1,114 @@
 {
-  "logLevel": ["required",  "string"],
-  "serviceName": ["required",  "string"],
-  "db": ["required", {
-    "nested_object": {
-      "host" : ["required", "string"],
-      "port" : ["required", "positive_integer"],
-      "database":  ["required", "string"],
-      "user": ["required", "string"],
-      "password": ["required", "string"],
-      "connectionsLimit": ["required", "positive_integer"]
+  "logLevel": [
+    "required",
+    "string"
+  ],
+  "serviceName": [
+    "required",
+    "string"
+  ],
+  "securityToken": [
+    "required",
+    "string"
+  ],
+  "db": [
+    "required",
+    {
+      "nested_object": {
+        "host": [
+          "required",
+          "string"
+        ],
+        "port": [
+          "required",
+          "positive_integer"
+        ],
+        "database": [
+          "required",
+          "string"
+        ],
+        "user": [
+          "required",
+          "string"
+        ],
+        "password": [
+          "required",
+          "string"
+        ],
+        "connectionsLimit": [
+          "required",
+          "positive_integer"
+        ]
+      }
     }
-  }],
-  "smtp": ["required", {
-    "nested_object": {
-      "host" : ["required", "string"],
-      "port" : ["required", "positive_integer"],
-      "user": ["required", "string"],
-      "password": ["required", "string"],
-      "from": ["required", "string"],
-      "secure": ["required", "boolean"]
+  ],
+  "smtp": [
+    "required",
+    {
+      "nested_object": {
+        "host": [
+          "required",
+          "string"
+        ],
+        "port": [
+          "required",
+          "positive_integer"
+        ],
+        "user": [
+          "required",
+          "string"
+        ],
+        "password": [
+          "required",
+          "string"
+        ],
+        "from": [
+          "required",
+          "string"
+        ],
+        "secure": [
+          "required",
+          "boolean"
+        ]
+      }
     }
-  }],
-  "telegram": ["required", {
-    "nested_object": {
-      "token" : ["required", "string"]
+  ],
+  "telegram": [
+    "required",
+    {
+      "nested_object": {
+        "token": [
+          "required",
+          "string"
+        ]
+      }
     }
-  }],
-  "service": ["required", {
-    "nested_object": {
-      "port": ["required", "positive_integer"],
-      "sessionsFolder": ["required", "string"],
-      "cron": ["required", "string"],
-      "apiId": ["required", "positive_integer"],
-      "apiHash": ["required", "string"]
+  ],
+  "service": [
+    "required",
+    {
+      "nested_object": {
+        "port": [
+          "required",
+          "positive_integer"
+        ],
+        "sessionsFolder": [
+          "required",
+          "string"
+        ],
+        "cron": [
+          "required",
+          "string"
+        ],
+        "apiId": [
+          "required",
+          "positive_integer"
+        ],
+        "apiHash": [
+          "required",
+          "string"
+        ]
+      }
     }
-  }]
+  ]
 }

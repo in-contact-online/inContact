@@ -1,6 +1,6 @@
 import logger from '../logger';
 
-export async function runUseCase(UseCase, {params}) {
+async function runUseCase(UseCase, {params}) {
     return new UseCase().execute(params);
 }
 
