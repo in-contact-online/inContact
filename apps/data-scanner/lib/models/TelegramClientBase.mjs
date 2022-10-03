@@ -7,7 +7,6 @@ export class TelegramClientBase extends TelegramClient {
     constructor(session) {
         super(session, TelegramClientBase.config.apiId, TelegramClientBase.config.apiHash, {});
         this.#config = TelegramClientBase.config;
-        console.log(this.#config);
     }
 
     /**
