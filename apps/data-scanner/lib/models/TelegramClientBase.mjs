@@ -1,4 +1,4 @@
-import {TelegramClient} from 'telegram/index.js';
+import { TelegramClient } from 'telegram/index.js';
 
 export class TelegramClientBase extends TelegramClient {
 

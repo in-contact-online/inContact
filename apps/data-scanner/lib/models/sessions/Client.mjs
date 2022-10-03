@@ -1,5 +1,5 @@
-import {TelegramClientAdapter} from './TelegramClientAdapter.mjs';
-import {Api} from 'telegram';
+import { TelegramClientAdapter } from './TelegramClientAdapter.mjs';
+import { Api } from 'telegram';
 
 export class Client {
     /**

@@ -48,7 +48,7 @@ export class AxiosSessionsApi implements IAxiosSessionsApi {
 
     async syncWithPool() {
         const response = await this.http.get('/sessions_sync');
-        if (response) return response.data.data;
+        if (response) return response.data;
         return null;
     }
 }

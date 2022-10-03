@@ -1,10 +1,10 @@
-import {Client} from './Client.mjs';
-import {Session} from './Session.mjs';
-import {humanReadableDate} from '../../utils/index.mjs';
-import {Status} from '../status/index.mjs';
-import {Api} from 'telegram';
-import {generateRandomBigInt} from 'telegram/Helpers';
-import {Contact} from '../index.mjs';
+import { Client } from './Client.mjs';
+import { Session } from './Session.mjs';
+import { humanReadableDate } from '../../utils/index.mjs';
+import { Status } from '../status/index.mjs';
+import { Api } from 'telegram';
+import { generateRandomBigInt } from 'telegram/Helpers';
+import { Contact } from '../index.mjs';
 import logger from '../../api/logger.mjs';
 
 export class ClientsPool {
