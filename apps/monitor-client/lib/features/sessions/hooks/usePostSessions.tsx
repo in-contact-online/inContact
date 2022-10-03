@@ -11,8 +11,11 @@ export interface ISessionsAdd {
 export function usePostSession(): ISessionsAdd {
     const { api } = useContext<IAppContext>(AppContext);
     const queryClient: QueryClient = useQueryClient();
+
     async function postSession(formData: any) {
-        return api?.sessions.add(formData);
+        const sessions = await api?.sessions.add(formData);
+        await api?.sessions.syncWithPool();
+        return sessions;
     }
 
     const { isLoading: isAdding, isError, mutate: addSession } = useMutation(postSession, {

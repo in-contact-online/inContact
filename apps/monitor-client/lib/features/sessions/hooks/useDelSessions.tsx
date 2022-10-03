@@ -11,8 +11,11 @@ export interface ISessionsDel {
 export function useDelSession(): ISessionsDel {
     const { api } = useContext<IAppContext>(AppContext);
     const queryClient: QueryClient = useQueryClient();
+
     async function removeSession(id: string) {
-        return api?.sessions.del(id);
+        const sessions = await api?.sessions.del(id);
+        await api?.sessions.syncWithPool();
+        return sessions;
     }
 
     const { isLoading: isRemoving, isError, mutate: delSession } = useMutation(removeSession, {

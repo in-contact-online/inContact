@@ -7,6 +7,7 @@ export interface IAxiosSessionsApi {
     readList: (params: ReadParams) => Promise<null | ISessionsReposnse>;
     add: (file: FormData) => Promise<null>;
     del: (id: string) => Promise<null>;
+    syncWithPool: () => Promise<null>;
 }
 
 export class AxiosSessionsApi implements IAxiosSessionsApi {
@@ -42,6 +43,12 @@ export class AxiosSessionsApi implements IAxiosSessionsApi {
         if (response) {
             return response.data;
         }
+        return null;
+    }
+
+    async syncWithPool() {
+        const response = await this.http.get('/sessions_sync');
+        if (response) return response.data.data;
         return null;
     }
 }
