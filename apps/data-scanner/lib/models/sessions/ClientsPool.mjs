@@ -20,20 +20,15 @@ export class ClientsPool {
     static pool = null;
 
     /**
-     * @param {Object} config - service configuration
-     * @param {String} config.sessionsFolder - folder path with telegram sessions
-     * @param {String} config.apiId - Telegram Api id
-     * @param {String} config.apiHash - Telegram Api hash
      * @returns {Promise<void>}
      */
-    static async init(config) {
-        if (ClientsPool.pool) return;
+    static async sync() {
         ClientsPool.pool = [];
 
         const sessions = await new Session().readAll({ valid: true });
 
         for (const session of sessions) {
-            const client = new Client(session, config);
+            const client = new Client(session);
 
             try {
                 await client.init();
@@ -45,6 +40,12 @@ export class ClientsPool {
         }
 
         ClientsPool.pool.sort((a, b) => a.contactsCount - b.contactsCount);
+        return ClientsPool.pool;
+    }
+
+    static async init() {
+        if (ClientsPool.pool) return;
+        await ClientsPool.sync();
     }
 
     static addClient(client) {

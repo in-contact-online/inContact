@@ -10,16 +10,15 @@ class Command {
     /**
      * @method
      * @param {String} command - command string
-     * @param {Object} config - configuration object
      */
-    invoke(command, config) {
+    invoke(command) {
         switch (command) {
             case COMMANDS.SESSIONS.INIT:
-                return commands.sessions.init(config);
+                return commands.sessions.init();
             case COMMANDS.SESSIONS.UPDATE:
-                return commands.sessions.update(config);
+                return commands.sessions.update();
             case COMMANDS.SCANNER.READ:
-                return commands.scanner.read(config);
+                return commands.scanner.read();
             default:
                 undefined;
         }

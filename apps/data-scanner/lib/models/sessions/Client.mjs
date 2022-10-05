@@ -38,15 +38,11 @@ export class Client {
      * @param {String} session.server_address - Telegram session server address
      * @param {Number} session.port - Telegram session port
      * @param {String} session.auth_key - Telegram session authentication key
-     * @param {Object} apiConfig - Telegram api configuration
-     * @param {String} apiConfig.apiId - Telegram Api id
-     * @param {String} apiConfig.apiHash - Telegram Api hash
-
      */
 
-    constructor(session, apiConfig) {
+    constructor(session) {
         this.#sessionId = session.id;
-        this.#api = new TelegramClientAdapter(session, apiConfig);
+        this.#api = new TelegramClientAdapter(session);
         this.#valid = session.valid;
     }
 

@@ -1,7 +1,7 @@
 import { ClientsPool } from '../models/index.mjs';
 
-export class InitSessionsPool {
+export class SyncSessionsPool {
     async execute() {
-        return ClientsPool.init();
+        return await ClientsPool.sync();
     }
 }

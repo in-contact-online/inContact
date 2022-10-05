@@ -1,8 +1,8 @@
 import { StringSession } from 'telegram/sessions/index.js';
-import { TelegramClient } from 'telegram/index.js';
 import { AuthKey } from 'telegram/crypto/AuthKey.js';
+import { TelegramClientBase } from '../TelegramClientBase.mjs';
 
-export class TelegramClientAdapter extends TelegramClient {
+export class TelegramClientAdapter extends TelegramClientBase {
     /**
      * @typedef {Class} TelegramClientAdapter
      */
@@ -13,11 +13,8 @@ export class TelegramClientAdapter extends TelegramClient {
      * @param {String} sessionConfig.server_address - Telegram session server address
      * @param {Number} sessionConfig.port - Telegram session port
      * @param {String} sessionConfig.auth_key - Telegram session authentication key
-     * @param {Object} appConfig - application configuration
-     * @param {Number} appConfig.apiId - Telegram Api id
-     * @param {String} appConfig.apiHash - Telegram Api hash
      */
-    constructor(sessionConfig, appConfig) {
+    constructor(sessionConfig) {
         const session = new StringSession();
         const authKey = new AuthKey();
 
@@ -25,6 +22,6 @@ export class TelegramClientAdapter extends TelegramClient {
         session.setDC(sessionConfig.dc_id, sessionConfig.server_address, sessionConfig.port);
         session.setAuthKey(authKey);
 
-        super(session, appConfig.apiId, appConfig.apiHash, {});
+        super(session);
     }
 }

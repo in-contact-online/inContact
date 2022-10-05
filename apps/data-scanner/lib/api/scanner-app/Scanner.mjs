@@ -29,9 +29,9 @@ export default class Scanner {
         this.#cronJob = new CronJob(
             this.#config.cron,
             async () => {
-                await appCommand.invoke(COMMANDS.SESSIONS.INIT, this.#config);
-                await appCommand.invoke(COMMANDS.SCANNER.READ, this.#config);
-                await appCommand.invoke(COMMANDS.SESSIONS.UPDATE, this.#config);
+                await appCommand.invoke(COMMANDS.SESSIONS.INIT);
+                await appCommand.invoke(COMMANDS.SCANNER.READ);
+                await appCommand.invoke(COMMANDS.SESSIONS.UPDATE);
             },
             null,
             true,

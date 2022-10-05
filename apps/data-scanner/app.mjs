@@ -8,6 +8,7 @@ import * as DataScanner from './lib/api/app.mjs';
 import * as ConfigContainer from './lib/config.cjs';
 import { createPgDbConnection } from './lib/db/index.mjs';
 import ModelBase from './lib/models/ModelBase.mjs';
+import { TelegramClientBase } from './lib/models/TelegramClientBase.mjs';
 
 // Init Logger
 const logger = createLogger({
@@ -51,6 +52,7 @@ const notificator = createNotificator({
 // Init Domain Model Layer
 ModelBase.setRepository(repository);
 ModelBase.setNotificator(notificator);
+TelegramClientBase.setConfig(ConfigContainer.config.service);
 
 // Init Controllers Layer (API)
 DataScanner.start(ConfigContainer.config.service);

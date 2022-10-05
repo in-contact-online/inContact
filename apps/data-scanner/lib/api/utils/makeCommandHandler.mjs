@@ -1,6 +1,6 @@
 import logger from '../logger';
 
-export async function runUseCase(UseCase, { params }) {
+async function runUseCase(UseCase, { params }) {
     return new UseCase().execute(params);
 }
 
@@ -14,7 +14,7 @@ export function makeCommandHandler(UseCase) {
         });
     }
 
-    return async function commandHandler(params) {
+    return async function commandHandler(params = {}) {
         try {
             const startTime = Date.now();
 
