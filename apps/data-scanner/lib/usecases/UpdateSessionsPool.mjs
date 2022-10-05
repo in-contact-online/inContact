@@ -8,6 +8,5 @@ export class UpdateSessionsPool {
 
         const removeList = await new Contact().getList({ tracked: false, withSession: true });
         await ClientsPool.removeContacts(removeList);
-        console.log(ClientsPool.pool.map((client) => client.sessionId));
     }
 }
