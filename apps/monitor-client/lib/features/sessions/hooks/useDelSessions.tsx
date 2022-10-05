@@ -14,7 +14,7 @@ export function useDelSession(): ISessionsDel {
 
     async function removeSession(id: string) {
         const sessions = await api?.sessions.del(id);
-        await api?.sessions.syncWithPool();
+        await api?.sessions.sync();
         return sessions;
     }
 

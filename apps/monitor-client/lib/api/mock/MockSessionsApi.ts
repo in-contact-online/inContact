@@ -4,7 +4,7 @@ export interface IMockSessionsApi {
     readList: (params: ReadParams) => Promise<null | {}>;
     add: (params: FormData) => Promise<null>;
     del: (id: string) => Promise<null>;
-    syncWithPool: () => Promise<null>;
+    sync: () => Promise<null>;
 }
 
 export class MockSessionsApi implements IMockSessionsApi {
@@ -28,7 +28,7 @@ export class MockSessionsApi implements IMockSessionsApi {
         return null;
     }
 
-    async syncWithPool() {
+    async sync() {
         return null;
     }
 }

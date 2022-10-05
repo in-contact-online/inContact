@@ -14,7 +14,7 @@ export function usePostSession(): ISessionsAdd {
 
     async function postSession(formData: any) {
         const sessions = await api?.sessions.add(formData);
-        await api?.sessions.syncWithPool();
+        await api?.sessions.sync();
         return sessions;
     }
 
