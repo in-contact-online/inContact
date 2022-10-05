@@ -1,5 +1,5 @@
 import * as commands from './commands/index.mjs';
-import {COMMANDS} from './constants.mjs';
+import { COMMANDS } from './constants.mjs';
 
 class Command {
     /**

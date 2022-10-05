@@ -1,6 +1,6 @@
-import {CronJob} from 'cron';
+import { CronJob } from 'cron';
 import appCommand from '../command-api/command.mjs';
-import {COMMANDS} from '../command-api/constants.mjs';
+import { COMMANDS } from '../command-api/constants.mjs';
 
 export default class Scanner {
     /**

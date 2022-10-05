@@ -25,7 +25,7 @@ export class ClientsPool {
     static async sync() {
         ClientsPool.pool = [];
 
-        const sessions = await new Session().readAll({valid: true});
+        const sessions = await new Session().readAll({ valid: true });
 
         for (const session of sessions) {
             const client = new Client(session);
@@ -83,7 +83,7 @@ export class ClientsPool {
      */
     static async addContacts(contactsList) {
         for (const contact of contactsList) {
-            const theSameContacts = await new Contact().getTrackedByPhone({trackedPhone: contact.tracked_phone});
+            const theSameContacts = await new Contact().getTrackedByPhone({ trackedPhone: contact.tracked_phone });
 
             if (theSameContacts.length > 0) {
                 await new Contact().updateSession({
@@ -130,7 +130,7 @@ export class ClientsPool {
             const client = ClientsPool.pool.find((client) => client.sessionId === contact.session_id);
 
             if (client) {
-                const theSameContacts = await new Contact().getTrackedByPhone({trackedPhone: contact.tracked_phone});
+                const theSameContacts = await new Contact().getTrackedByPhone({ trackedPhone: contact.tracked_phone });
 
                 if (theSameContacts.length === 0) {
                     const result = await client.invoke(new Api.contacts.GetContacts({}));
@@ -162,7 +162,7 @@ export class ClientsPool {
                                 ? null
                                 : humanReadableDate(user.status.wasOnline);
                         if (wasOnline === null) {
-                            await new Contact().notifyTrackedOnline({trackedPhone: '+' + user.phone});
+                            await new Contact().notifyTrackedOnline({ trackedPhone: '+' + user.phone });
                         }
                         if (wasOnline !== undefined) {
                             await new Status().save({
@@ -172,13 +172,13 @@ export class ClientsPool {
                                 checkDate: new Date().toISOString(),
                             });
                         } else
-                            await new Contact().updateTrackedStatus({trackedPhone: '+' + user.phone, tracked: false});
+                            await new Contact().updateTrackedStatus({ trackedPhone: '+' + user.phone, tracked: false });
                     }
                 }
             } catch (e) {
                 logger.error(e);
                 ClientsPool.removeClient(client);
-                await new Contact().removeSessionId({sessionId: client.sessionId});
+                await new Contact().removeSessionId({ sessionId: client.sessionId });
                 logger.info(`Session ${client.sessionId} failed`);
                 await new Session().invalidate(client.sessionId);
             }

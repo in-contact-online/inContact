@@ -1,6 +1,6 @@
-import {StringSession} from 'telegram/sessions/index.js';
-import {AuthKey} from 'telegram/crypto/AuthKey.js';
-import {TelegramClientBase} from "../TelegramClientBase.mjs";
+import { StringSession } from 'telegram/sessions/index.js';
+import { AuthKey } from 'telegram/crypto/AuthKey.js';
+import { TelegramClientBase } from '../TelegramClientBase.mjs';
 
 export class TelegramClientAdapter extends TelegramClientBase {
     /**

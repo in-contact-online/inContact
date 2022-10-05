@@ -1,6 +1,6 @@
 import logger from '../logger';
 
-async function runUseCase(UseCase, {params}) {
+async function runUseCase(UseCase, { params }) {
     return new UseCase().execute(params);
 }
 
@@ -18,7 +18,7 @@ export function makeCommandHandler(UseCase) {
         try {
             const startTime = Date.now();
 
-            const result = await runUseCase(UseCase, {params});
+            const result = await runUseCase(UseCase, { params });
 
             logRequest(params, result, startTime);
         } catch (err) {

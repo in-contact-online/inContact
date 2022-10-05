@@ -1,5 +1,5 @@
-import {Router} from 'express';
-import {access, sessions} from './routes/index.mjs';
+import { Router } from 'express';
+import { access, sessions } from './routes/index.mjs';
 
 const router = Router();
 

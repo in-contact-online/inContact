@@ -1,7 +1,6 @@
 import { TelegramClient } from 'telegram/index.js';
 
 export class TelegramClientBase extends TelegramClient {
-
     #config = null;
 
     constructor(session) {

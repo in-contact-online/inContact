@@ -1,7 +1,6 @@
-import {runUseCase} from "../../utils/index.mjs";
-import {AccessCheck} from "../../../usecases/index.mjs";
+import { runUseCase } from '../../utils/index.mjs';
+import { AccessCheck } from '../../../usecases/index.mjs';
 import logger from '../../logger.mjs';
-
 
 export const access = {
     async check(req, res, next) {
@@ -15,7 +14,7 @@ export const access = {
             return next();
         } catch (e) {
             logger.error(e);
-            res.status(401).send({message: 'Access denied'});
+            res.status(401).send({ message: 'Access denied' });
         }
     },
 };
